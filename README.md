@@ -5,8 +5,10 @@ IntroPython gibt einen kurzen Überblick zu den wichtigsten Funktionen, welche f
 
 PV4Ing_Tutorial ist eine Einführung in die Ertragsberechnung und Darstellung der Ergebnisse als Diagramm.
 
-Theoriebuch lautet
-Photovoltaik für Ingenieure
-Markus Markstaler
-Verlag: BoD – Books on Demand, Norderstedt.
+Titel: Photovoltaik für Ingenieure
+
+Autor: Markus Markstaler
+
+Verlag: BoD – Books on Demand, Norderstedt
+
 ISBN: 9783744871877
