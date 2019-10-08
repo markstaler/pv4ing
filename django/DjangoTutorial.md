@@ -46,7 +46,7 @@ Zur Erstellung von Webpages wird deshalb ein Webframework verwendet. Dies ist ei
 
 Der erste Schritt hierzu ist die Auftrennung von *Information*  und der *Darstellung*, wodurch beide Blöcke wiederverwendbar sind. Selbe Darstellung mit anderen Informationen oder selbe Informationen bei unterschiedlichen Darstellungen.
 
-![](D:\01_SWD\02_Vorlesungen\03_HTMLDjango\md\pic2.png)
+![](pic2.png)
 
 Als Webframework verwenden wir Djano basierend auf Python. Dies Framework wird bei hunderten Webpages eingesetzt wie Youtube, Dropbox, Google, Netflix, Spotify, Pinterest, NASA, uvm. Der Untertitel von Django heisst "The web framework for perfectionists with deadlines" und zeigt die Stärken von Django, wie:
 
@@ -60,13 +60,13 @@ Als Webframework verwenden wir Djano basierend auf Python. Dies Framework wird b
 
 Djanog ist benannt nach dem Gitaristen Django Reinhardt.
 
-![djangoReinhardt.jpg](D:\01_SWD\02_Vorlesungen\03_HTMLDjango\md\djangoReinhardt.jpg)
+![](djangoReinhardt.jpg)
 
 ## Architektur Django
 
 Die Architektur von Django teilt die *Darstellung (Template)* von den *Informationen (Model)*, welche, je nach Anfrage (request) unterschiedlich zusammengebaut (*View*) werden. Das Konzept wird als MTV bezeichnet für *Model, Template, View* und ist eine lose gekoppelte Struktur, sodass einzelne Teile wiederverwendet werden können.
 
-![](D:\01_SWD\02_Vorlesungen\03_HTMLDjango\md\pic3.png)
+![](pic3.png)
 
 # 
 
@@ -475,13 +475,13 @@ Wenn du dazu aufgefordert wirst, gib einen Benutzernamen (Kleinbuchstaben, keine
 
 Geh nochmal in deinen Browser und log dich mit den Daten des Superusers ein, den du gerade erstellt hast. Du solltest nun das Django-Admin-Dashboard sehen.
 
-!["Django Admin"-Weboberfläche](django_admin3.png)
+![](django_admin3.png)
 
 Gehe auf Tours und experimentiere ein bisschen damit. Füge z.B. zwei Toureneinträge hinzu. Mach dir keine Sorgen wegen des Inhalts -- der ist nur auf deinem lokalen Computer sichtbar. 
 
 Achte darauf, dass bei einem kein Veröffentlichungsdatum eingetragen ist. Das werden wir später noch brauchen.
 
-!["Django Admin"-Weboberfläche](edit_post3.png)
+![](edit_post3.png)
 
 Mehr zum Django-Admin-Dashboard kannst du in der Django-Dokumentation erfahren: https://docs.djangoproject.com/en/2.2/ref/contrib/admin/
 
@@ -877,7 +877,7 @@ Wir werden nun die Liste mit einer for-Schleife sequentiell darstellen. Diese Fu
 
 Versuch das in deinem Template.
 
-![Abbildung 13.2](step2.png)
+![](step2.png)
 
 Es funktioniert! Alles, was du zwischen `{% for %}`und `{% endfor %}` schreibst, wird für jedes Objekt in der Liste wiederholt. Aktualisiere deine Seite.
 
@@ -929,7 +929,7 @@ return render(request, 'tourenbuch/index.html', {'wanderungen': wanderungen})
 
 Wir starten den Entwicklungsserver und es zeigt sich folgende Seite:
 
-![step3.png](D:\01_SWD\02_Vorlesungen\03_HTMLDjango\md\step3.png)
+![](step3.png)
 
 Hier fehlt das Design. Die `index.html` findet nicht die Bilder und Formaierungsdateien (css), da der Pfad nicht aktuell ist. Dies holen wir nach. Öffne die Datei `index.html` im Code-Editor und füge diese Zeile ganz oben ein:
 
