@@ -8,7 +8,7 @@ Deshalb bauen wir nicht ein eigenes GUI (Graphical User Interface), sondern erst
 
 Dabei ist neben der eigentlichen Information die Darstellung der Webpage wichtig um eine gute Lesbarkeit auf unterschiedlichen Geräten (PC, Notebook, Smartphone) zu erreichen. Dies wird als Responsiv Design bezeichnet.
 
-![](D:\01_SWD\02_Vorlesungen\03_HTMLDjango\md\pic1.png)
+![](pic1.png)
 
 ## Leistsatz
 
