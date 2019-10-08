@@ -300,7 +300,7 @@ Jetzt wollen wir schauen, ob unsere Website funktioniert: Öffne deinen Browser 
 
 Glückwunsch! Du hast gerade deine erste Website erstellt und sie auf deinem Webserver laufen! Ist das nicht toll?
 
-![Installation hat funktioniert!](install_worked.png)
+![](install_worked.png)
 
 Beachte, dass ein Terminalfenster immer nur eine Sache zur selben Zeit erledigen kann, und in dem Terminalfenster, was du vorhin geöffnet hast, läuft gerade der Webserver. Und solange der Webserver läuft und auf einkommende Anfragen wartet, akzeptiert das Terminal zwar Texteingaben, aber es wird keine neuen Befehle ausführen. 
 
@@ -465,7 +465,7 @@ Wie du siehst, importieren wir hier das Model "Tour", das wir im vorherigen Kapi
 
 Okay, wir sehen uns nun unser Tour-Model an. Denk daran, `python manage.py runserver` in die Konsole einzugeben, um den Webserver zu starten. Öffne deinen Browser und gib die Adresse http://127.0.0.1:8000/admin/ ein. Du siehst eine Anmeldeseite:
 
-![Login Seite](login_page2.png)
+![](login_page2.png)
 
 Um dich einloggen zu können, musst du zunächst einen *superuser* erstellen - einen User, der alles auf der Website steuern darf. Geh zurück zur Kommandozeile, tippe `python manage.py createsuperuser` und drücke Enter.
 
@@ -495,7 +495,7 @@ Gleich werden wir unsere erste Website basteln: eine Homepage als Tour! Zuerst s
 
 Eine URL ist eine Web-Adresse. Jedes Mal, wenn du eine Website besuchst, kannst du eine URL sehen - sie ist in der Adressleiste des Browsers sichtbar. (Ja! `127.0.0.1:8000` ist eine URL! Und `http://www.pv4ing.ch` ist auch eine URL.)
 
-![URL](url.png)
+![](url.png)
 
 Jede Seite im Internet braucht ihre eigene URL. Dadurch weiß deine Applikation, was sie dem Nutzer, der eine URL öffnet, zeigen soll. In Django verwenden wir eine sogenannte `URLconf` (URL-Konfiguration). URLconf ist eine Ansammlung von Mustern, die Django mit der empfangenen URL abgleicht, um die richtige View zu finden, das heißt, um letztlich die richtige Seite für den Nutzer anzuzeigen.
 
@@ -781,7 +781,7 @@ Cool! Jetzt bist du bereit für den nächsten Teil! Um die Konsole zu schließen
 
 Wir haben nun schon einige Dinge an verschiedenen Orten fertiggestellt: 
 
-![](D:\01_SWD\02_Vorlesungen\03_HTMLDjango\md\pic4.png)
+![](pic4.png)
 
 1. Projekt angelegt und `settings.py` konfiguriert
 
@@ -859,7 +859,7 @@ Um eine Variable in einem Django-Template darzustellen, nutzen wir doppelte, ges
 
 Versuche das in deinem `tourenbuch/templates/tourenbuch/home.html` Template. Öffne es in deinem Code-Editor und ersetze alles vom zweiten `<div>` bis zum dritten `</div>` mit `{{ wanderungen }}`. Speichere die Datei und aktualisiere die Seite, um die Ergebnisse anzuzeigen.
 
-![Abbildung 13.1](step1.png)
+![](step1.png)
 
 Das heißt im Template wird nun eine Liste mit den Ojekt-Titel angezeigt. Die Ojekt-Titel haben wir in `model.py`mit der Funktion `def __str__(self)` definiert.
 
