@@ -340,15 +340,13 @@ Wie du sehen kannst, wurde ein neues `tourenbuch`-Verzeichnis erstellt, welches 
 
     djangoProjekt
     ├── tourenbuch
-    │   ├── __init__.py
-    │   ├── admin.py
-    │   ├── apps.py
-    │   ├── migrations
-    │   │   └── __init__.py
-    │   ├── models.py
-    │   ├── tests.py
-    |   ├── urls.py
-    │   └── views.py
+    │    __init__.py
+    │    admin.py
+    │    apps.py
+    │    models.py
+    │    tests.py
+    |    urls.py
+    │    views.py
     ├── db.sqlite3
     ├── manage.py
     ├── mysite
@@ -1039,30 +1037,30 @@ def dauerberechnen(w):
 
 Was habe wir nun gemacht? Es kommt einem viel vor. Sehr viel vor. Jedoch fassen wir zusammen, so viel ist es nicht:
 
+
+
 ![](pic4.png)
-Unsere gewünschten Funktionen sind in der Datei `views.py`. Zusätzlich statischer Text und Einbindung in die Webpage habe wir in der Datei `index.html`durchgeführt. Dies ist es im wesentlichen. Sehr mächtig sind die Modelle, definiert in `models.py`.
+
+
+Unsere gewünschten Funktionen sind in der Datei `views.py`. Zusätzlich statischer Text und Einbindung in die Webpage habe wir in der Datei `index.html`durchgeführt. Sehr mächtig sind die Modelle, definiert in `models.py`. 
 
 Für Django haben wir sehr wenige Zeilen Code in `settings.py` und `urls.py`durchgeführt. Mehr nicht. Dies ist was Django so erfolgreich macht: wenig code, d.h. auch wenig Fehler. Das einzig an was man sich gewöhnen muss ist die Ordnerstruktur und Dateinamen, welche Django erwartet. 
 
     djangoProjekt
-    ├── tourenbuch
-    │   ├── __init__.py
-    │   ├── admin.py
-    │   ├── apps.py
-    │   ├── migrations
-    │   │   └── __init__.py
-    │   ├── models.py
-    │   ├── tests.py
-    |   ├── urls.py
-    │   └── views.py
-    ├── db.sqlite3
-    ├── manage.py
-    ├── mysite
-    │   ├── __init__.py
-    │   ├── settings.py
-    │   ├── urls.py
-    │   └── wsgi.py
-    ├───myvenv
-    └───swpakete.txt
+    │ db.sqlite3
+    │ manage.py
+    ├──tourenbuch
+    │       ├──templates
+    │       └──static
+    │       models.py
+    |       urls.py
+    │       views.py
+    └──mysite
+          settings.py
+          urls.py   
+
+
+
+
 
 
