@@ -873,11 +873,7 @@ Wir werden nun die Liste mit einer for-Schleife sequentiell darstellen. Diese Fu
 {% endfor %}
 ```
 
-Versuch das in deinem Template.
-
-![](step2.png)
-
-Es funktioniert! Alles, was du zwischen `{% for %}`und `{% endfor %}` schreibst, wird für jedes Objekt in der Liste wiederholt. Aktualisiere deine Seite.
+Versuch das in deinem Template. Alles, was du zwischen `{% for %}`und `{% endfor %}` schreibst, wird für jedes Objekt in der Liste wiederholt. Aktualisiere deine Seite.
 
 Ist dir aufgefallen, dass wir diesmal eine etwas andere Notation benutzen haben (`{{ w.titel }}` oder `{{ w.text }}`)? Wir greifen auf Daten von jedem Feld unseres `Tour`-Models zu. Außerdem leitet das `|linebreaksbr` den Text der Tours durch einen Filter, um Zeilenumbrüche in Absätze umzuwandeln. Dies ist ebenfalls eine build-in Django-Filter template.
 
@@ -894,9 +890,15 @@ download
  └── index.html
 ```
 
-Die Webpage ist wieder die html-Datei. Die Bilder zur Webpage sind im Unterordner `images` abelegt und die Darstellung, Formatierung und Effekte sind in den Dateien im Unterordner `assets`. Wir werden nicht genauer darauf eingehen, ebenso ist die Suche nach einem passenden "Template" zu beginn reizvoll, jedoch sehr zeitaufwändig, vorallem wenn man kleine Anpassungen wünscht. Wir verwenden das Template "Big Picture" auf html5up. Teste es aus indem du die html-Seite startest.
+Die Webpage ist wieder die html-Datei. Die Bilder zur Webpage sind im Unterordner `images` abelegt und die Darstellung, Formatierung und Effekte sind in den Dateien im Unterordner `assets`. Wir werden nicht genauer darauf eingehen, ebenso ist die Suche nach einem passenden "Template" zu beginn reizvoll, jedoch sehr zeitaufwändig, vorallem wenn man kleine Anpassungen wünscht. Wir verwenden das Template *Eventually* von html5up. Teste es aus indem du die html-Seite startest. Die Hintergrundbib\pvlder kannst du anpassen, indem du eigene Bilder mit den gleichen Dateinamen in den Ordner `images`ablegst.
 
-Die Hintergrundbilder kannst du anpassen, indem du eigene Bilder mit den gleichen Dateinamen in den Ordner `images`ablegst.
+![](temp1.png)
+
+Ändere den Titel die Überschrift und den Text. Blende die E-Mail-Eingabe und die Verbindungen zu den sozialen Median aus. Dies alles machst du in der index.html Datei.
+
+Gehe in die main.css-Datei (Unterordner assets/css) und suche nach "animation:". Hier kannst du die Geschwindigkeit der Bilder ändern. Suche nach "opacity:" direkt nach dem Eintrag /* BG */. Dort kannst du die Helligkeit anpassen, z.B. auf 0.8.
+
+![](temp2.png)
 
 ### Template in Django integrieren
 
@@ -939,17 +941,17 @@ Wir laden hier den Pfad zu den statischen Dateien. In der Datei oben bei `<head>
 
 ```html
 href="assets/css/main.css"
-src="assets/js/jquery.min.js
+src="assets/js/main.js
 ```
 
 Diese ändern wir zu:
 
 ```html
 href="{% static "assets/css/main.css" %}"
-src="{% "assets/js/jquery.min.js" %}"
+src="{% "assets/js/main.js" %}"
 ```
 
-Führe noch weitere Anpassungen durch, wie ändern des Titel, der Überschriften h1 und h2 und Änderungen in den Textstellen. So kannst du den Inhalt der Webpage gestalten.
+Die Hintergrundbilder sind in der main.js-Datei definiert. Auch hier müssen wir den Pfad ändern. Django sucht unter 'static/..', d.h. wir geben den Ort unserer Bilder an durch '''static/images/bg01.jpg". Nun funktioniert's.
 
 # Inderaktiv
 
@@ -959,13 +961,9 @@ Zuerst die `index.html`-Datei:
 
 ```html
 {% for w in wanderungen %}
-
     <p>{{w.titel}}: {{w.text|linebreaksbr }}; <br>
-
-	Aufstieg: {{w.aufstieg }} - Abstieg: {{w.abstieg }}<br>
-
-	Distanz: {{w.distanz }} - Dauer: {{w.dauer }}</p>
-
+    Aufstieg: {{w.aufstieg }} - Abstieg: {{w.abstieg }}<br>
+    Distanz: {{w.distanz }} - Dauer: {{w.dauer }}</p>
 {% endfor %}
 
 <form method="post"> {% csrf_token %}
@@ -1028,5 +1026,43 @@ def dauerberechnen(w):
 
     return dauer, chart    
 ```
+
+???Fragen:
+
+- Skalierung header passt nicht???
+
+- Von wo kommt 'request'?
+
+- Wie kann markdown leserlich gedruckt werden?
+
+# Zusammenfassung
+
+Was habe wir nun gemacht? Es kommt einem viel vor. Sehr viel vor. Jedoch fassen wir zusammen, so viel ist es nicht:
+
+![](pic4.png)
+Unsere gewünschten Funktionen sind in der Datei `views.py`. Zusätzlich statischer Text und Einbindung in die Webpage habe wir in der Datei `index.html`durchgeführt. Dies ist es im wesentlichen. Sehr mächtig sind die Modelle, definiert in `models.py`.
+
+Für Django haben wir sehr wenige Zeilen Code in `settings.py` und `urls.py`durchgeführt. Mehr nicht. Dies ist was Django so erfolgreich macht: wenig code, d.h. auch wenig Fehler. Das einzig an was man sich gewöhnen muss ist die Ordnerstruktur und Dateinamen, welche Django erwartet. 
+
+    djangoProjekt
+    ├── tourenbuch
+    │   ├── __init__.py
+    │   ├── admin.py
+    │   ├── apps.py
+    │   ├── migrations
+    │   │   └── __init__.py
+    │   ├── models.py
+    │   ├── tests.py
+    |   ├── urls.py
+    │   └── views.py
+    ├── db.sqlite3
+    ├── manage.py
+    ├── mysite
+    │   ├── __init__.py
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    ├───myvenv
+    └───swpakete.txt
 
 
