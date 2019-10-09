@@ -867,11 +867,9 @@ Wir werden nun die Liste mit einer for-Schleife sequentiell darstellen. Diese Fu
 
 ```html
 {% for w in wanderungen %}
-
-     <h2>{{w.titel}}</h2>
-
-     <p>{{w.text|linebreaksbr }}</p>
-
+     {{w.titel}}: {{w.text|linebreaksbr }}; <br>
+     Aufstieg: {{w.aufstieg }} - Abstieg: {{w.abstieg }}<br>
+     Distanz: {{w.distanz }} - Dauer: {{w.dauer }}
 {% endfor %}
 ```
 
@@ -952,3 +950,83 @@ src="{% "assets/js/jquery.min.js" %}"
 ```
 
 Führe noch weitere Anpassungen durch, wie ändern des Titel, der Überschriften h1 und h2 und Änderungen in den Textstellen. So kannst du den Inhalt der Webpage gestalten.
+
+# Inderaktiv
+
+Nun möchten wir nichtnur Informationen senden, sondern auch Aktionen über die Webpage auslösen, d.h. Daten von der Webpage zum Server senden (=Post). Über ein Eingabefeld geben wir den Titel einer Tour ein und der Server berechnet die Gehzeit aufgrund der Distanz, dem Aufstieg und dem Abstieg und gibt einen Wert zurück, sowie ein Diagramm mit Distanz und Höhe der Tour. Diesen Code bauen wir an zwei Stellen ein. Bei der Darstellung/Template, d.h. in der `index.html`-Datei und bei der Steuerung/View, dies ist die `views.py`-Datei.
+
+Zuerst die `index.html`-Datei: 
+
+```html
+{% for w in wanderungen %}
+
+    <p>{{w.titel}}: {{w.text|linebreaksbr }}; <br>
+
+	Aufstieg: {{w.aufstieg }} - Abstieg: {{w.abstieg }}<br>
+
+	Distanz: {{w.distanz }} - Dauer: {{w.dauer }}</p>
+
+{% endfor %}
+
+<form method="post"> {% csrf_token %}
+    <p>Wähle den Titel einer Tour aus: </p>
+    <input type="text" name="w" value={{ dic.w }}>
+    <input type="submit" value="rechnen" name="knopf">
+
+    <p> Berechnete Dauer ist {{ out.dauer|floatformat:1 }} Stunden</p>      
+    <p>{{ out.chart|safe }}</p>      
+</form>    
+```
+
+`form`erstellt ein Formular für Eingaben. Dieses Formular verwendet die Methode "post" für das senden der Daten von der Webpage zum Server. 
+
+`{% crsf_token %}` ist eine Sicherheitsfunktion von Django (Cross Site Request Forgery protection). Hier stellt Django sicher, dass die Anfrage zum Server von unserer Webpage erfolgt und nicht durch einen Webangriff.
+
+`<input type="text" name="w" value={{ dic.w }}>` HIer wird ein Eingabefeld definiert vom Typ text. Der Variabelname für den eingegebenen Inhalt des Textfeld definieren wir mit "name=w" und der Wert, welcher zu Beginn im Textfeld steht wird mit "value" definiert. HIer greifen wir über Django auf ein Python-Dictionary, welches wir naher in views.py definieren.
+
+Dann geben wir die berechnete Gehzeit "out.dauer" und ein Diagramm "out.chart". Für beide verwenden wir Django-Filter. Der Filter "|floatformat:1" definiert dass nur eine Nachkommastelle anzeigen. Der Filter "|safe" behandelt den Variableninhalt nicht als Text, sondern direkt als HTML-Code. Mit diesem HTML-Code wird das Diagramm gezeichnet. Das Diagramm wird mit Bokeh erstellt, wofür in der index.html-Datei ein Javascript geladen wird. Dies erfolgt im Bereich <head> durch folgende Zeile:
+
+```html
+<script type="text/javascript" src="{% static "bokeh-1.3.4.min.js" %}"></script>    
+```
+
+In der views.py-Datei werden die Informationen erzeugt:
+
+```python
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Tour
+from bokeh.plotting import figure
+from bokeh.embed import components
+
+def tbuch(request):   
+    if request.POST: # wenn button gedrückt
+        dic = request.POST # Werte von Page übernehmen
+        print('mal sehen was das ist: ' + str(dic))
+        w = dic['w']
+        wanderungen = Tour.objects.filter(titel__contains=w) # QuerySet 
+        objectW = wanderungen.get() # Objekt
+        dauer, chart = dauerberechnen(objectW)
+        out = {'dauer' : dauer, 'chart': chart}
+    else: # wenn erstmals gestartet wird
+        dic = {'w' : ''}
+        out = {'dauer' : 0, 'chart': ''}
+    wanderungen = Tour.objects.filter(sichtbarSeit__lte=timezone.now()).order_by('sichtbarSeit')
+    return render(request, 'tourenbuch/index.html', {'wanderungen': wanderungen, 'dic': dic, 'out' : out}) 
+
+def dauerberechnen(w):
+    vertikalzeit = w.distanz / 4 # [h]
+    hohenzeit = w.aufstieg/300 + w.abstieg/500 # [h]
+    klWert = min(vertikalzeit, hohenzeit)
+    grWert = max(vertikalzeit, hohenzeit)
+    dauer = klWert/2 + grWert # [h]
+
+    p1 = figure(plot_width=400, plot_height=200)
+    p1.line((0,w.distanz), (0,w.aufstieg/1000))
+    script, div = components(p1)
+    chart = script + div
+
+    return dauer, chart    
+```
+
+
