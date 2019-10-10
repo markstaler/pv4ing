@@ -1,10 +1,14 @@
 # Visualisierung
 
-Um entscheiden oder handeln zu können sind Infomationen notwendig. Z.B. Energiemonitoring um die Effizenz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen ebenfalls Entscheidungen zu fällen. Im Ingenieurwesen ist dies in der Regel ein Diagramm. In den beiden Tutorial auf [www.pv4ing.ch](https://www.pv4ing.ch) sind die für uns relevanten Diagramme dargestellt. Zusätzlich sollte bei einer Visualisierung noch ein erklärender Text hinzu, nicht zu viel aber ein bisschen macht Sinn.
+Um entscheiden oder handeln zu können sind Infomationen notwendig. Z.B. Energiemonitoring um die Effizenz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl in den Bergen zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen ebenfalls Entscheidungen zu fällen. 
 
-Denken wir an Energiemonitoring, so sollte die Visualisierung günstig sein, d.h. kein zusätzlicher Bildschirm und PC um den Zählerstand darzustellen. Das günstigste Display ist dies welches wir bereits dabei haben, das Mobil oder ein PC.
+Das verstehen der Informationen ist zentral und somit die geeignete Darstellung der Information um diese nachvollziehen zu können.
 
-Deshalb bauen wir nicht ein eigenes GUI (Graphical User Interface), sondern erstellen eine Webpage. Auf der Messeinheit läuft ein Server, welcher die Information als Webpage darstellt und durch ein Mobil oder PC "angesurft" wird, welches die Informationen als Webpage über einen Browser darstellt.
+Im Ingenieurwesen sind dies Diagramm mit einem erklärenden Text, nicht zu viel aber ein bisschen macht Sinn. In den beiden Tutorial auf [www.pv4ing.ch](https://www.pv4ing.ch) sind die für uns relevanten Diagramme dargestellt. 
+
+Denken wir an Energiemonitoring, so sollte die Visualisierung günstig sein, d.h. kein zusätzlicher Bildschirm und PC um den Zählerstand darzustellen. Das günstigste Display ist dies welches wir bereits dabei haben, das Mobil oder ein Notebook.
+
+Deshalb bauen wir nicht ein eigenes GUI (Graphical User Interface), sondern erstellen eine Webpage. Auf der Messeinheit läuft ein Server, welcher die Information als Webpage darstellt und durch ein Mobil oder Rechner "angesurft" wird, welches die Informationen als Webpage über einen Browser darstellt.
 
 Dabei ist neben der eigentlichen Information die Darstellung der Webpage wichtig um eine gute Lesbarkeit auf unterschiedlichen Geräten (PC, Notebook, Smartphone) zu erreichen. Dies wird als Responsiv Design bezeichnet.
 
@@ -14,13 +18,13 @@ Dabei ist neben der eigentlichen Information die Darstellung der Webpage wichtig
 
 Das Bauen einer Website kann zu einer sehr aufwändigen Sache werden, vorallem wenn wir uns in der Gestaltung verlieren. Deshalb einige Leitsätze:
 
-1. Konzentration aufdas s Wesentliche: Was ist die Kernaussage der Webpage? Desgin wird "zugekauft"
+1. Konzentration auf das Wesentliche: Was ist die Kernaussage der Webpage? Desgin wird "zugekauft"
 
-2. Effektiv
+2. Effektiv: DRY (Dont'e Repeat Yourself)
 
 3. Für jeden Handgriff das richtige Werkzeug
 
-Der erste Punkt hat nicht mit programmieren oder Webpage zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizziern.
+Der erste Punkt hat nichts mit programmieren oder Webpagebauen zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizziern.
 
 Bei zweiten Punkt "Effektiv" geht es daraum in kurzer Zeit eine Webpage zu erstellen. dies heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
 
@@ -34,21 +38,19 @@ Bei zweiten Punkt "Effektiv" geht es daraum in kurzer Zeit eine Webpage zu erste
 
 5. Flat is better than nested (verschachtelt).
 
-Es gibt noch weitere Punkte, gib auf der Python Konsole folgendes ein:
+Es gibt noch weitere Punkte, gib auf der Python Konsole folgendes ein "import this".
 
-`import this`
-
-Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeit. Das heisst auch das wir nicht das Selbe zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzpip wird als "Don't repeat yourself (DRY)" bezeichnet.
+Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeit. Das heisst auch dass wir nicht das Selbe zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzpip wird als "Don't repeat yourself (DRY)" bezeichnet und unterstützt Punkt 2. Für uns heisst das richtige Werkzeug ein Webframework.
 
 ## Webframework
 
-Zur Erstellung von Webpages wird deshalb ein Webframework verwendet. Dies ist ein Baukastensystem mit einer Vielzahl nützlicher Werkzeuge wie Benutzerverwaltung, Formulare, Upload von Dateien und voralllem ein integrierter Entwicklungsserver um die Webpage schnell und einfach darzustellen ohne dem Aufsetzten eines Servers.
+Ein Webframework ist ein Baukastensystem mit einer Vielzahl nützlicher Werkzeuge wie Benutzerverwaltung, Formulare, Upload von Dateien und voralllem ein integrierter Entwicklungsserver um die Webpage schnell und einfach darzustellen ohne dem Aufsetzten eines Servers.
 
 Der erste Schritt hierzu ist die Auftrennung von *Information*  und der *Darstellung*, wodurch beide Blöcke wiederverwendbar sind. Selbe Darstellung mit anderen Informationen oder selbe Informationen bei unterschiedlichen Darstellungen.
 
 ![](pic2.png)
 
-Als Webframework verwenden wir Djano basierend auf Python. Dies Framework wird bei hunderten Webpages eingesetzt wie Youtube, Dropbox, Google, Netflix, Spotify, Pinterest, NASA, uvm. Der Untertitel von Django heisst "The web framework for perfectionists with deadlines" und zeigt die Stärken von Django, wie:
+Als Webframework verwenden wir Djano basierend auf Python. Dieses Framework wird bei hunderten Webpages eingesetzt wie Youtube, Dropbox, Google, Netflix, Spotify, Pinterest, NASA, uvm. Der Untertitel von Django heisst "The web framework for perfectionists with deadlines" und zeigt die Stärken von Django, wie:
 
 - Schnell umsetzbar mit wenig Code
 
@@ -62,23 +64,23 @@ Djanog ist benannt nach dem Gitaristen Django Reinhardt.
 
 ![](djangoReinhardt.jpg)
 
+Nun klingt das sehr schön "schnell umsetzbar". Dies nächsten Stunden fühlen sich nicht wie "schnell umsetzbar" oder "einfach" an. Dies ist aber nur beim ersten mal. Siehe jetzt schon die Zusammenfassung am Ende des Tutorial an.
+
 ## Architektur Django
 
 Die Architektur von Django teilt die *Darstellung (Template)* von den *Informationen (Model)*, welche, je nach Anfrage (request) unterschiedlich zusammengebaut (*View*) werden. Das Konzept wird als MTV bezeichnet für *Model, Template, View* und ist eine lose gekoppelte Struktur, sodass einzelne Teile wiederverwendet werden können.
 
 ![](pic3.png)
 
-# 
-
 ### View
 
-Die View ist die Programmeinheit bei Django, welche die Webpage zusammenbaut und darstellt, deshalb view. Hier werden auch die Anfragen (request) behandelt und die Adresse geprüft.
+Die View ist die Programmeinheit bei Django, welche die Webpage zusammenbaut und darstellt, deshalb view (in der Datei views.py). Hier werden auch die Anfragen (request) behandelt und die Adresse geprüft (in der Datei urls.py).
 
 In der allgemeinen Literatur wird das MTV-Modell häufiger als MVC-Modell verwedet für Model, View, Control. Hier entspricht View dem DjangoTemplate und Control der Django View.
 
 ### Template
 
-Das Template beinhaltet die Darstellung, das Design der Webpage. Dieses Template werden wir nicht bauen, sondern fertig beziehen. Eine Quelle ist [www.html5up.net](http://www.html5up.net).
+Das Template beinhaltet die Darstellung, das Design der Webpage. Dieses Template werden wir nicht bauen, sondern fertig beziehen. Eine Quelle ist [www.html5up.net](http://www.html5up.net). Dies sind html-, css- und js-Dateien.
 
 ### Model
 
@@ -90,7 +92,7 @@ Die Modellierung erfolgt über Objekte.
 
 Ein Objekt ist eine Sammlung von Eigenschaften und Aktionsmöglichkeiten (Funktionen/Methoden), das anhand einer Vorlage (Klasse) erstellt wird. Das klingt erst einmal komisch, aber hier haben wir gleich ein Beispiel.
 
-Wenn wir zum Beispiel ein Fahrrad modellieren wollen, erschaffen wir eine Objektvorlage `Fahrrad`, eine Art Blaupause oder Schema, nach welcher zukünftig jedes spezifische Fahrradobjekt erstellt werden kann. Die Vorlage beschreibt typische Eigenschaften von einem Fahrrad, z.B. `farbe`, `typ` (z.b. Tourenrad, Mountainbike, Rennrad) und `anzahlService` welches die gemachten Service mitzählt.
+Wenn wir zum Beispiel ein Fahrrad modellieren wollen, erschaffen wir eine Objektvorlage `Fahrrad`, eine Art Blaupause oder Schema, nach welcher zukünftig jedes einzelne individuelle Fahrradobjekt erstellt werden kann. Die Vorlage beschreibt typische Eigenschaften von einem Fahrrad, z.B. `farbe`, `typ` (z.b. Tourenrad, Mountainbike, Rennrad) und `anzahlService` welches die gemachten Service mitzählt.
 
 Jedes Objekt der Vorlage `Fahrrad` soll natürlich auch einige Aktionsmöglichkeiten besitzen: `servicegemacht`. Dies sieht dann so aus:
 
@@ -350,10 +352,10 @@ Wie du sehen kannst, wurde ein neues `tourenbuch`-Verzeichnis erstellt, welches 
     ├── db.sqlite3
     ├── manage.py
     ├── mysite
-    │   ├── __init__.py
-    │   ├── settings.py
-    │   ├── urls.py
-    │   └── wsgi.py
+    │     __init__.py
+    │     settings.py
+    │     urls.py
+    │     wsgi.py
     ├───myvenv
     └───swpakete.txt
 
@@ -1037,10 +1039,7 @@ def dauerberechnen(w):
 
 Was habe wir nun gemacht? Es kommt einem viel vor. Sehr viel vor. Jedoch fassen wir zusammen, so viel ist es nicht:
 
-
-
 ![](pic4.png)
-
 
 Unsere gewünschten Funktionen sind in der Datei `views.py`. Zusätzlich statischer Text und Einbindung in die Webpage habe wir in der Datei `index.html`durchgeführt. Sehr mächtig sind die Modelle, definiert in `models.py`. 
 
@@ -1059,8 +1058,88 @@ Für Django haben wir sehr wenige Zeilen Code in `settings.py` und `urls.py`durc
           settings.py
           urls.py   
 
+ Hier nochmals der gesamte neue Code der wichtigen drei Dateien:
+ models.py:
 
+```python
+from django.conf import settings
+from django.db import models
+from django.utils import timezone
 
+class Tour(models.Model):
+    titel = models.CharField(max_length=200)
+    text = models.TextField()
+    distanz = models.FloatField() # [km]
+    aufstieg = models.FloatField() # [m]
+    abstieg = models.FloatField() # [m]
+    dauer = models.FloatField() # [h] Stunden als Dezimalzahl
+    sichtbarSeit = models.DateTimeField(blank=True, null=True)
+ 
+    def veroffentlichen(self):
+         self.sichtbarSeit = timezone.now()
+         self.save()
+    def __str__(self):
+         return self.titel
+```
 
+views.py:
 
+```python
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Tour
+from bokeh.plotting import figure
+from bokeh.embed import components
 
+def tbuch(request):   
+    if request.POST: # wenn button gedrückt
+        dic = request.POST # Werte von Page übernehmen
+        print('mal sehen was das ist: ' + str(dic))
+        w = dic['w']
+        wanderungen = Tour.objects.filter(titel__contains=w) # QuerySet 
+        objectW = wanderungen.get() # Objekt
+        dauer, chart = dauerberechnen(objectW)
+        out = {'dauer' : dauer, 'chart': chart}
+    else: # wenn erstmals gestartet wird
+        dic = {'w' : ''}
+        out = {'dauer' : 0, 'chart': ''}
+    wanderungen = Tour.objects.filter(sichtbarSeit__lte=timezone.now()).order_by('sichtbarSeit')
+    return render(request, 'tourenbuch/index.html', {'wanderungen': wanderungen, 'dic': dic, 'out' : out}) 
+
+def dauerberechnen(w):
+    vertikalzeit = w.distanz / 4 # [h]
+    hohenzeit = w.aufstieg/300 + w.abstieg/500 # [h]
+    klWert = min(vertikalzeit, hohenzeit)
+    grWert = max(vertikalzeit, hohenzeit)
+    dauer = klWert/2 + grWert # [h]
+
+    p1 = figure(plot_width=400, plot_height=200)
+    p1.line((0,w.distanz), (0,w.aufstieg/1000))
+    script, div = components(p1)
+    chart = script + div
+
+    return dauer, chart    
+```
+
+  und Eintrag in der index.html:
+
+```html
+{% load static %}
+...
+<script type="text/javascript" src="{% static "bokeh-1.3.4.min.js" %}"></script>    
+...
+{% for w in wanderungen %}
+    <p>{{w.titel}}: {{w.text|linebreaksbr }}; <br>
+    Aufstieg: {{w.aufstieg }} - Abstieg: {{w.abstieg }}<br>
+    Distanz: {{w.distanz }} - Dauer: {{w.dauer }}</p>
+{% endfor %}
+
+<form method="post"> {% csrf_token %}
+    <p>Wähle den Titel einer Tour aus: </p>
+    <input type="text" name="w" value={{ dic.w }}>
+    <input type="submit" value="rechnen" name="knopf">
+
+    <p> Berechnete Dauer ist {{ out.dauer|floatformat:1 }} Stunden</p>      
+    <p>{{ out.chart|safe }}</p>      
+</form>    
+```
