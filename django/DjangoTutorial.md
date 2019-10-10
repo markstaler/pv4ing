@@ -1,4 +1,4 @@
-# Visualisierung
+## Visualisierung
 
 Um entscheiden oder handeln zu können sind Infomationen notwendig. Z.B. Energiemonitoring um die Effizenz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl in den Bergen zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen ebenfalls Entscheidungen zu fällen. 
 
@@ -10,11 +10,13 @@ Denken wir an Energiemonitoring, so sollte die Visualisierung günstig sein, d.h
 
 Deshalb bauen wir nicht ein eigenes GUI (Graphical User Interface), sondern erstellen eine Webpage. Auf der Messeinheit läuft ein Server, welcher die Information als Webpage darstellt und durch ein Mobil oder Rechner "angesurft" wird, welches die Informationen als Webpage über einen Browser darstellt.
 
-Dabei ist neben der eigentlichen Information die Darstellung der Webpage wichtig um eine gute Lesbarkeit auf unterschiedlichen Geräten (PC, Notebook, Smartphone) zu erreichen. Dies wird als Responsiv Design bezeichnet.
+Dabei ist neben der eigentlichen Information die Darstellung der Webpage wichtig um eine gute Lesbarkeit auf unterschiedlichen Geräten (PC, Notebook, Smartphone) zu erreichen. So wird eine Seite auf einem kleinen Mobil-Display anders aufgebaut, als auf einem grossen Bildschirm am Arbeitsplatz.
+
+Dies wird als Responsiv Design bezeichnet.
 
 ![](pic1.png)
 
-## Leistsatz
+### Leistsatz
 
 Das Bauen einer Website kann zu einer sehr aufwändigen Sache werden, vorallem wenn wir uns in der Gestaltung verlieren. Deshalb einige Leitsätze:
 
@@ -24,9 +26,9 @@ Das Bauen einer Website kann zu einer sehr aufwändigen Sache werden, vorallem w
 
 3. Für jeden Handgriff das richtige Werkzeug
 
-Der erste Punkt hat nichts mit programmieren oder Webpagebauen zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizziern.
+Der erste Punkt hat nichts mit programmieren oder Webpage bauen zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizziern.
 
-Bei zweiten Punkt "Effektiv" geht es daraum in kurzer Zeit eine Webpage zu erstellen. dies heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
+Beim zweiten Punkt "Effektiv" geht es daraum in kurzer Zeit eine Webpage zu erstellen. dies heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
 
 1. Beautiful is better than ugly. 
 
@@ -42,9 +44,9 @@ Es gibt noch weitere Punkte, gib auf der Python Konsole folgendes ein "import th
 
 Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeit. Das heisst auch dass wir nicht das Selbe zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzpip wird als "Don't repeat yourself (DRY)" bezeichnet und unterstützt Punkt 2. Für uns heisst das richtige Werkzeug ein Webframework.
 
-## Webframework
+### Webframework
 
-Ein Webframework ist ein Baukastensystem mit einer Vielzahl nützlicher Werkzeuge wie Benutzerverwaltung, Formulare, Upload von Dateien und voralllem ein integrierter Entwicklungsserver um die Webpage schnell und einfach darzustellen ohne dem Aufsetzten eines Servers.
+Ein Webframework ist ein Baukastensystem mit einer Vielzahl nützlicher Werkzeuge wie Benutzerverwaltung, Formulare, Upload von Dateien und voralllem ein integrierter Entwicklungsserver um die Webpage schnell und einfach darzustellen ohne ein Aufsetzten eines Servers.
 
 Der erste Schritt hierzu ist die Auftrennung von *Information*  und der *Darstellung*, wodurch beide Blöcke wiederverwendbar sind. Selbe Darstellung mit anderen Informationen oder selbe Informationen bei unterschiedlichen Darstellungen.
 
@@ -60,13 +62,13 @@ Als Webframework verwenden wir Djano basierend auf Python. Dieses Framework wird
 
 - Vielfach erprobt und bewährt
 
-Djanog ist benannt nach dem Gitaristen Django Reinhardt.
+Django ist benannt nach dem Gitaristen Django Reinhardt.
 
 ![](djangoReinhardt.jpg)
 
-Nun klingt das sehr schön "schnell umsetzbar". Dies nächsten Stunden fühlen sich nicht wie "schnell umsetzbar" oder "einfach" an. Dies ist aber nur beim ersten mal. Siehe jetzt schon die Zusammenfassung am Ende des Tutorial an.
+Nun klingt das sehr schön "schnell umsetzbar". Dies nächsten Stunden fühlen sich nicht wie "schnell umsetzbar" oder "einfach" an. Dies ist aber nur beim ersten mal. Siehe jetzt schon die Zusammenfassung am Ende des Tutorials an.
 
-## Architektur Django
+### Architektur von Django
 
 Die Architektur von Django teilt die *Darstellung (Template)* von den *Informationen (Model)*, welche, je nach Anfrage (request) unterschiedlich zusammengebaut (*View*) werden. Das Konzept wird als MTV bezeichnet für *Model, Template, View* und ist eine lose gekoppelte Struktur, sodass einzelne Teile wiederverwendet werden können.
 
@@ -74,9 +76,9 @@ Die Architektur von Django teilt die *Darstellung (Template)* von den *Informati
 
 ### View
 
-Die View ist die Programmeinheit bei Django, welche die Webpage zusammenbaut und darstellt, deshalb view (in der Datei views.py). Hier werden auch die Anfragen (request) behandelt und die Adresse geprüft (in der Datei urls.py).
+Die View ist die Programmeinheit bei Django, welche die Webpage zusammenbaut und darstellt, deshalb als view bezeichnet. Code ist in der Datei views.py. Hier werden auch die Anfragen (request) behandelt und die Adresse geprüft. Funktion in der Datei urls.py.
 
-In der allgemeinen Literatur wird das MTV-Modell häufiger als MVC-Modell verwedet für Model, View, Control. Hier entspricht View dem DjangoTemplate und Control der Django View.
+In der allgemeinen Literatur wird das MTV-Modell häufiger als MVC-Modell verwedet für Model, View, Control. Hier entspricht View dem Django-Template und Control der Django-View.
 
 ### Template
 
@@ -90,9 +92,9 @@ Die Modellierung erfolgt über Objekte.
 
 #### Was sind Objekte?
 
-Ein Objekt ist eine Sammlung von Eigenschaften und Aktionsmöglichkeiten (Funktionen/Methoden), das anhand einer Vorlage (Klasse) erstellt wird. Das klingt erst einmal komisch, aber hier haben wir gleich ein Beispiel.
+Ein Objekt ist eine Sammlung von Eigenschaften und Aktionsmöglichkeiten (Funktionen/Methoden), das anhand einer Vorlage (Klasse) erstellt wird. Hier ein Beispiel.
 
-Wenn wir zum Beispiel ein Fahrrad modellieren wollen, erschaffen wir eine Objektvorlage `Fahrrad`, eine Art Blaupause oder Schema, nach welcher zukünftig jedes einzelne individuelle Fahrradobjekt erstellt werden kann. Die Vorlage beschreibt typische Eigenschaften von einem Fahrrad, z.B. `farbe`, `typ` (z.b. Tourenrad, Mountainbike, Rennrad) und `anzahlService` welches die gemachten Service mitzählt.
+Wenn wir ein Fahrrad modellieren wollen, erschaffen wir eine Objektvorlage `Fahrrad`, eine Art Blaupause oder Schema, nach welcher zukünftig jedes einzelne individuelle Fahrradobjekt erstellt werden kann. Die Vorlage beschreibt typische Eigenschaften von einem Fahrrad, z.B. `farbe`, `typ` (z.b. Tourenrad, Mountainbike, Rennrad) und `anzahlService` welches die gemachten Service mitzählt.
 
 Jedes Objekt der Vorlage `Fahrrad` soll natürlich auch einige Aktionsmöglichkeiten besitzen: `servicegemacht`. Dies sieht dann so aus:
 
@@ -103,7 +105,7 @@ Jedes Objekt der Vorlage `Fahrrad` soll natürlich auch einige Aktionsmöglichke
     anzahlService
     servicegemacht()
 
-In Pythonschreibt man wie folgt:
+In Python schreibt man wie folgt:
 
 ```python
 class Fahrrad:
@@ -119,7 +121,7 @@ Mit diesem Code hast du eine Vorlage definiert. Nun erzeugst du ein Objekt `velo
 
     velo = Fahrrad()
 
-Die Eigenschaften von `velo` kann du abfragen indem du `velo.anzahlService`eingibst. Wenn du nun einen Service gemacht hast, d.h. die Funktion aufgerufen hast (`velo.servicegemacht()`), so erhöht sich die `anzahlService`. Probiere es aus.
+Die Eigenschaften von `velo` kannst du abfragen indem du beispielsweise `velo.anzahlService` eingibst. Nun hast du eine Service durchgeführt, so wendest du die Funktion `velo.servicegemacht()` an. Es erhöht sich die `anzahlService`. Probiere es aus.
 
 Was jedoch nicht schön ist, dass alle Objekte welche wir nun erzeugen die gleiche Farbe und den gleichen Fahrradtyp enthalten. Dies ändern wir nun:
 
@@ -134,15 +136,15 @@ class Fahrrad:
         self.anzahlService = self.anzahlService + 1
 ```
 
-Nun können wir unterschiedliche Fahrräder von der Vorlage erzeugen. Die Frage und den Fahrradtyp definieren wir, wenn wir ein neues Objekt erzeugen.
+Nun können wir unterschiedliche Fahrräder von der Vorlage erzeugen. Die Frabe und den Fahrradtyp definieren wir, wenn wir ein neues Objekt erzeugen.
 
     velo = Fahrrad('grün', 'Tourenrad')
 
 Dabei müssen wir die Methode `_init_` nicht explizit aufrufen, sondern einfach die Werte in Klammern übergeben, wenn das Objekt erzeugt wird, basierend der Vorlage.
 
-# Einrichten der Werkstatt
+### Einrichten der Werkstatt
 
-Zum Leitsatz 3 "Für jeden Handgriff das richtige Werkzeug" richten uns zuerst eine Arbeitsumgebung, ein *virtual enviroment* ein. Dies legt ein Ordner an indem unsere Python, Django, Bokeh Programme mit definierter Verion abgelegt sind. Sollten wir auf dem PC später mal ein Update durchführen, so bleibt unser Projekt trotzdem auf dem Versionsstand auf dem wir es gebaut haben.
+Zum Leitsatz 3 "Für jeden Handgriff das richtige Werkzeug" richten wir uns zuerst eine Arbeitsumgebung ein, d.h. *virtual enviroment* . Dies legt ein Ordner an indem unsere Python, Django, Bokeh Programme mit definierter Verion abgelegt sind. Sollten wir auf dem PC später mal ein Update durchführen, so bleibt unser Projekt trotzdem auf dem Versionsstand auf dem wir es gebaut haben.
 
 Dies ist jetzt ein Mehraufwand, genau jetzt wo so viel Neues auf uns zukommt, aber es macht sich bezahlt. Wenn du später auf ein Projekt zurückgreifen möchtst haben sich die Versionen weiterentwickelt und der ürspüngliche Projekt-Code läuft nicht mehr, was nicht nur ärgerlich, sondern sehr zeitaufwändig ist. Deshalb "frieren" wir den aktuelle Stand der Entwicklungsumgebung ein. 
 
@@ -156,17 +158,18 @@ Nun starten wir die virtuelle Umgebung in unserem Projektverzeichnis mit
 
 Damit die verwendeten Versionen der auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine *neue* Textdatei `swpakete.txt`. Darin listen wir die SW-Pakete mit den Versionen:
 
-    pip
-    Django==2.2.1
-    bokeh==1.3.4 
+```text
+Django==2.2.1  
+bokeh==1.3.4  
+```
 
 Nun aktualisieren:
 
      pip install -r swpakete.txt
 
-Nun sind wir eingerichtet. Mit `pip list`  kannst du die aktuell, installierten Versionen ansehen. 
+Nun sind wir eingerichtet. Mit `pip list`  kannst du die aktuell, installierten Versionen ansehen. Mit `pip freeze > swpakete.txt` kannst du alle Pakete mit Versionen in die Textdatei schreiben lassen. 
 
-# 1. Projekt anlegen
+## 1. Projekt anlegen
 
 Die Funktionsweise von Django erklären wir indem wir ein Tourenbuch erstellen, als Webpage! Für die Webpage legen wir zuerst ein Ordner bzw. ein Projekt an. Anschliessend definieren wir, wie die Anfragen, d.h. die URLs behandelt werden und dann die Webpage als View generiert wird. Zuvor benötigen wir aber Informationen, welche als Modelle definiert werden. Hier unterstützt uns Django-Administration. Am Ende kümmern wir uns dann um die Darstellung. Wir führen 8 Schritte durch:
 
@@ -218,11 +221,9 @@ Lass uns kurz die anderen Dateien vergessen - wir werden sie nicht verändern. D
 
 Der `myvenv`-Ordner und die `swpakete.txt`-Datei kommen von der virtuellen Umgebung, nicht von Django.
 
-## Einstellungen anpassen
+### Einstellungen anpassen
 
-Wir machen nun ein paar Änderungen in `mysite/settings.py`. Öffne die Datei mit dem Code-Editor, den du schon installiert hast.
-
-Es wäre schön, wenn die richtige Zeit auf deiner Webseite eingestellt ist. Gehe zur [Zeitzonen-Liste auf Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) und kopiere die für dich geltende Zeitzone (Spalte "TZ"), z.B. `Europe/Zurich`.
+Wir machen nun ein paar Änderungen in `mysite/settings.py`. Es wäre schön, wenn die richtige Zeit auf deiner Webseite eingestellt ist. Siehe [Zeitzonen-Liste auf Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) und kopiere die für dich geltende Zeitzone, z.B. `Europe/Zurich`.
 
 Suche in `settings.py` die Zeile, die `TIME_ZONE` enthält und ändere sie ab, um deine eigene Zeitzone auszuwählen. Zum Beispiel:
 
@@ -251,7 +252,7 @@ Wenn `DEBUG` auf `True` gesetzt ist und `ALLOWED_HOSTS` leer, dann wird der "Hos
 ALLOWED_HOSTS = ['127.0.0.1', '.meineSeite.ch']
 ```
 
-## Eine Datenbank erstellen
+### Eine Datenbank erstellen
 
 Es gibt viele verschiedene Datenbank Programme, welche die Daten unserer Website verwalten können. Wir werden die Standard-Datenbanksoftware nehmen, `sqlite3`.
 
@@ -266,7 +267,7 @@ DATABASES = {
 }
 ```
 
-Um eine Datenbank für unseren Blog zu erstellen, müssen wir folgenden Befehl in der Konsole ausführen (Dazu müssen wir in dem `djangoProjekt`-Verzeichnis sein, in dem sich auch die `manage.py`-Datei befindet). Wenn alles glatt läuft, sollte das so aussehen:
+Um eine Datenbank für unser Tourenbuch zu erstellen, müssen wir folgenden Befehl in der Konsole ausführen (Dazu müssen wir in dem `djangoProjekt`-Verzeichnis sein, in dem sich auch die `manage.py`-Datei befindet). Wenn alles glatt läuft, sollte das so aussehen:
 
     (myvenv) ~/djangoProjekt$ python manage.py migrate
     Operations to perform:
@@ -290,7 +291,7 @@ Um eine Datenbank für unseren Blog zu erstellen, müssen wir folgenden Befehl i
 
 Und wir sind fertig! Zeit, unseren Webserver zu starten, um zu sehen, ob unsere Website funktioniert!
 
-## Den Webserver starten
+### Den Webserver starten
 
 Kontrolliere, dass du in dem Verzeichnis bist, in dem die `manage.py`-Datei liegt (das `djangoProjekt`-Verzeichnis). Wir starten den Webserver, indem wir in der Konsole `python manage.py runserver` ausführen:
 
@@ -300,15 +301,15 @@ Jetzt wollen wir schauen, ob unsere Website funktioniert: Öffne deinen Browser 
 
 `http://127.0.0.1:8000/`
 
-Glückwunsch! Du hast gerade deine erste Website erstellt und sie auf deinem Webserver laufen! Ist das nicht toll?
+Glückwunsch! Du hast gerade deine erste Website erstellt.
 
 ![](install_worked.png)
 
 Beachte, dass ein Terminalfenster immer nur eine Sache zur selben Zeit erledigen kann, und in dem Terminalfenster, was du vorhin geöffnet hast, läuft gerade der Webserver. Und solange der Webserver läuft und auf einkommende Anfragen wartet, akzeptiert das Terminal zwar Texteingaben, aber es wird keine neuen Befehle ausführen. 
 
-# 2. Modelle
+## 2. Modelle
 
-Wir erstellen jetzt etwas, damit wir alle Tours von unserem Tourenbuch speichern können. Dies machen wir mit `Objekten`.  Ein Objekt besteht aus Eigenschaften und Aktionsmöglichkeiten (genannt `Methoden`) .Wir müssen folgende Fragen beantworten:  Welche Eigenschaften sollte er haben? Titel, Beschreibungstext, zurückgelegte Distanz und Aufstiegs- und Abstiegshöhe, sowie die Dauer für die Tour. Weiter der Zeitpunkt wann der Eintag veröffentlicht wurde. Dies sind Objekteigenschaften. Wir nennen das Objekt `Tour`, gross geschrieben wie bei Objekten üblich.
+Wir erstellen jetzt etwas, damit wir alle Tours von unserem Tourenbuch speichern können. Dies machen wir mit `Objekten`.  Ein Objekt besteht aus Eigenschaften und Aktionsmöglichkeiten (genannt `Methoden`) .Wir müssen folgende Fragen beantworten:  Welche Eigenschaften sollte es haben? Titel, Beschreibungstext, zurückgelegte Distanz und Aufstiegs- und Abstiegshöhe, sowie die Dauer für die Tour. Weiter der Zeitpunkt wann der Eintrag veröffentlicht wurde. Dies sind Objekteigenschaften. Wir nennen das Objekt `Tour`, gross geschrieben wie bei Objekten üblich.
 
     Tour 
     -------- 
@@ -320,15 +321,15 @@ Wir erstellen jetzt etwas, damit wir alle Tours von unserem Tourenbuch speichern
     dauer
     sichtbarSeit
 
-Was für Dinge könnte man mit dem Toureneintrag machen? Es wäre schön, wenn wir eine `Methode` hätten, die den Tour zu veröffentlicht. Wir brauchen also eine `veroffentlichen`-Methode.
+Was für Dinge könnte man mit dem Toureneintrag machen? Es wäre schön, wenn wir eine `Methode` hätten, welche die Tour veröffentlicht. Wir brauchen also eine `veroffentlichen`-Methode.
 
 Da wir jetzt wissen, was wir erreichen wollen, können wir nun damit anfangen, es in Django zu formulieren!
 
-## Ein Django-Model erstellen
+### Ein Django-Model erstellen
 
 Wir erstellen ein Django-Model, eine Vorlage. Mit dieser werden zukünftig einzelne Touren-Einträge bzw. Tourobjekte erstellt.
 
-Ein "Modell" ist in Django ein Objekt einer speziellen Sorte – eines das in der `Datenbank` gespeichert wird. Eine Datenbank ist eine Sammlung von Daten. Dies ist ein Ort, an dem du Informationen zu Benutzern, deinen Toureneinträge usw. speichern wirst. Wir benutzen dafür eine SQLite-Datenbank. Das ist die Voreinstellung in Django – für uns wird das erst einmal ausreichen.
+Ein "Modell" ist in Django ein Objekt einer speziellen Sorte – eines das in der Datenbank gespeichert wird. Eine Datenbank ist eine Sammlung von Daten. Dies ist ein Ort, an dem du Informationen zu Benutzern, deinen Toureneinträge usw. speichern wirst. Wir benutzen dafür eine SQLite-Datenbank. Das ist die Voreinstellung in Django – für uns wird das erst einmal ausreichen.
 
 Du kannst dir ein Model wie eine Tabelle mit Spalten ("Feldern", englisch "fields") und Zeilen (Datensätzen) vorstellen.
 
@@ -359,7 +360,7 @@ Wie du sehen kannst, wurde ein neues `tourenbuch`-Verzeichnis erstellt, welches 
     ├───myvenv
     └───swpakete.txt
 
-Nach dem Erstellen der Applikation müssen wir Django noch sagen, dass diese auch genutzt werden soll. Das tun wir in der Datei `mysite/settings.py` -- öffne diese in deinem Code-Editor. Wir suchen den Eintrag `INSTALLED_APPS` und fügen darin die Zeile `'tourenbuch.apps.TourenbuchConfig',` (Name durch die zuvor definierte app gegeben) direkt über der schließenden Klammer `]` ein. Danach sollte es also so aussehen:
+Nach dem Erstellen der Applikation müssen wir Django noch sagen, dass diese auch genutzt werden soll. Das tun wir in der Datei `mysite/settings.py` -- öffne diese in deinem Code-Editor. Wir suchen den Eintrag `INSTALLED_APPS` und fügen darin die Zeile `'tourenbuch.apps.TourenbuchConfig',` (Name durch die zuvor definierte app gegeben). Danach sollte es also so aussehen:
 
 ```python
 INSTALLED_APPS = [
@@ -416,11 +417,11 @@ Die Zeilen, die mit `from` oder `import` beginnen, sind Anweisungen, um Sachen a
 Jetzt definieren wir die Eigenschaften, über welche wir gesprochen haben: `titel`, `text`, `distanz`, `aufsteig`, `abstieg`,  `dauer` und `sichtbarSeit`. Um dies zu tun, müssen wir den Typ jedes Felds definieren. (Ist es Text? Eine Zahl? Ein Datum?)
 
 - `models.CharField` – so definierst du ein Textfeld mit einer limitierten Anzahl von Zeichen.
-- `models.TextField` – so definierst du ein langes Textfeld ohne Grössenbeschränkung. Klingt doch perfekt für unsere Blogpostinhalte, oder?
+- `models.TextField` – so definierst du ein langes Textfeld ohne Grössenbeschränkung. 
 - `models.DateTimeField` – ein Feld für einen Zeitpunkt (ein Datum und eine Uhrzeit).
 - `models.FloatField` – definiert ein Zahlenfeld.
 
-Was ist mit `def veroffentlichen(self):`? Das ist genau die `veroffentlichen`-Methode zum Veröffentlichen unseres Toureneintrags. `def` zeigt an, dass es sich nachfolgend um eine Funktion/Methode handelt, und `veroeffentlichen` ist der Name der Methode. Du kannst den Namen der Methode auch ändern, wenn du möchtest. Die Benennungsregel ist, dass wir Kleinbuchstaben verwenden, und anstatt Leerzeichen (die in Funktionsnamen nicht vorkommend dürfen) Unterstriche. Eine Methode, die einen Durchschnittspreis berechnet, könnte zum Beispiel `calculate_average_price` genannt werden.
+Was ist mit `def veroffentlichen(self):`? Das ist genau die `veroffentlichen`-Methode zum Veröffentlichen unseres Toureneintrags. `def` zeigt an, dass es sich nachfolgend um eine Funktion/Methode handelt, und `veroeffentlichen` ist der Name der Methode. Du kannst den Namen der Methode auch ändern, wenn du möchtest. Die Benennungsregel ist, dass wir Kleinbuchstaben verwenden.
 
 Oft geben Methoden einen Wert zurück (englisch: `return`). Ein Beispiel dafür ist die Methode `__str__`. In diesem Szenario, wenn wir `__str__()` aufrufen, bekommen wir einen durch uns definierten Text (string) zurück, anstatt schwerverständlichen Code.
 
@@ -448,7 +449,7 @@ Django hat eine Migrationsdatei für uns vorbereitet, die wir nun auf unsere Dat
 
 Hurra! Unser Tour-Model ist ab sofort in unserer Datenbank gespeichert! Sehe wir es uns an...
 
-# 3. Django-Administration
+## 3. Django-Administration
 
 Wir benutzen den Django-Admin, um die soeben modellierten Tours hinzuzufügen, zu ändern oder zu löschen.
 
@@ -487,11 +488,11 @@ Mehr zum Django-Admin-Dashboard kannst du in der Django-Dokumentation erfahren: 
 
 Drei der acht Schritte haben wir. Jetzt ist wahrscheinlich ein guter Moment, um dir einen Kaffee (oder Tee) zu gönnen und neue Kraft zu tanken. Du hast dein erstes Django-Model erstellt - du hast dir eine kleine Pause verdient!
 
-# 4. URLs
+## 4. URLs
 
-Gleich werden wir unsere erste Website basteln: eine Homepage als Tour! Zuerst sollten wir uns jedoch mit Django URLs beschäftigen.
+Gleich werden wir unsere erste Website basteln: eine Homepage als Tourenbuch! Zuerst sollten wir uns jedoch mit Django URLs beschäftigen.
 
-## Was ist eine URL?
+### Was ist eine URL?
 
 Eine URL ist eine Web-Adresse. Jedes Mal, wenn du eine Website besuchst, kannst du eine URL sehen - sie ist in der Adressleiste des Browsers sichtbar. (Ja! `127.0.0.1:8000` ist eine URL! Und `http://www.pv4ing.ch` ist auch eine URL.)
 
@@ -499,7 +500,7 @@ Eine URL ist eine Web-Adresse. Jedes Mal, wenn du eine Website besuchst, kannst 
 
 Jede Seite im Internet braucht ihre eigene URL. Dadurch weiß deine Applikation, was sie dem Nutzer, der eine URL öffnet, zeigen soll. In Django verwenden wir eine sogenannte `URLconf` (URL-Konfiguration). URLconf ist eine Ansammlung von Mustern, die Django mit der empfangenen URL abgleicht, um die richtige View zu finden, das heißt, um letztlich die richtige Seite für den Nutzer anzuzeigen.
 
-## Wie funktionieren URLs in Django?
+### Wie funktionieren URLs in Django?
 
 Öffne die `mysite/urls.py`-Datei in deinem Code-Editor nach Wahl und schaue dir an, wie sie aussieht:
 
@@ -528,9 +529,9 @@ Die admin-URL, die du im vorangegangenen Kapitel bereits besucht hast, ist schon
 
 Diese Zeile bedeutet, dass Django für jede URL, die mit `admin/` beginnt, die entsprechende *View* finden wird. Hier wird mit admin-site.urls eine ganze Sammlung von admin-URLs referenziert. Dadurch müssen nicht alle in dieser kleinen Datei aufgeführt werden und sie bleibt lesbarer und übersichtlicher.
 
-## Deine erste Django-URL!
+### Deine erste Django-URL!
 
-Es wird Zeit, unsere erste URL zu erstellen! Wir wollen, dass 'http://127.0.0.1:8000/' die Homepage unseres Blogs wird und eine Liste unserer Tours zeigt.
+Es wird Zeit, unsere erste URL zu erstellen! Wir wollen, dass 'http://127.0.0.1:8000/' die Homepage unseres Tourenbuchs wird und eine Liste unserer Tours zeigt.
 
 Wir wollen auch, dass die `mysite/urls.py`-Datei sauber bleibt. Deshalb importieren wir die URLs unserer `tourenbuch`-Applikation in die `mysite/urls.py`-Hauptdatei.
 
@@ -550,7 +551,7 @@ urlpatterns = [
 
 Django wird nun alle Aufrufe von 'http://127.0.0.1:8000/' auf `tourenbuch.urls` umleiten und dort nach weiteren Anweisungen schauen.
 
-## tourenbuch.urls
+### tourenbuch.urls
 
 Erstelle eine neue leere Datei namens `urls.py` im Verzeichnis `tourenbuch` und öffne sie im Code-Editor. Alles klar! Füge folgende zwei Zeilen ein:
 
@@ -565,19 +566,17 @@ Jetzt können wir unser erstes URL-Muster hinzufügen:
 
 ```python
 urlpatterns = [
-    path('', views.tbuch, name='buch'),
+    path('', views.tbuch),
 ]
 ```
 
 Wie du siehst, fügen wir nun eine `view` mit dem Namen `tbuch` zur Root-URL hinzu. Leere Zeichenfolgen passen auf dieses Muster und der Django-URL-Resolver ignoriert den Domain-Namen (z.B. http://127.0.0.1:8000/), der im vollständigen Pfad voransteht. Dieses Muster sagt Django also, dass `views.tbuch` das gewünschte Ziel ist, wenn jemand deine Website über 'http://127.0.0.1:8000/' aufruft.
 
-Der letzte Teil `name='buch'` ist der Name der URL, der genutzt wird, um die View zu identifizieren. Er kann identisch mit dem Namen der View sein, aber es kann auch ein komplett anderer sein. Wir werden später die Namen der URLs im Projekt benutzen. Daher ist es wichtig, jede URL in der App zu benennen. Wir sollten außerdem versuchen, eindeutige und einfach zu merkende URL-Namen zu wählen.
-
-# 5. Views
+## 5. Views
 
 In der *View* schreiben wir die Logik unserer Anwendung. So werden Informationen aus dem *Model* abgefragt werden, welches du zuvor erzeugt hast und diese werden an ein *Template* weitergeben. Ein Template erzeugen wir im nächsten Kapitel. Views sind Python-Funktionen in der `views.py` Datei. Wir fügen nun also unsere *Views* zur Datei `tourenbuch/views.py` hinzu.
 
-## tourenbuch/views.py
+### tourenbuch/views.py
 
 OK, wir öffnen jetzt diese Datei in unserem Code-Editor und schauen, was darin steht:
 
@@ -602,11 +601,11 @@ Wie du siehst, definieren wir eine Funktion (`def`) mit dem Namen `tbuch`, die d
 
 Die Webseite funktioniert noch nicht da wir das Template, die Vorlage `home.html` noch nicht erstellt haben.
 
-## Dein erstes Template!
+### Dein erstes Template!
 
 Ein Template zu erstellen, heißt, eine entsprechende Datei dafür zu erstellen. Alles ist eine Datei, wie du vielleicht schon bemerkt hast.
 
-Templates werden im Verzeichnis `tourenbuch/templates/tourenbuch` gespeichert. Als Erstes erzeugen wir das Verzeichnis `templates` in deinem Blog-Verzeichnis. Im Template-Verzeichnis selbst erstellen wir ein weiteres Verzeichnis `tourenbuch`:
+Templates werden im Verzeichnis `tourenbuch/templates/tourenbuch` gespeichert. Als Erstes erzeugen wir das Verzeichnis `templates` in deinem tourenbuch-Verzeichnis. Im Template-Verzeichnis selbst erstellen wir ein weiteres Verzeichnis `tourenbuch`:
 
     tourenbuch
     └───templates
@@ -641,19 +640,19 @@ Yaaay! Bis jetzt zeigt unser Template aber immer genau die **gleichen Inhalte** 
 
 Eigentlich wollen wir richtige Tours anzeigen, die in unserer Django-Admin-Oberfläche hinzugefügt wurden – und das wollen wir als Nächstes tun.
 
-# 6. Datenbankabfrage
+## 6. Datenbankabfrage
 
 In diesem Kapitel lernst du, wie sich Django mit der Datenbank verbindet und Daten darin speichert. Lass uns loslegen!
 
-## Was ist ein QuerySet?
+### Was ist ein QuerySet?
 
 Zusammengefasst ist ein QuerySet eine Liste von Objekten eines bestimmten Models. QuerySets erlauben es dir, Daten aus der Datenbank zu lesen, zu filtern und zu sortieren.
 
 Am besten wir sehen uns das an einem Beispiel an. Versuchen wir's?
 
-## Django-Shell
+### Django-Shell
 
-Öffne deine lokale Konsole (nicht in PythonAnywhere) und tippe dieses Kommando ein:
+Öffne deine lokale Konsole und tippe dieses Kommando ein:
 
     (myvenv) ~/djangoProjekt$ python manage.py shell
 
@@ -663,7 +662,7 @@ Das sollte angezeigt werden:
 (InteractiveConsole) >>>
 ```
 
-Nun bist du in der interaktiven Konsole von Django. Die funktioniert wie der Python-Prompt, aber hat noch etwas zusätzliche Django-Magie. :) Du kannst hier auch alle Python-Befehle verwenden.
+Nun bist du in der interaktiven Konsole von Django. Du kannst hier auch alle Python-Befehle verwenden.
 
 ### Alle Objekte
 
@@ -710,7 +709,7 @@ Da ist sie, ein weitere Tour in der Liste! Du kann jetzt nach Belieben weitere T
 
 ### Objekte filtern
 
-Eine wichtige Eigenschaft von QuerySets ist, dass die Einträge gefiltert werden können. Zum Beispiel wollen wir alle Tours finden, die einen Aufstieg von mehr als 1000 m haben. Dafür nehmen wir `filter` statt `all` in `Tour.objects.all()`. In Klammern schreiben wir die Bedingung(en), die eine Tour erfüllen muss, damit ein er in unser Queryset kommt. So soll jetzt der `aufstieg` grösser als 1000 m herausgefiltert werden. In Django schreiben wir deshalb: `aufstieg__gt`. gt für greater than, `lt` für less than, `gte` für greater equal than. Weitere Filtereigenschaften sind in der Djangodoku beschrieben unter Django-QuerySet-API reference.
+Eine wichtige Eigenschaft von QuerySets ist, dass die Einträge gefiltert werden können. Zum Beispiel wollen wir alle Tours finden, die einen Aufstieg von mehr als 1000 m haben. Dafür nehmen wir `filter` statt `all` in `Tour.objects.all()`. In Klammern schreiben wir die Bedingung(en), die eine Tour erfüllen muss. So soll jetzt der `aufstieg` grösser als 1000 m herausgefiltert werden. In Django schreiben wir deshalb: `aufstieg__gt`. gt für greater than, `lt` für less than, `gte` für greater equal than. Weitere Filtereigenschaften sind in der Djangodoku beschrieben unter Django-QuerySet-API reference.
 
  Jetzt sieht unser Code folgendermaßen aus:
 
@@ -726,7 +725,7 @@ Oder vielleicht wollen wir alle Tours haben, die das Wort "zweiter" im `titel`-F
 <QuerySet [<Tour: Hoher Kasten>]>
 ```
 
-**Anmerkung:** Zwischen `titel` und `contains` befinden sich zwei Unterstriche (`__`). Das ORM von Django nutzt diese Regel, um Feldnamen ("titel") und Operationen oder Filter ("contains") voneinander zu trennen. Wenn du nur einen Unterstrich benutzt, bekommst du einen Fehler wie "FieldError: Cannot resolve keyword titel_contains".
+**Anmerkung:** Zwischen `titel` und `contains` befinden sich zwei Unterstriche (`__`). Das ORM (Object Relational Mapping) von Django nutzt diese Regel, um Feldnamen ("titel") und Operationen oder Filter ("contains") voneinander zu trennen. Wenn du nur einen Unterstrich benutzt, bekommst du einen Fehler wie "FieldError: Cannot resolve keyword titel_contains".
 
 Du kannst auch eine Liste aller bereits publizierten Tours erhalten, indem wir nach allen Tours suchen, deren `sichtbarSeit` in der Vergangenheit liegt. Zuerst timezone importieren, dann filtern:
 
@@ -736,13 +735,13 @@ Du kannst auch eine Liste aller bereits publizierten Tours erhalten, indem wir n
 <QuerySet []>
 ```
 
-Unglücklicherweise ist einige Touren noch nicht veröffentlicht. Aber das können wir ändern! Als Erstes holen wir eine Instanz des Tours, den wir veröffentlichen wollen:
+Unglücklicherweise sind einige Touren noch nicht veröffentlicht. Aber das können wir ändern! Als Erstes holen wir eine Instanz der Tour, die wir veröffentlichen wollen:
 
 ```python
 >>> wanderung = Tour.objects.get(titel="Freschen")
 ```
 
-Dann publizieren wir ihn mit unserer `veroffentlichen`-Methode:
+Dann publizieren wir sie mit unserer `veroffentlichen`-Methode:
 
 ```python
 >>> wanderung.veroffentlichen()
@@ -777,7 +776,7 @@ Dies ist wirklich mächtig und lässt dich ziemlich komplexe Abfragen schreiben.
 
 Cool! Jetzt bist du bereit für den nächsten Teil! Um die Konsole zu schließen, schreib `exit()`.
 
-# 7. Dynamische Daten in Templates
+## 7. Dynamische Daten in Templates
 
 Wir haben nun schon einige Dinge an verschiedenen Orten fertiggestellt: 
 
@@ -797,9 +796,7 @@ Wir haben nun schon einige Dinge an verschiedenen Orten fertiggestellt:
 
 Aber wie schaffen wir es nun, dass all unsere Tours wirklich im HTML-Template erscheinen? Denn wir wollen ja erreichen, dass bestimmte Inhalte (die in der Datenbank gespeicherten Models) auf schöne Weise in unserem Template anzeigt werden, richtig?
 
-Genau dafür sind die *Views* zuständig: die Verbindung zwischen den Models und den Templates. In unserer `tbuch`-View müssen wir die Models, die wir anzeigen wollen, hernehmen und diese dem Template übergeben. In einer *View* entscheiden wir, was (welches Model) wir in einem Template anzeigen werden.
-
-Okay, und wie machen wir das jetzt?
+Genau dafür sind die *Views* zuständig: die Verbindung zwischen den Models und den Templates. In unserer `tbuch`-View müssen wir die Models, die wir anzeigen wollen, hernehmen und diese dem Template übergeben. In einer *View* entscheiden wir, was wir in einem Template anzeigen werden.
 
 Wir öffnen unsere Datei `tourenbuch/views.py` in unserem Code-Editor. Bisher sieht unsere `tbuch`-*View* folgendermaßen aus:
 
@@ -843,7 +840,7 @@ In der `render`-Funktion haben wir einen Parameter `request` (also alles, was wi
 
 Das war's! Zeit, zurück zum `home.html` zu gehen und das QuerySet anzuzeigen!
 
-## Django-Templates
+### Django-Templates
 
 Django bringt dafür bereits ein paar sehr hilfreiche **Template-Tags** mit. Was sind Template-Tags?
 
@@ -877,9 +874,9 @@ Versuch das in deinem Template. Alles, was du zwischen `{% for %}`und `{% endfor
 
 Ist dir aufgefallen, dass wir diesmal eine etwas andere Notation benutzen haben (`{{ w.titel }}` oder `{{ w.text }}`)? Wir greifen auf Daten von jedem Feld unseres `Tour`-Models zu. Außerdem leitet das `|linebreaksbr` den Text der Tours durch einen Filter, um Zeilenumbrüche in Absätze umzuwandeln. Dies ist ebenfalls eine build-in Django-Filter template.
 
-# 8. Darstellung
+## 8. Darstellung
 
-Beeindruckend ist unsere Webpage bisher nicht. Wir wollten aber eine "fully responsiv" Webpage mit modernem Design. Dies bauen wir nicht selbst, sondern nehmen ein fertiges Webtemplate wie z.B. von [html5up](https://html5up.net/). Diese Templates sind bereits lauffähig und haben folgende Struktur:
+Beeindruckend ist unsere Webpage bisher nicht. Wir wollten aber eine "fully responsiv" Webpage mit modernem Design. Dies bauen wir nicht selbst, sondern nehmen ein fertiges Webtemplate wie z.B. von [html5up](https://html5up.net/). Diese Templates sind bereits lauffähig und haben meist folgende Struktur:
 
 ```
 download
@@ -890,7 +887,7 @@ download
  └── index.html
 ```
 
-Die Webpage ist wieder die html-Datei. Die Bilder zur Webpage sind im Unterordner `images` abelegt und die Darstellung, Formatierung und Effekte sind in den Dateien im Unterordner `assets`. Wir werden nicht genauer darauf eingehen, ebenso ist die Suche nach einem passenden "Template" zu beginn reizvoll, jedoch sehr zeitaufwändig, vorallem wenn man kleine Anpassungen wünscht. Wir verwenden das Template *Eventually* von html5up. Teste es aus indem du die html-Seite startest. Die Hintergrundbib\pvlder kannst du anpassen, indem du eigene Bilder mit den gleichen Dateinamen in den Ordner `images`ablegst.
+Die Webpage ist wieder die html-Datei. Die Bilder zur Webpage sind im Unterordner `images` abelegt und die Darstellung, Formatierung und Effekte sind in den Dateien im Unterordner `assets`. Wir werden nicht genauer darauf eingehen, ebenso ist die Suche nach einem passenden "Template" zu Beginn reizvoll, jedoch sehr zeitaufwändig, vorallem wenn man kleine Anpassungen wünscht. Wir verwenden das Template *Eventually* von html5up. Teste es aus indem du die html-Seite startest. Die Hintergrundbilder kannst du anpassen, indem du eigene Bilder mit den gleichen Dateinamen in den Ordner `images` ablegst.
 
 ![](temp1.png)
 
@@ -948,14 +945,14 @@ Diese ändern wir zu:
 
 ```html
 href="{% static "assets/css/main.css" %}"
-src="{% "assets/js/main.js" %}"
+src="{% static "assets/js/main.js" %}"
 ```
 
-Die Hintergrundbilder sind in der main.js-Datei definiert. Auch hier müssen wir den Pfad ändern. Django sucht unter 'static/..', d.h. wir geben den Ort unserer Bilder an durch '''static/images/bg01.jpg". Nun funktioniert's.
+Die Hintergrundbilder sind in der main.js-Datei definiert. Auch hier müssen wir den Pfad ändern. Django sucht unter 'static/..', d.h. wir geben den Ort unserer Bilder an durch 'static/images/bg01.jpg'. Nun funktioniert's.
 
-# Inderaktiv
+## Inderaktiv
 
-Nun möchten wir nichtnur Informationen senden, sondern auch Aktionen über die Webpage auslösen, d.h. Daten von der Webpage zum Server senden (=Post). Über ein Eingabefeld geben wir den Titel einer Tour ein und der Server berechnet die Gehzeit aufgrund der Distanz, dem Aufstieg und dem Abstieg und gibt einen Wert zurück, sowie ein Diagramm mit Distanz und Höhe der Tour. Diesen Code bauen wir an zwei Stellen ein. Bei der Darstellung/Template, d.h. in der `index.html`-Datei und bei der Steuerung/View, dies ist die `views.py`-Datei.
+Nun möchten wir nicht nur Informationen senden, sondern auch Aktionen über die Webpage auslösen, d.h. Daten von der Webpage zum Server senden (=Post). Über ein Eingabefeld geben wir den Titel einer Tour ein und der Server berechnet die Gehzeit aufgrund der Distanz, dem Aufstieg und dem Abstieg und gibt einen Wert zurück, sowie ein Diagramm mit Distanz und Höhe der Tour. Diesen Code bauen wir an zwei Stellen ein. Bei der Darstellung/Template, d.h. in der `index.html`-Datei und bei der Steuerung/View, dies ist die `views.py`-Datei.
 
 Zuerst die `index.html`-Datei: 
 
@@ -976,11 +973,11 @@ Zuerst die `index.html`-Datei:
 </form>    
 ```
 
-`form`erstellt ein Formular für Eingaben. Dieses Formular verwendet die Methode "post" für das senden der Daten von der Webpage zum Server. 
+`form` erstellt ein Formular für die Eingaben. Dieses Formular verwendet die Methode "post" für das senden der Daten von der Webpage zum Server. 
 
 `{% crsf_token %}` ist eine Sicherheitsfunktion von Django (Cross Site Request Forgery protection). Hier stellt Django sicher, dass die Anfrage zum Server von unserer Webpage erfolgt und nicht durch einen Webangriff.
 
-`<input type="text" name="w" value={{ dic.w }}>` HIer wird ein Eingabefeld definiert vom Typ text. Der Variabelname für den eingegebenen Inhalt des Textfeld definieren wir mit "name=w" und der Wert, welcher zu Beginn im Textfeld steht wird mit "value" definiert. HIer greifen wir über Django auf ein Python-Dictionary, welches wir naher in views.py definieren.
+`<input type="text" name="w" value={{ dic.w }}>` Hier wird ein Eingabefeld definiert vom Typ text. Der Variabelname für den eingegebenen Inhalt des Textfeld definieren wir mit "name=w" und der Wert, welcher zu Beginn im Textfeld steht wird mit "value" definiert. Hier greifen wir über Django auf ein Python-Dictionary zu, welches wir naher in views.py definieren.
 
 Dann geben wir die berechnete Gehzeit "out.dauer" und ein Diagramm "out.chart". Für beide verwenden wir Django-Filter. Der Filter "|floatformat:1" definiert dass nur eine Nachkommastelle anzeigen. Der Filter "|safe" behandelt den Variableninhalt nicht als Text, sondern direkt als HTML-Code. Mit diesem HTML-Code wird das Diagramm gezeichnet. Das Diagramm wird mit Bokeh erstellt, wofür in der index.html-Datei ein Javascript geladen wird. Dies erfolgt im Bereich <head> durch folgende Zeile:
 
@@ -988,7 +985,7 @@ Dann geben wir die berechnete Gehzeit "out.dauer" und ein Diagramm "out.chart". 
 <script type="text/javascript" src="{% static "bokeh-1.3.4.min.js" %}"></script>    
 ```
 
-In der views.py-Datei werden die Informationen erzeugt:
+Diese js-Datei hängt mit der Bokeh-Version zusammen und findet man im Internet (https://cdn.pydata.org/bokeh/release/bokeh-1.3.4.min.js). Diese Datei wir im Order `static` abgelget. In der views.py-Datei werden die Informationen erzeugt:
 
 ```python
 from django.shortcuts import render
@@ -998,7 +995,7 @@ from bokeh.plotting import figure
 from bokeh.embed import components
 
 def tbuch(request):   
-    if request.POST: # wenn button gedrückt
+    if request.method == 'POST': # wenn button gedrückt
         dic = request.POST # Werte von Page übernehmen
         print('mal sehen was das ist: ' + str(dic))
         w = dic['w']
@@ -1027,15 +1024,11 @@ def dauerberechnen(w):
     return dauer, chart    
 ```
 
-???Fragen:
+Es wird der `request` betrachtet, ob ein POST vorhanden ist. `request` ist ein Django-internes Objekt und enthält viele Informationen zur Kommunikation zwischen Browser und Server. Liegt ein POST vor, so wird der Dictionary `dic` ausgelesen. Darin liegen die Informationen, welche auf der Webpage eingegeben wurden. In unserem Fall ist des der Titel der Tour. Mit QuerySet holen wird die Tour und übergeben es der Funktion `dauerberechnen()` welche die Gehzeit berechnet.
 
-- Skalierung header passt nicht???
+Beim ersten Starten der Webpage liegt kein POST und somit keine Daten vor, weshalb wir eine `else` Anweisung erstellen, worin wir die Werte vordefinieren, wie z.B. `'dauer' : 0`. Dies ist auch der Initialwert, welcher auf der Webpage dargestellt wird.
 
-- Von wo kommt 'request'?
-
-- Wie kann markdown leserlich gedruckt werden?
-
-# Zusammenfassung
+## Zusammenfassung
 
 Was habe wir nun gemacht? Es kommt einem viel vor. Sehr viel vor. Jedoch fassen wir zusammen, so viel ist es nicht:
 
@@ -1043,7 +1036,7 @@ Was habe wir nun gemacht? Es kommt einem viel vor. Sehr viel vor. Jedoch fassen 
 
 Unsere gewünschten Funktionen sind in der Datei `views.py`. Zusätzlich statischer Text und Einbindung in die Webpage habe wir in der Datei `index.html`durchgeführt. Sehr mächtig sind die Modelle, definiert in `models.py`. 
 
-Für Django haben wir sehr wenige Zeilen Code in `settings.py` und `urls.py`durchgeführt. Mehr nicht. Dies ist was Django so erfolgreich macht: wenig code, d.h. auch wenig Fehler. Das einzig an was man sich gewöhnen muss ist die Ordnerstruktur und Dateinamen, welche Django erwartet. 
+Für Django haben wir sehr wenige Zeilen Code in `settings.py` und `urls.py`durchgeführt. Mehr nicht. Dies ist was Django so erfolgreich macht: wenig Code, d.h. auch wenig Fehler. Das einzig an was man sich gewöhnen muss ist die Ordnerstruktur und Dateinamen, welche Django erwartet. 
 
     djangoProjekt
     │ db.sqlite3
@@ -1059,30 +1052,7 @@ Für Django haben wir sehr wenige Zeilen Code in `settings.py` und `urls.py`durc
           urls.py   
 
  Hier nochmals der gesamte neue Code der wichtigen drei Dateien:
- models.py:
-
-```python
-from django.conf import settings
-from django.db import models
-from django.utils import timezone
-
-class Tour(models.Model):
-    titel = models.CharField(max_length=200)
-    text = models.TextField()
-    distanz = models.FloatField() # [km]
-    aufstieg = models.FloatField() # [m]
-    abstieg = models.FloatField() # [m]
-    dauer = models.FloatField() # [h] Stunden als Dezimalzahl
-    sichtbarSeit = models.DateTimeField(blank=True, null=True)
- 
-    def veroffentlichen(self):
-         self.sichtbarSeit = timezone.now()
-         self.save()
-    def __str__(self):
-         return self.titel
-```
-
-views.py:
+ views.py für die Python Funktionen welche wir bei der Webpage haben möchten:
 
 ```python
 from django.shortcuts import render
@@ -1121,7 +1091,7 @@ def dauerberechnen(w):
     return dauer, chart    
 ```
 
-  und Eintrag in der index.html:
+ Einträge in der index.html um die Informationen darzustellen:
 
 ```html
 {% load static %}
@@ -1142,4 +1112,28 @@ def dauerberechnen(w):
     <p> Berechnete Dauer ist {{ out.dauer|floatformat:1 }} Stunden</p>      
     <p>{{ out.chart|safe }}</p>      
 </form>    
+```
+
+models.py für die Definition des Datenmodells:
+
+```python
+from django.conf import settings
+from django.db import models
+from django.utils import timezone
+
+class Tour(models.Model):
+      titel = models.CharField(max_length=200)
+      text = models.TextField()
+      distanz = models.FloatField() # [km]
+      aufstieg = models.FloatField() # [m]
+      abstieg = models.FloatField() # [m]
+      dauer = models.FloatField() # [h] Stunden als Dezimalzahl
+      sichtbarSeit = models.DateTimeField(blank=True, null=True)
+
+      def veroffentlichen(self):
+          self.sichtbarSeit = timezone.now()
+          self.save()
+
+      def __str__(self):
+          return self.titel
 ```
