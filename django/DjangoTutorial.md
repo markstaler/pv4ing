@@ -1,4 +1,6 @@
-## Visualisierung
+# 
+
+# Visualisierung
 
 Um entscheiden oder handeln zu können sind Infomationen notwendig. Z.B. Energiemonitoring um die Effizenz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl in den Bergen zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen ebenfalls Entscheidungen zu fällen. 
 
@@ -148,6 +150,14 @@ Zum Leitsatz 3 "Für jeden Handgriff das richtige Werkzeug" richten wir uns zuer
 
 Dies ist jetzt ein Mehraufwand, genau jetzt wo so viel Neues auf uns zukommt, aber es macht sich bezahlt. Wenn du später auf ein Projekt zurückgreifen möchtst haben sich die Versionen weiterentwickelt und der ürspüngliche Projekt-Code läuft nicht mehr, was nicht nur ärgerlich, sondern sehr zeitaufwändig ist. Deshalb "frieren" wir den aktuelle Stand der Entwicklungsumgebung ein. 
 
+Zuerst stellen wir sicher das unser System auf dem aktuelle Stand ist mit:
+
+`conda update --all`
+
+conda ist der Package Manager für das Anaconda Repository. Das Anaconda Repository ist der Standard für eine Sammlung von Progammen und Bibliotheken für Data Science Tool, bestehend aus Python-Bibiotheken, aber auch R und weitere Tools. conda prüft die Versionen der einzelnen Pakete und gleicht die Versionen untereinander ab, sodass die Pakete untereinander kompatibel sind. D.h. es müssen nicht zwingend die letzt verfügbaren Versionen eines Pakets sein, sondern die aktuell kompatible Version.
+
+Sehr oft findet man auch `pip install`. Dies ist der offizielle Package Installer für Python Bibliotheken mit welchem die aktuellsten Version bezogen werden können, jedoch ohne Kompatibilitätsprüfung im vorhanden System.
+
 Wir erstellen zuerst unser Projektverzeichnis `djangoProjekt`. In diesem Verzeichnis erstellen wir eine virtuelle Umgebung namens `myvenv`. Im Anaconda-Paket ist die notwendige Software 'venv 'enthalten. Wir starten Python und weisen dieses an (mit -m) das die Software 'venv' ausgeführt werden soll:
 
     python -m venv myvenv
@@ -156,16 +166,18 @@ Nun starten wir die virtuelle Umgebung in unserem Projektverzeichnis mit
 
     D:\djangoProjekt> myvenv\Scripts\activate
 
-Damit die verwendeten Versionen der auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine *neue* Textdatei `swpakete.txt`. Darin listen wir die SW-Pakete mit den Versionen:
+Damit die verwendeten Versionen der auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine *neue* Textdatei `swpakete.txt`. Darin listen wir die SW-Pakete und geben die Version an, welche gewünscht ist mit '=='. Die aktuelle Version sehen wir mit `conda list`.  mit den Versionen:
 
 ```text
-Django==2.2.1  
+Django==2.2.5  
 bokeh==1.3.4  
 ```
 
-Nun aktualisieren:
+Nun installieren wir die Pakete mit `pip install` durch die Vorgabe aus einer Datei (-r) in unserer virtuellen Umgebung:
 
-     pip install -r swpakete.txt
+    pip install -r swpakete.txt
+
+Es kann ein Hinweis kommen, dass pip selbst aktualisiert werden soll. Dies müssen wir nicht ausführen. pip als offizielle Python Package Manager sucht die aktuellsten Versionen. Wir verwenden aber die aktuell kompatiblen Versionen, welches durch conda sichergestellt wird. Deshalb haben wir auf vorgängig die Version mit `conda list` ermittelt.
 
 Nun sind wir eingerichtet. Mit `pip list`  kannst du die aktuell, installierten Versionen ansehen. Mit `pip freeze > swpakete.txt` kannst du alle Pakete mit Versionen in die Textdatei schreiben lassen. 
 
@@ -197,7 +209,7 @@ Die Namen einiger Dateien und Verzeichnisse sind sehr wichtig für Django, da si
 
     (myvenv) ~/djangoProjekt> django-admin startproject mysite .
 
-Der Punkt `.` ist sehr wichtig, weil er dem Skript mitteilt, dass Django in deinem aktuellen Verzeichnis installiert werden soll. (Der Punkt `.` ist eine Schnellreferenz dafür.)
+Der Punkt `.` ist sehr wichtig, weil er dem Skript mitteilt, dass Djangoprojekt in deinem aktuellen Verzeichnis installiert werden soll. (Der Punkt `.` ist eine Schnellreferenz dafür.)
 
 `django-admin.py` ist ein Skript, welches Verzeichnisse und Dateien für dich erstellt. Du solltest jetzt eine Verzeichnisstruktur haben, die folgendermaßen aussieht:
 
@@ -267,29 +279,11 @@ DATABASES = {
 }
 ```
 
-Um eine Datenbank für unser Tourenbuch zu erstellen, müssen wir folgenden Befehl in der Konsole ausführen (Dazu müssen wir in dem `djangoProjekt`-Verzeichnis sein, in dem sich auch die `manage.py`-Datei befindet). Wenn alles glatt läuft, sollte das so aussehen:
+Um eine Datenbank für unser Tourenbuch zu erstellen, müssen wir folgenden Befehl in der Konsole ausführen (Dazu müssen wir in dem `djangoProjekt`-Verzeichnis sein, in dem sich auch die `manage.py`-Datei befindet). 
 
-    (myvenv) ~/djangoProjekt$ python manage.py migrate
-    Operations to perform:
-      Apply all migrations: auth, admin, contenttypes, sessions
-    Running migrations:
-      Rendering model states... DONE 
-      Applying contenttypes.0001_initial... OK
-      Applying auth.0001_initial... OK
-      Applying admin.0001_initial... OK
-      Applying admin.0002_logentry_remove_auto_add... OK 
-      Applying contenttypes.0002_remove_content_type_name... OK 
-      Applying auth.0002_alter_permission_name_max_length... OK 
-      Applying auth.0003_alter_user_email_max_length... OK 
-      Applying auth.0004_alter_user_username_opts... OK  
-      Applying auth.0005_alter_user_last_login_null... OK 
-      Applying auth.0006_require_contenttypes_0002... OK
-      Applying auth.0007_alter_validators_add_error_messages... OK
-      Applying auth.0008_alter_user_username_max_length... OK
-      Applying auth.0009_alter_user_last_name_max_length... OK
-      Applying sessions.0001_initial... OK
+    python manage.py migrate
 
-Und wir sind fertig! Zeit, unseren Webserver zu starten, um zu sehen, ob unsere Website funktioniert!
+Auf der Konsole wird nun angezeigt, was Django nun in der Datenbank alles anlegt.  Zeit, unseren Webserver zu starten, um zu sehen, ob unsere Website funktioniert!
 
 ### Den Webserver starten
 
@@ -381,7 +375,7 @@ Alle `Models` unserer Applikation werden in der `tourenbuch/models.py`-Datei def
 Öffnen wir also `tourenbuch/models.py` im Code-Editor, löschen alles darin und schreiben Code wie diesen:
 
 ```python
-from django.conf import settings
+
 from django.db import models
 from django.utils import timezone
 
