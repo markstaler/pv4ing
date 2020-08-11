@@ -186,7 +186,7 @@ urlpatterns = [
 
 #### views.py
 
-In der *Views* schreiben wir die Logik unserer Anwendung. Wir fügen eine neue Datei  `energieDigital/views.py` hinzu. Hier schreiben wir den Code zur Darstellung einer Sinusfunktion:
+In der *Views* schreiben wir die Logik unserer Anwendung und erzeugen die Darstellung mit dem Diagramm. Wir fügen eine neue Datei  `energieDigital/views.py` hinzu. Hier schreiben wir den Code zur Darstellung einer Sinusfunktion als eigene Funktion 'makeChart(nCycle)' in welche der Sinus berechnet wird und das Bokeh-Diagramm erzeugt wird:
 
 ```python
 from django.shortcuts import render
@@ -202,18 +202,22 @@ def chart(request):
         print('mal sehen was das ist: ' + str(dic))
         nCycle = int(dic['nCycle'])
     else:
-        nCycle = int(1)
+        nCycle = int(1)   
 
+    chart = makeChart(nCycle)        
+    return render(request, 'home.html', {'nCycle': nCycle, 'chart': chart})
+
+
+def makeChart(nCycle):
     x = np.linspace(0,100,100)
     y = np.sin(x/100*2*3.1415*nCycle)    
-    p1 = figure(plot_width=400, plot_height=200)
+    p1 = figure(plot_width=460, plot_height=200)
     p1.line(x, y)
-    p1.toolbar.logo = None
+    p1.toolbar.logo = None    
 
     script, div = components(p1)
     chart = script + div
-
-    return render(request, 'home.html', {'nCycle': nCycle, 'chart': chart})
+    return chart
 ```
 
 ### Templates
@@ -381,13 +385,13 @@ Es soll unter Web unten "HTTP to HTTPS" aktivieren werden.
 
 ### login
 
-Der Inhalt der Webseite kann zusätzlich durch ein login ergänzt werden. Hierfür muss zuerst ein superuser angelegt werden. Über dieser kann anschliessend bei Webside user generiert werden. Anlegen des Superuser:
+Der Inhalt der Webseite kann zusätzlich durch ein login ergänzt werden. Hierfür muss zuerst ein superuser angelegt werden. Über dieser kann anschliessend bei Webpage user generiert werden. Anlegen des Superuser:
 
 `python3.7 manage.py createsuperuser`
 
 Anschliessend wird im Browser die Django administration geöffnet:
 
-`markstaler.pythonanywhere/admin` und eingeloggt , als Superuser. Dort kann ein user angelegt werden.
+`markstaler.pythonanywhere/admin` und eingeloggen, als Superuser, anschliessend kann ein user angelegt werden.
 
 Für den login ergänzen wir die Datei `settings.py` durch folgende Zeile:
 

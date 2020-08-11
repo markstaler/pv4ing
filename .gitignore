@@ -1,0 +1,6 @@
+.env
+*.bat
+*.pyc
+__pycache__
+db.sqlite3
+erzeugeProfilinklVerbrauch.py
