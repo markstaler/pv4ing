@@ -1269,7 +1269,7 @@ urlpatterns <span class="token operator">=</span> <span class="token punctuation
     <span class="token punctuation">]</span>
 </code></pre>
 <h4 class="atx" id="viewspy">views.py</h4>
-<p>In der <em>Views</em> schreiben wir die Logik unserer Anwendung. Wir fügen eine neue Datei  <code>energieDigital/views.py</code> hinzu. Hier schreiben wir den Code zur Darstellung einer Sinusfunktion:</p>
+<p>In der <em>Views</em> schreiben wir die Logik unserer Anwendung und erzeugen die Darstellung mit dem Diagramm. Wir fügen eine neue Datei  <code>energieDigital/views.py</code> hinzu. Hier schreiben wir den Code zur Darstellung einer Sinusfunktion als eigene Funktion 'makeChart(nCycle)' in welche der Sinus berechnet wird und das Bokeh-Diagramm erzeugt wird:</p>
 <pre><code class="fenced-code-block language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>shortcuts <span class="token keyword">import</span> render
 
 <span class="token keyword">from</span> bokeh<span class="token punctuation">.</span>plotting <span class="token keyword">import</span> figure
@@ -1283,18 +1283,22 @@ urlpatterns <span class="token operator">=</span> <span class="token punctuation
         <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'mal sehen was das ist: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>dic<span class="token punctuation">)</span><span class="token punctuation">)</span>
         nCycle <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>dic<span class="token punctuation">[</span><span class="token string">'nCycle'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
     <span class="token keyword">else</span><span class="token punctuation">:</span>
-        nCycle <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        nCycle <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>   
 
+    chart <span class="token operator">=</span> makeChart<span class="token punctuation">(</span>nCycle<span class="token punctuation">)</span>        
+    <span class="token keyword">return</span> render<span class="token punctuation">(</span>request<span class="token punctuation">,</span> <span class="token string">'home.html'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token string">'nCycle'</span><span class="token punctuation">:</span> nCycle<span class="token punctuation">,</span> <span class="token string">'chart'</span><span class="token punctuation">:</span> chart<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">makeChart</span><span class="token punctuation">(</span>nCycle<span class="token punctuation">)</span><span class="token punctuation">:</span>
     x <span class="token operator">=</span> np<span class="token punctuation">.</span>linspace<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span>
     y <span class="token operator">=</span> np<span class="token punctuation">.</span>sin<span class="token punctuation">(</span>x<span class="token operator">/</span><span class="token number">100</span><span class="token operator">*</span><span class="token number">2</span><span class="token operator">*</span><span class="token number">3.1415</span><span class="token operator">*</span>nCycle<span class="token punctuation">)</span>    
-    p1 <span class="token operator">=</span> figure<span class="token punctuation">(</span>plot_width<span class="token operator">=</span><span class="token number">400</span><span class="token punctuation">,</span> plot_height<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">)</span>
+    p1 <span class="token operator">=</span> figure<span class="token punctuation">(</span>plot_width<span class="token operator">=</span><span class="token number">460</span><span class="token punctuation">,</span> plot_height<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">)</span>
     p1<span class="token punctuation">.</span>line<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
-    p1<span class="token punctuation">.</span>toolbar<span class="token punctuation">.</span>logo <span class="token operator">=</span> <span class="token boolean">None</span>
+    p1<span class="token punctuation">.</span>toolbar<span class="token punctuation">.</span>logo <span class="token operator">=</span> <span class="token boolean">None</span>    
 
     script<span class="token punctuation">,</span> div <span class="token operator">=</span> components<span class="token punctuation">(</span>p1<span class="token punctuation">)</span>
     chart <span class="token operator">=</span> script <span class="token operator">+</span> div
-
-    <span class="token keyword">return</span> render<span class="token punctuation">(</span>request<span class="token punctuation">,</span> <span class="token string">'home.html'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token string">'nCycle'</span><span class="token punctuation">:</span> nCycle<span class="token punctuation">,</span> <span class="token string">'chart'</span><span class="token punctuation">:</span> chart<span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> chart
 </code></pre>
 <h3 class="atx" id="templates">Templates</h3>
 <p>Wenn nicht genauer angegeben sucht Django das html-Template im Ordner <code>templates</code>. D.h. wir legen diesen Ordner an.</p>
@@ -1418,10 +1422,10 @@ application <span class="token operator">=</span> get_wsgi_application<span clas
 <p>Bei pythonanywhere wird der Produktionsserver durch den Anbieter betrieben und Django liegt dahinter. </p>
 <p>Es soll unter Web unten "HTTP to HTTPS" aktivieren werden.</p>
 <h3 class="atx" id="login">login</h3>
-<p>Der Inhalt der Webseite kann zusätzlich durch ein login ergänzt werden. Hierfür muss zuerst ein superuser angelegt werden. Über dieser kann anschliessend bei Webside user generiert werden. Anlegen des Superuser:</p>
+<p>Der Inhalt der Webseite kann zusätzlich durch ein login ergänzt werden. Hierfür muss zuerst ein superuser angelegt werden. Über dieser kann anschliessend bei Webpage user generiert werden. Anlegen des Superuser:</p>
 <p><code>python3.7 manage.py createsuperuser</code></p>
 <p>Anschliessend wird im Browser die Django administration geöffnet:</p>
-<p><code>markstaler.pythonanywhere/admin</code> und eingeloggt , als Superuser. Dort kann ein user angelegt werden.</p>
+<p><code>markstaler.pythonanywhere/admin</code> und eingeloggen, als Superuser, anschliessend kann ein user angelegt werden.</p>
 <p>Für den login ergänzen wir die Datei <code>settings.py</code> durch folgende Zeile:</p>
 <pre><code class="fenced-code-block language-python">LOGIN_REDIRECT_URL <span class="token operator">=</span> <span class="token string">'/'</span>
 </code></pre>
