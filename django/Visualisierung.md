@@ -106,7 +106,7 @@ Damit die verwendeten Versionen der auf dem gewünschten Stand sind und dieser d
 
 ```text
 bokeh==2.0.0
-django==3.0.3
+django==3.0.4
 ```
 
 Nun aktualisieren:
