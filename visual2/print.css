@@ -1,0 +1,37 @@
+/* @group Hide */
+
+hr,
+.uplink,
+#nav,
+#right,
+#adsLeft,
+#adsRight {
+	display: none;
+}
+
+/* @end */
+
+/* @group Print */
+
+#sidebar * {
+	font-size: 0.9em;
+	text-align: left;
+}
+#sidebar h1 {
+	font-size: 100%;
+	font-weight: bold;
+}
+
+/* @end */
+
+/* @group Blueprint */
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1em; line-height:1.5; }
+h4 { font-size: 1em; line-height:1; font-weight:bold; }
+h5 { font-size: 1em; font-weight:bold; }
+h6 { font-size: 1em; }
+
+/* @end */
+
