@@ -105,8 +105,8 @@ Nun starten wir die virtuelle Umgebung in unserem Projektverzeichnis mit
 Damit die verwendeten Versionen der auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine *neue* Textdatei `requirements.txt`. Darin listen wir die SW-Pakete mit den Versionen:
 
 ```text
-bokeh==2.0.0
-django==3.0.4
+bokeh~=2.0.0
+django~=3.0.4
 ```
 
 Nun aktualisieren:
