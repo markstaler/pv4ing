@@ -1,4 +1,4 @@
-# Visualisierung
+# Visualisierung 1
 
 Um entscheiden oder handeln zu können sind Infomationen notwendig. Z.B. Energiemonitoring um die Effizenz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen ebenfalls Entscheidungen zu fällen. Im Ingenieurwesen ist dies in der Regel ein Diagramm. In den beiden Tutorial auf [www.pv4ing.ch](https://www.pv4ing.ch) sind die für uns relevanten Diagramme dargestellt. Zusätzlich sollte bei einer Visualisierung noch ein erklärender Text hinzu, nicht zu viel aber ein bisschen macht Sinn.
 
@@ -16,13 +16,13 @@ Das Bauen einer Website kann zu einer sehr aufwändigen Sache werden, vorallem w
 
 1. Konzentration auf das Wesentliche: Was ist die Kernaussage der Webpage? Desgin wird "zugekauft"
 
-2. Effektiv
+2. Effektiv und wirksam
 
 3. Für jeden Handgriff das richtige Werkzeug
 
 Der erste Punkt hat nicht mit programmieren oder Webpage zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizziern.
 
-Bei zweiten Punkt "Effektiv" geht es daraum in kurzer Zeit eine Webpage zu erstellen. dies heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
+Bei zweiten Punkt "Effektiv und wirksam" geht es daraum in kurzer Zeit eine Webpage zu erstellen mit Wirkung. Wirkung kommt durch Punkt 1, Konzentration auf das Wesentliche. Effektiv heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
 
 1. Beautiful is better than ugly. 
 

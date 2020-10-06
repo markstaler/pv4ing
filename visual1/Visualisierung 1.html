@@ -1044,7 +1044,7 @@ pre[class*="language-"] {
 	color: #999;
 }
 
-.namespace {
+.token.namespace {
 	opacity: .7;
 }
 
@@ -1111,14 +1111,45 @@ pre[class*="language-"] {
   </style>
   <style>
     .markdown-body {
+      font-family: -apple-system,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
       box-sizing: border-box;
       min-width: 200px;
       max-width: 980px;
       margin: 0 auto;
       padding: 45px;
     }
+
+    @media not print {
+      .markdown-body {
+        padding: 45px;
+      }
+
+      @media (max-width: 767px) {
+        .markdown-body {
+          padding: 15px;
+        }
+      }
+    }
+
+    .hf-container {
+      color: #24292e;
+      line-height: 1.3;
+    }
+
+    .markdown-body .highlight pre,
+    .markdown-body pre {
+      white-space: pre-wrap;
+    }
     .markdown-body table {
       display: table;
+    }
+    .markdown-body img[data-align="center"] {
+      display: block;
+      margin: 0 auto;
+    }
+    .markdown-body img[data-align="right"] {
+      display: block;
+      margin: 0 0 0 auto;
     }
     .markdown-body li.task-list-item {
       list-style-type: none;
@@ -1130,17 +1161,47 @@ pre[class*="language-"] {
       margin-top: 0;
       display: inline-block;
     }
-    @media (max-width: 767px) {
-      .markdown-body {
-        padding: 15px;
-      }
+    .markdown-body ol ol,
+    .markdown-body ul ol {
+      list-style-type: decimal;
+    }
+    .markdown-body ol ol ol,
+    .markdown-body ol ul ol,
+    .markdown-body ul ol ol,
+    .markdown-body ul ul ol {
+      list-style-type: decimal;
     }
   </style>
-  <style></style>
+  <style>.markdown-body a.footnote-ref {
+  text-decoration: none;
+}
+
+.footnotes {
+  font-size: .85em;
+  opacity: .8;
+}
+
+.footnotes li[role="doc-endnote"] {
+  position: relative;
+}
+
+.footnotes .footnote-back {
+  position: absolute;
+  font-family: initial;
+  top: .2em;
+  right: 1em;
+  text-decoration: none;
+}
+
+.inline-math.invalid,
+.multiple-math.invalid {
+  color: rgb(255, 105, 105);
+}
+</style>
+  <style>.markdown-body{}pre.front-matter{display:none!important;}</style>
 </head>
 <body>
-  <article class="markdown-body">
-  <h1 class="atx" id="visualisierung">Visualisierung</h1>
+  <article class="markdown-body"><h1 class="atx" id="visualisierung-1">Visualisierung 1</h1>
 <p>Um entscheiden oder handeln zu können sind Infomationen notwendig. Z.B. Energiemonitoring um die Effizenz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen ebenfalls Entscheidungen zu fällen. Im Ingenieurwesen ist dies in der Regel ein Diagramm. In den beiden Tutorial auf <a href="https://www.pv4ing.ch">www.pv4ing.ch</a> sind die für uns relevanten Diagramme dargestellt. Zusätzlich sollte bei einer Visualisierung noch ein erklärender Text hinzu, nicht zu viel aber ein bisschen macht Sinn.</p>
 <p>Denken wir an Energiemonitoring, so sollte die Visualisierung günstig sein, d.h. kein zusätzlicher Bildschirm und PC um den Zählerstand darzustellen. Das günstigste Display ist dies welches wir bereits dabei haben, das Mobil oder ein PC.</p>
 <p>Deshalb bauen wir nicht ein eigenes GUI (Graphical User Interface), sondern erstellen eine Webpage. Auf der Messeinheit läuft ein Server, welcher die Information als Webpage darstellt und durch ein Mobil oder PC "angesurft" wird, welches die Informationen als Webpage über einen Browser darstellt.</p>
@@ -1151,13 +1212,13 @@ pre[class*="language-"] {
 <ol>
 <li><p>Konzentration auf das Wesentliche: Was ist die Kernaussage der Webpage? Desgin wird "zugekauft"</p>
 </li>
-<li><p>Effektiv</p>
+<li><p>Effektiv und wirksam</p>
 </li>
 <li><p>Für jeden Handgriff das richtige Werkzeug</p>
 </li>
 </ol>
 <p>Der erste Punkt hat nicht mit programmieren oder Webpage zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizziern.</p>
-<p>Bei zweiten Punkt "Effektiv" geht es daraum in kurzer Zeit eine Webpage zu erstellen. dies heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":</p>
+<p>Bei zweiten Punkt "Effektiv und wirksam" geht es daraum in kurzer Zeit eine Webpage zu erstellen mit Wirkung. Wirkung kommt durch Punkt 1, Konzentration auf das Wesentliche. Effektiv heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":</p>
 <ol>
 <li><p>Beautiful is better than ugly. </p>
 </li>
@@ -1207,18 +1268,14 @@ pre[class*="language-"] {
 <p>Dies legt ein Ordner an indem unsere Python, Django, Bokeh Programme mit definierter Verion abgelegt sind. Sollten wir auf dem PC später mal ein Update durchführen, so bleibt unser Projekt trotzdem auf dem Versionsstand auf dem wir es gebaut haben.</p>
 <p>Dies ist jetzt ein Mehraufwand, genau jetzt wo so viel Neues auf uns zukommt, aber es macht sich bezahlt. Wenn du später auf ein Projekt zurückgreifen möchtst haben sich die Versionen weiterentwickelt und der ürspüngliche Projekt-Code läuft nicht mehr, was nicht nur ärgerlich, sondern sehr zeitaufwändig ist. Deshalb "frieren" wir den aktuelle Stand der Entwicklungsumgebung ein. </p>
 <p>Wir erstellen zuerst unser Projektverzeichnis <code>djangoProjekt</code>. In diesem Verzeichnis erstellen wir eine virtuelle Umgebung namens <code>.env</code>. Im Anaconda-Paket ist die notwendige Software 'venv 'enthalten. Wir starten Python und weisen dieses an (mit -m) das die Software 'venv' ausgeführt werden soll:</p>
-<pre><code class="indented-code-block">python -m venv .env
-</code></pre>
+<pre><code class="indented-code-block">python -m venv .env</code></pre>
 <p>Nun starten wir die virtuelle Umgebung in unserem Projektverzeichnis mit </p>
-<pre><code class="indented-code-block">D:\djangoProjekt&gt; .env\Scripts\activate
-</code></pre>
+<pre><code class="indented-code-block">D:\djangoProjekt&gt; .env\Scripts\activate</code></pre>
 <p>Damit die verwendeten Versionen der auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine <em>neue</em> Textdatei <code>requirements.txt</code>. Darin listen wir die SW-Pakete mit den Versionen:</p>
-<pre><code class="fenced-code-block language-text">bokeh==2.0.0
-django==3.0.4
-</code></pre>
+<pre><code class="fenced-code-block language-text">bokeh~=2.0.0
+django~=3.0.4</code></pre>
 <p>Nun aktualisieren:</p>
-<pre><code class="indented-code-block"> pip install -r requirements.txt
-</code></pre>
+<pre><code class="indented-code-block"> pip install -r requirements.txt</code></pre>
 <p>Nun sind wir eingerichtet. Mit <code>pip list</code>  kannst du die aktuell, installierten Versionen ansehen. </p>
 <h3 class="atx" id="github">GitHub</h3>
 <p>Als zweiten Schritt installieren wir GitHub ein Tool zur Code-Ablage auf einem Server. <a href="https://rogerdudler.github.io/git-guide/index.de.html">Info zu Git</a>. Dies ermöglicht das mehrere an einem Code arbeiten können und die Änderungen mit geloggt werden. Ein weiterer Vorteil ist, dass wir lokal unser Django-Projekt erstellen können und später über GitHub den Code auf einen Produktionsserver ins Internet bringen, zur Veröffentlichung (deployment). GitHub Desktop findet man unter <a href="https://git-scm.com/">https://git-scm.com/</a>. Lege ein Username/Passwort an. Wir öffnen GitHub und legen ein neues Repository an mit dem Namen <strong>djangoProjekt</strong> als "Local path" geben wir den existierenden Ordner "D:\djangoProjekt" an. Das ist alles.
@@ -1228,21 +1285,18 @@ Nun haben ein Repository angelegt, welches wir später mit dem Server synchronis
 *.bat
 *.pyc
 __pycache__
-db.sqlite3
-</code></pre>
+db.sqlite3</code></pre>
 <p>Das wars. Nun bauen wir die erste Seite. Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von <a href="https://djangogirls.org">DjangoGirls</a> auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages bietet DjangoGirls den flüssigsten Einstieg in Django.</p>
 <h1 class="atx" id="1-lokales-django-projekt-erstellen">1. Lokales Django-Projekt erstellen</h1>
 <p>Erstellen eines Django-Projekt  <code>energieDigital</code> .</p>
-<pre><code class="indented-code-block">(.env) &gt; django-admin startproject energieDigital .
-</code></pre>
+<pre><code class="indented-code-block">(.env) &gt; django-admin startproject energieDigital .</code></pre>
 <p>Der Punkt <code>.</code> ist sehr wichtig, weil er dem Skript mitteilt, dass Django in deinem aktuellen Verzeichnis installiert werden soll. (Der Punkt <code>.</code> ist eine Schnellreferenz dafür.)</p>
 <h3 class="atx" id="settingspy">settings.py</h3>
 <p>Wir machen nun ein paar Änderungen in <code>settings.py</code>. </p>
 <pre><code class="fenced-code-block language-python">ALLOWED_HOSTS <span class="token operator">=</span> <span class="token punctuation">[</span>
     <span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span>
     <span class="token string">'markstaler.pythonanywhere.com'</span><span class="token punctuation">,</span>
-    <span class="token punctuation">]</span>
-</code></pre>
+    <span class="token punctuation">]</span></code></pre>
 <p>Wir werden später die Seite unter pythonanywhere.com veröffentlichen. Du kannst dann deinen eigenen Namen davorstellen, anstatt "markstaler".</p>
 <pre><code class="fenced-code-block language-python">INSTALLED_APPS <span class="token operator">=</span> <span class="token punctuation">[</span>
 <span class="token string">'django.contrib.admin'</span><span class="token punctuation">,</span>
@@ -1252,11 +1306,9 @@ db.sqlite3
 <span class="token string">'django.contrib.messages'</span><span class="token punctuation">,</span> 
 <span class="token string">'django.contrib.staticfiles'</span><span class="token punctuation">,</span>
 <span class="token string">'energieDigital'</span><span class="token punctuation">,</span>
-<span class="token punctuation">]</span>
-</code></pre>
+<span class="token punctuation">]</span></code></pre>
 <pre><code class="fenced-code-block language-python">STATIC_URL <span class="token operator">=</span> <span class="token string">'/static/'</span>
-STATIC_ROOT <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>BASE_DIR<span class="token punctuation">,</span> <span class="token string">'energieDigital/static'</span><span class="token punctuation">)</span>
-</code></pre>
+STATIC_ROOT <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>BASE_DIR<span class="token punctuation">,</span> <span class="token string">'energieDigital/static'</span><span class="token punctuation">)</span></code></pre>
 <h3 class="atx" id="urlspy">urls.py</h3>
 <p>Öffne die <code>energieDigital/urls.py</code>-Datei und passe den Code an, wie folgt:</p>
 <pre><code class="fenced-code-block language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>contrib <span class="token keyword">import</span> admin
@@ -1266,8 +1318,7 @@ STATIC_ROOT <span class="token operator">=</span> os<span class="token punctuati
 urlpatterns <span class="token operator">=</span> <span class="token punctuation">[</span>
     path<span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">,</span> chart<span class="token punctuation">)</span><span class="token punctuation">,</span>
     path<span class="token punctuation">(</span><span class="token string">'admin/'</span><span class="token punctuation">,</span> admin<span class="token punctuation">.</span>site<span class="token punctuation">.</span>urls<span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token punctuation">]</span>
-</code></pre>
+    <span class="token punctuation">]</span></code></pre>
 <h4 class="atx" id="viewspy">views.py</h4>
 <p>In der <em>Views</em> schreiben wir die Logik unserer Anwendung und erzeugen die Darstellung mit dem Diagramm. Wir fügen eine neue Datei  <code>energieDigital/views.py</code> hinzu. Hier schreiben wir den Code zur Darstellung einer Sinusfunktion als eigene Funktion 'makeChart(nCycle)' in welche der Sinus berechnet wird und das Bokeh-Diagramm erzeugt wird:</p>
 <pre><code class="fenced-code-block language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>shortcuts <span class="token keyword">import</span> render
@@ -1298,13 +1349,11 @@ urlpatterns <span class="token operator">=</span> <span class="token punctuation
 
     script<span class="token punctuation">,</span> div <span class="token operator">=</span> components<span class="token punctuation">(</span>p1<span class="token punctuation">)</span>
     chart <span class="token operator">=</span> script <span class="token operator">+</span> div
-    <span class="token keyword">return</span> chart
-</code></pre>
+    <span class="token keyword">return</span> chart</code></pre>
 <h3 class="atx" id="templates">Templates</h3>
 <p>Wenn nicht genauer angegeben sucht Django das html-Template im Ordner <code>templates</code>. D.h. wir legen diesen Ordner an.</p>
 <pre><code class="indented-code-block">energieDigital
-└───templates
-</code></pre>
+└───templates</code></pre>
 <p>Als nächstes erstellen wir eine Datei <code>home.html</code>:</p>
 <pre><code class="fenced-code-block language-html"><span class="token doctype">&lt;!DOCTYPE HTML&gt;</span>
 <span class="token comment">&lt;!-- Eventually by HTML5 UP --&gt;</span>
@@ -1334,28 +1383,24 @@ urlpatterns <span class="token operator">=</span> <span class="token punctuation
         <span class="token comment">&lt;!-- Scripts --&gt;</span>
             &lt;script src="{% static "assets/js/main.js" %}"&gt;<span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
-</code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span></code></pre>
 <p>Dies ist ein reduziertes Template von <a href="http://www.html5up.com/eventually">www.html5up.com/eventually</a>. Dieses referenziert auf css-Datein und js-Dateien. Diese werden im Ordner <code>static</code> abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "Eventually" und speichere die beiden Ordner <code>immages</code>und <code>assets</code> in einem neu angelegten Ordner <code>static</code>. Dies ist der Ordner bei dem Django css-Dateien, Bilder und weitere Dateien zur Darstellung sucht. Die Ordnersturktur sieht nun wir folgt aus:</p>
 <pre><code class="fenced-code-block">energieDigital 
    ├── static 
    │     ├── images
    │     └── assets
-   └── templates
-</code></pre>
+   └── templates</code></pre>
 <p>Öffne die Dateil <code>static/assets/js/main.js</code> mit dem Editor. Dort siehst du den Verweis auf die Hintergrundbilder <code>'images/bg01.jpg': 'center',</code>. Passe den Verweis an, wie folgt, da Django vom Projektverzeichnis ausgeht und unter <code>static</code> suchen soll:</p>
-<pre><code class="fenced-code-block language-js">images<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-    <span class="token string">'static/images/bg01.jpg'</span><span class="token punctuation">:</span> <span class="token string">'center'</span><span class="token punctuation">,</span>
-    <span class="token string">'static/images/bg02.jpg'</span><span class="token punctuation">:</span> <span class="token string">'center'</span><span class="token punctuation">,</span>
-    <span class="token string">'static/images/bg03.jpg'</span><span class="token punctuation">:</span> <span class="token string">'center'</span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span>
-</code></pre>
+<pre><code class="fenced-code-block language-js">images<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token string">'static/images/bg01.jpg'</span><span class="token operator">:</span> <span class="token string">'center'</span><span class="token punctuation">,</span>
+    <span class="token string">'static/images/bg02.jpg'</span><span class="token operator">:</span> <span class="token string">'center'</span><span class="token punctuation">,</span>
+    <span class="token string">'static/images/bg03.jpg'</span><span class="token operator">:</span> <span class="token string">'center'</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span></code></pre>
 <p>Speichere im images-Ordner deine gewünschten Hintergundbilder mit obigen Namen. </p>
 <p>Nun haben wir in views.py ein bokeh-Diagramm er stellt als html-Code. Zur Darstellung braucht es noch die js-Datein von Bokeh im <code>static</code>Ordner. Diese ist im Internet unter <a href="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.0.min.js">https://cdn.bokeh.org/bokeh/release/bokeh-2.0.0.min.js</a> wobei die Versionsnummer zu beachten ist (oben bei der pip-Installation definiert in der requirements.txt Datei). Diese Seite im Bowser aufrufen und rechte Maustaste "speichern unter" um so die Datei im Ordner <code>static</code> abspeichern.</p>
 <p>Um den Developmentserver von Django zu starten muss auf der Konsole das Kommando <code>python manage.py runserver</code> eingegeben werden. Um nicht zeitaufwändig mit in der Konsole zum Projektlordner zu navigieren, die virtuelle Umgebung zu starten und anschliessend der Developmentserver, kann eine bat-Datei angelegt werden mit folgendem Inhalt in der <code>start.bat</code> Datei, welche zukünftig das starten übernimmt: </p>
 <pre><code class="fenced-code-block language-dos">cd ablouterPfadProjektordnerWoManage.pyLiegt
-start cmd /T:0E /K ".env\Scripts\activate&amp;&amp;python manage.py runserver"
-</code></pre>
+start cmd /T:0E /K ".env\Scripts\activate&amp;&amp;python manage.py runserver"</code></pre>
 <h1 class="atx" id="3-veröffentlichen">3. Veröffentlichen</h1>
 <p>Zuerst laden wir unser Projekt auf GitHub laden (push). Wir veröffentlichen die Webpage auf <a href="https://www.pythonanywhere.com">pythonannywhere.com</a>. Hierfür registrieren wir uns und reservieren den Namen der Webpage.</p>
 <p>??ganz oben recht: Account&gt;API Token&gt;Create a new API token??</p>
@@ -1368,8 +1413,7 @@ Eingabe GitHub-Name und Passwort wird abgefragt. Falls du später ein Update mac
    └─ markstaler
        ├── .virtualenvs/
        ├── djangoProjekt/
-       ├── ...  
-</code></pre>
+       ├── ...  </code></pre>
 <p>Als nächstes installieren wir die virtuelle Umgebung, dabei geben wir die Pythonversion an (3.7) und den Namen der virtuellen Umgebung (markstaler-env).
 `mkvirtualenv --python=/usr/bin/python3.7 markstaler-env
 Die Ornderstruktur sieht nun wie folgt aus:</p>
@@ -1378,8 +1422,7 @@ Die Ornderstruktur sieht nun wie folgt aus:</p>
        ├── .virtualenvs/
        │       └─ markstaler-env
        ├── djangoProjekt/
-       ├── ...
-</code></pre>
+       ├── ...</code></pre>
 <p>Auf der Konsole kann mit "ls" angezeigt werden wie "dir" bei Windows. Wir wechseln ins Verzeichnis <code>djangoProjekt</code> indem wir auf der Konsole "cd dj" eingeben und TABULATOR drücken. Der Verzeichnisname wird vervollständigt! Komfortabel. Nun installieren wir unsere Pakete, die Datei "requirements.txt" kommt von unserem Projekt:
 <code>pip3.7 install -r requirements.txt</code>
 (Achtung auf dem Server/Linux die Version angeben "pip3.7")</p>
@@ -1392,8 +1435,7 @@ Die Ornderstruktur sieht nun wie folgt aus:</p>
        │                       └─ site-packages
        │                            └─ *meine Pakete*      
        ├── djangoProjekt/
-       ├── ...
-</code></pre>
+       ├── ...</code></pre>
 <p>Sollte was beim installieren nicht funktionieren, so können die Pakete gelöscht werden, durch Löschen des Paketordner unter <code>site-packages</code> . Navigieren mit oben rechts Menüpunkt "Files".</p>
 <p>Wir wechseln von der Bash-Console auf "Web" oben links. "Add a new web app" und wählen <strong>Manual Configuration</strong>, Python3.7. </p>
 <p>Wir ergänzen: </p>
@@ -1414,8 +1456,7 @@ path <span class="token operator">=</span> <span class="token string">'/home/dja
 os<span class="token punctuation">.</span>environ<span class="token punctuation">[</span><span class="token string">'DJANGO_SETTINGS_MODULE'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'energieDigital.settings'</span>
 
 <span class="token keyword">from</span> django<span class="token punctuation">.</span>core<span class="token punctuation">.</span>wsgi <span class="token keyword">import</span> get_wsgi_application
-application <span class="token operator">=</span> get_wsgi_application<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
+application <span class="token operator">=</span> get_wsgi_application<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>Wir geben noch den Ort der virtuellen Umgebung an und den URL für static files (/static/) und das Verzeichnis, das wars.</p>
 <p>Neustart des Produktionsserver durch "Reload ..." oben.</p>
 <h2 class="atx" id="3-security">3. Security</h2>
@@ -1427,8 +1468,7 @@ application <span class="token operator">=</span> get_wsgi_application<span clas
 <p>Anschliessend wird im Browser die Django administration geöffnet:</p>
 <p><code>markstaler.pythonanywhere/admin</code> und eingeloggen, als Superuser, anschliessend kann ein user angelegt werden.</p>
 <p>Für den login ergänzen wir die Datei <code>settings.py</code> durch folgende Zeile:</p>
-<pre><code class="fenced-code-block language-python">LOGIN_REDIRECT_URL <span class="token operator">=</span> <span class="token string">'/'</span>
-</code></pre>
+<pre><code class="fenced-code-block language-python">LOGIN_REDIRECT_URL <span class="token operator">=</span> <span class="token string">'/'</span></code></pre>
 <p>In der Datei <code>urls.py</code> ergänzen wir folgendes:</p>
 <pre><code class="fenced-code-block language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>contrib <span class="token keyword">import</span> admin
 <span class="token keyword">from</span> django<span class="token punctuation">.</span>urls <span class="token keyword">import</span> path
@@ -1440,8 +1480,7 @@ urlpatterns <span class="token operator">=</span> <span class="token punctuation
     path<span class="token punctuation">(</span><span class="token string">'admin/'</span><span class="token punctuation">,</span> admin<span class="token punctuation">.</span>site<span class="token punctuation">.</span>urls<span class="token punctuation">)</span><span class="token punctuation">,</span>
     path<span class="token punctuation">(</span><span class="token string">'login/'</span><span class="token punctuation">,</span> views<span class="token punctuation">.</span>LoginView<span class="token punctuation">.</span>as_view<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'loginPage'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     path<span class="token punctuation">(</span><span class="token string">'logout/'</span><span class="token punctuation">,</span> views<span class="token punctuation">.</span>LogoutView<span class="token punctuation">.</span>as_view<span class="token punctuation">(</span>next_page <span class="token operator">=</span> <span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'logoutPage'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token punctuation">]</span>
-</code></pre>
+    <span class="token punctuation">]</span></code></pre>
 <p>Schliesslich erstellen wir einen Login/Logout Dialog im Template <code>home.html</code>:</p>
 <pre><code class="fenced-code-block language-html"><span class="token comment">&lt;!-- Footer --&gt;</span>
 
@@ -1455,8 +1494,7 @@ urlpatterns <span class="token operator">=</span> <span class="token punctuation
         bitte <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>{% url 'loginPage' %}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>hier anmelden<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
 
     {% endif %}
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>footer</span><span class="token punctuation">&gt;</span></span> 
-</code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>footer</span><span class="token punctuation">&gt;</span></span> </code></pre>
 <p>Im Ordner <code>templates</code> legen wir einen Unterordner <code>registration</code> an. Dort sucht Django standardmässig das login.html, welches wir wie folgt anlegen:</p>
 <pre><code class="fenced-code-block language-html">{% load static %}
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
@@ -1485,13 +1523,11 @@ urlpatterns <span class="token operator">=</span> <span class="token punctuation
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">&gt;</span></span>
     {% endblock %}
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
-</code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span></code></pre>
 <p>Mit der Autentifiezierung können unterschiedliche Aktionen durchgeführt werden. Im Folgenden eine Ergänzung im Code von <code>views.py</code>:</p>
 <pre><code class="fenced-code-block language-python">    auth <span class="token operator">=</span> request<span class="token punctuation">.</span>user<span class="token punctuation">.</span>is_authenticated <span class="token comment"># ist jemand angemeldet</span>
     <span class="token keyword">if</span> <span class="token keyword">not</span><span class="token punctuation">(</span>auth<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        chart <span class="token operator">=</span> <span class="token string">'&lt;br&gt;Kein Diagramm, da nicht angemeldet'</span>
-</code></pre>
+        chart <span class="token operator">=</span> <span class="token string">'&lt;br&gt;Kein Diagramm, da nicht angemeldet'</span></code></pre>
 <h1 class="atx" id="zusammenfassung">Zusammenfassung</h1>
 <p>Die View-Model-Template Architektur von Django sieht nun wie folgt aus:
 <img alt="" src="pic4.png"></p>
@@ -1517,9 +1553,7 @@ urlpatterns <span class="token operator">=</span> <span class="token punctuation
    ├─db.sqlite3
    ├─manage.py
    ├─requirments.txt
-   └─start.bat 
-</code></pre>
-
-  </article>
+   └─start.bat </code></pre>
+</article>
 </body>
 </html>
