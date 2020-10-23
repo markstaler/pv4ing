@@ -1,32 +1,28 @@
 # Visualisierung 1
 
-Um entscheiden oder handeln zu können sind Infomationen notwendig. Z.B. Energiemonitoring um die Effizenz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen, um ebenfalls Entscheidungen zu fällen. Im Ingenieurwesen sind Informationen in der Regel ein Diagrammdarstellung. In den beiden Tutorial auf [pv4ing.ch](https://pv4ing.ch) sind die für uns relevanten Diagramme dargestellt. Zusätzlich sollte bei einer Visualisierung noch ein erklärender Text hinzu, nicht zu viel aber ein bisschen macht Sinn.
+Um entscheiden oder handeln zu können sind Informationen notwendig. Z.B. Energiemonitoring um die Effizienz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen ebenfalls um Entscheidungen zu fällen. Im Ingenieurwesen sind Informationen in der Regel als ein Diagramm dargestellt. In den beiden Tutorial auf [pv4ing.ch](https://pv4ing.ch) wurden die für uns relevanten Diagramme vorgestellt. Zusätzlich sollte bei einer Visualisierung noch ein erklärender Text hinzu, nicht zu viel aber ein bisschen macht Sinn.
 
 Denken wir an Energiemonitoring, so sollte die Visualisierung günstig sein, d.h. kein zusätzlicher Bildschirm und PC um den Zählerstand darzustellen. Das günstigste Display ist dies, welches wir bereits dabei haben, das Mobil oder ein PC.
 
-Deshalb bauen wir nicht ein eigenes GUI (Graphical User Interface), sondern erstellen eine Webpage. Auf der Messeinheit läuft ein Server, welcher die Information als Webpage darstellt. Mit dem Mobil oder PC wird dieser Server "angesurft", welcher die Informationen als Webpage über einen Browser darstellt.
+Deshalb bauen wir nicht ein eigenes GUI (Graphical User Interface), sondern erstellen eine Webpage. Auf der Messeinheit läuft ein Server, welcher die Information als Webpage darstellt. Mit dem Mobil oder dem PC wird dieser Server "angesurft", welcher die Informationen als Webpage über einen Browser darstellt.
 
-Dabei ist neben der eigentlichen Information, die Darstellung der Webpage wichtig um eine gute Lesbarkeit auf unterschiedlichen Geräten (PC, Notebook, Smartphone) zu erreichen. Dies wird als Responsiv Design bezeichnet.
+Dabei ist neben der eigentlichen Information, die Darstellung der Webpage wichtig um eine gute Lesbarkeit auf unterschiedlichen Endgeräten (PC, Notebook, Smartphone) zu erreichen. Dies wird als Responsiv Design bezeichnet.
 
 ![](pic1.png)
 
 ### Leistsatz
 
-Das Bauen einer Website kann zu einer sehr aufwändigen Sache werden, vorallem wenn wir uns in der Gestaltung verlieren. Deshalb einige Leitsätze:
+Das Bauen einer Website kann zu einer sehr aufwändigen Sache werden, vor allem wenn wir uns in der Gestaltung verlieren. Deshalb einige Leitsätze:
 
-1. Konzentration auf das Wesentliche: Was ist die Kernaussage der Webpage? Desgin wird "zugekauft"
+1. Konzentration auf das Wesentliche: Was ist die Kernaussage der Webpage? Design wird "zugekauft"
 
 2. Effektiv und wirksam
 
 3. Für jeden Handgriff das richtige Werkzeug
 
-Der erste Punkt hat nicht mit programmieren oder Webpage zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizziern. 
+Der erste Punkt hat nichts mit programmieren oder Webpage zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizzieren. Eine Verschriftlichung der Kernaussage ist sehr empfehlenswert.
 
-Eine Verschriftlichung der Kernaussage ist sehr empfehlenswert.
-
-
-
-Beim zweiten Punkt "Effektiv und wirksam" geht es daraum in kurzer Zeit eine Webpage zu erstellen mit Wirkung. Wirkung kommt durch Punkt 1, Konzentration auf das Wesentliche. Effektiv heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
+Beim zweiten Punkt "Effektiv und wirksam" geht es darum in kurzer Zeit eine Webpage zu erstellen mit Wirkung. Wirkung kommt durch Punkt 1, Konzentration auf das Wesentliche und dies zielführend dargestellt. Effektiv heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
 
 1. Beautiful is better than ugly. 
 
@@ -42,19 +38,17 @@ Es gibt noch weitere Punkte, gib auf der Python Konsole folgendes ein:
 
 `import this`
 
-
-
-Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeit. Das heisst auch das wir nicht das Selbe zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzpip wird als "Don't repeat yourself (DRY)" bezeichnet.
+Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeiten. Das heisst auch das wir nicht das Selbe zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzip wird als "Don't repeat yourself (DRY)" bezeichnet. DRY heisst nicht nur Effizienz indem der Code nur einmal geschrieben wird, sondern heisst auch weniger Fehlermöglichkeiten im Code und bessere Wartbarkeit.
 
 ### Webframework
 
-Zur Erstellung von Webpages wird deshalb ein Webframework verwendet. Dies ist ein Baukastensystem mit einer Vielzahl nützlicher Werkzeuge wie Benutzerverwaltung, Formulare, Upload von Dateien und voralllem ein integrierter Entwicklungsserver um die Webpage schnell und einfach darzustellen ohne dem Aufsetzten eines Servers.
+Zur Erstellung von Webpages wird deshalb ein Webframework verwendet. Dies ist ein Baukastensystem mit einer Vielzahl nützlicher Werkzeuge wie Benutzerverwaltung, Formulare, Upload von Dateien und einen integrierter Entwicklungsserver um die Webpage schnell und einfach darzustellen. Die Teile dieses Baukastensystems können einmal erstellt, für unterschiedliche Anwendungen eingesetzt werden.
 
-Der erste Schritt hierzu ist die Auftrennung von *Information*  und der *Darstellung*, wodurch beide Blöcke wiederverwendbar sind. Selbe Darstellung mit anderen Informationen oder selbe Informationen bei unterschiedlichen Darstellungen.
+Der erste Schritt hierzu ist die Auftrennung von *Information*  und der *Darstellung*, wodurch beide Blöcke unabhängig voneinander wieder verwendbar sind. Die selbe Darstellung mit anderen Informationen oder dieselben Informationen bei unterschiedlicher Darstellung.
 
 ![](pic2.png)
 
-Als Webframework verwenden wir Djano basierend auf Python. Dies Framework wird bei hunderten Webpages eingesetzt wie Youtube, Dropbox, Google, Netflix, Spotify, Pinterest, NASA, uvm. Der Untertitel von Django heisst "The web framework for perfectionists with deadlines" und zeigt die Stärken von Django, wie:
+Als Webframework verwenden wir Django basierend auf Python. Dieses Framework wird bei hunderten von Webpages eingesetzt wie Youtube, Dropbox, Google, Netflix, Spotify, Pinterest, NASA, u.v.m. Der Untertitel von Django heisst *"The web framework for perfectionists with deadlines"* und zeigt die Stärken von Django, wie:
 
 - Schnell umsetzbar mit wenig Code
 
@@ -64,7 +58,7 @@ Als Webframework verwenden wir Djano basierend auf Python. Dies Framework wird b
 
 - Vielfach erprobt und bewährt
 
-Djanog ist benannt nach dem Gitaristen Django Reinhardt.
+Django ist benannt nach dem französischen Gitarristen Django Reinhardt.
 
 ![](djangoReinhardt.jpg)
 
@@ -74,31 +68,31 @@ Die Architektur von Django teilt die *Darstellung (Template)* von den *Informati
 
 ![](pic3.png)
 
-# 
+#### Views
 
-#### View
+Die Views ist die Programmeinheit bei Django, welche die Webpage zusammenbaut und darstellt, deshalb views. Hier werden auch die Anfragen (request) behandelt und die Webadresse geprüft.
 
-Die View ist die Programmeinheit bei Django, welche die Webpage zusammenbaut und darstellt, deshalb view. Hier werden auch die Anfragen (request) behandelt und die Adresse geprüft.
-
-In der allgemeinen Literatur wird das MTV-Modell häufiger als MVC-Modell verwedet für Model, View, Control. Hier entspricht View dem DjangoTemplate und Control der Django View.
+In der allgemeinen Literatur wird das Django-MTV-Modell häufiger als MVC-Modell bezeichnet für Model, View, Control. Hier entspricht View dem Django-Template und Control der Django-Views.
 
 #### Template
 
-Das Template beinhaltet die Darstellung, das Design der Webpage. Dieses Template werden wir nicht bauen, sondern fertig beziehen. Beispeil für eine Quelle ist [www.html5up.net](http://www.html5up.net).
+Das Template beinhaltet die Darstellung, das Design der Webpage. Dieses Template werden wir nicht bauen, sondern fertig beziehen. Beispiel für eine Quelle ist [www.html5up.net](http://www.html5up.net).
 
-#### Model
+#### Models
 
-Unter Model werden die Informationen verstanden. Diese werden als Daten in einer Datenbank abgelegt. Um auf die Daten zugreifen zu können sind Datenbankabfragen wie SQL notwendig, diese sind jedoch nicht einfach und Django soll einfach sein. Deshalb wird die Information als Model definiert um so auf die Daten zugreifen zu können unabhängig der Datenbankstruktur im Hintergrund. Modelle werden vorerst nicht behandelt.
+Unter Models werden die Informationen verstanden. Diese werden als Daten in einer Datenbank abgelegt. Um auf die Daten zugreifen zu können sind Datenbankabfragen wie z.B. SQL notwendig, welche kompliziert sind und Django soll jedoch einfach und schnell umsetzbar sein. Deshalb wird die Information als ein "Model" definiert um so auf die Daten zugreifen zu können unabhängig der Datenbankstruktur im Hintergrund. Modelle werden wir erst im Tutorial "Visualisierung 2" vorstellen.
+
+Nun werden wir in drei Schritten eine Webpage erstellen. Zuerst richten wir und die Werkstatt ein (Leitsatz 3) um effektiv und wirksam (Leitsatz 2) arbeiten zu können. Anschliessend erstellen wir ein Django-Projekt, die eigentliche Webpage. Als dritten Schritt veröffentlichen wir die Webpage, sodass diese eine Wirkung hat (Leitsatz 1).
 
 # 1. Einrichten der Werkstatt
 
-Zum Leitsatz 3 "Für jeden Handgriff das richtige Werkzeug" richten uns zuerst eine Arbeitsumgebung, ein *virtual enviroment* ein. 
+Zuerst richten wir die Arbeitsumgebung ein, d.h. ein *virtual enviroment*. 
 
 ### Virtuelle Umgebung
 
-Dies legt ein Ordner an indem unsere Python, Django, Bokeh Programme mit definierter Verion abgelegt sind. Sollten wir auf dem PC später mal ein Update durchführen, so bleibt unser Projekt trotzdem auf dem Versionsstand auf dem wir es gebaut haben.
+Dies legt ein Ordner an indem unsere Python, Django, Bokeh Programme mit definierter Versionen abgelegt sind. Sollten wir auf dem PC später mal ein Update durchführen, so bleibt unser Projekt trotzdem auf dem Versionsstand auf dem wir es gebaut haben.
 
-Dies ist jetzt ein Mehraufwand, genau jetzt wo so viel Neues auf uns zukommt, aber es macht sich bezahlt. Wenn du später auf ein Projekt zurückgreifen möchtst haben sich die Versionen weiterentwickelt und der ürspüngliche Projekt-Code läuft nicht mehr, was nicht nur ärgerlich, sondern sehr zeitaufwändig ist. Deshalb "frieren" wir den aktuelle Stand der Entwicklungsumgebung ein. 
+Dies ist jetzt ein Mehraufwand, genau jetzt wo so viel Neues auf uns zukommt, aber es macht sich bezahlt. Wenn du später auf ein Projekt zurückgreifen möchtest haben sich die Versionen weiterentwickelt und der ursprüngliche Projekt-Code läuft nicht mehr, was nicht nur ärgerlich, sondern sehr zeitaufwändig ist und dies passt überhaupt nicht zu Django. Deshalb "frieren" wir den aktuelle Stand der Entwicklungsumgebung ein. 
 
 Wir erstellen zuerst unser Projektverzeichnis `djangoProjekt`. In diesem Verzeichnis erstellen wir eine virtuelle Umgebung namens `.env`. Im Anaconda-Paket ist die notwendige Software 'venv 'enthalten. Wir starten Python und weisen dieses an (mit -m) das die Software 'venv' ausgeführt werden soll:
 
@@ -108,14 +102,14 @@ Nun starten wir die virtuelle Umgebung in unserem Projektverzeichnis mit
 
     D:\djangoProjekt> .env\Scripts\activate
 
-Damit die verwendeten Versionen der auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine *neue* Textdatei `requirements.txt`. Darin listen wir die SW-Pakete mit den Versionen:
+Damit die verwendeten Versionen auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine *neue* Textdatei `requirements.txt`. Darin listen wir die SW-Pakete mit unseren gewünschten Versionen:
 
 ```text
 bokeh~=2.1.0
 django~=3.1.0
 ```
 
-Nun aktualisieren:
+Mit ""~= "geben wir an, dass auch kompatible Versionen installiert werden dürfen. Es ist auch "==", ">=" oder "!=" möglich. Nun installieren wir die Programme:
 
      pip install -r requirements.txt
 
@@ -123,7 +117,8 @@ Nun sind wir eingerichtet. Mit `pip list`  kannst du die aktuell, installierten 
 
 ### GitHub
 
-Als zweiten Schritt installieren wir GitHub ein Tool zur Code-Ablage auf einem Server. [Info zu Git](https://rogerdudler.github.io/git-guide/index.de.html). Dies ermöglicht das mehrere an einem Code arbeiten können und die Änderungen mit geloggt werden. Ein weiterer Vorteil ist, dass wir lokal unser Django-Projekt erstellen können und später über GitHub den Code auf einen Produktionsserver ins Internet bringen, zur Veröffentlichung (deployment). GitHub Desktop findet man unter [https://git-scm.com/](https://git-scm.com/). Lege ein Username/Passwort an. Wir öffnen GitHub und legen ein neues Repository an mit dem Namen **djangoProjekt** als "Local path" geben wir den existierenden Ordner "D:\djangoProjekt" an. Das ist alles.
+Als zweiten Schritt installieren wir GitHub ein Tool zur Code-Ablage auf einem Server. Der einfache Einstieg, um git zu lernen ohne Schnick-Schnack findest du [hier](https://rogerdudler.github.io/git-guide/index.de.html). Git ermöglicht uns, dass wir lokal unser Django-Projekt erstellen können und später über GitHub den Code auf einen Produktionsserver ins Internet bringen, zur Veröffentlichung, genannt "deployment". GitHub Desktop findet man unter [https://git-scm.com/](https://git-scm.com/). Lege ein Username/Passwort an. Wir öffnen GitHub und legen ein neues Repository an mit dem Namen **djangoProjekt** als "Local path" geben wir den existierenden Ordner "D:\djangoProjekt" an. Das ist alles.
+
 ![](newRepGitHub.PNG)
 Nun haben ein Repository angelegt, welches wir später mit dem Server synchronisieren können, jedoch gibt es einige Ordner und Dateien welche wir nicht auf den Server stellen möchten, wie z.B. die virtuelle Umgebung mit dem Ordner `.env` oder .bat-Datei, welche wir später erstellen. Dazu legen wir eine neue Datei `.gitignore` im Hauptordner (`djangoProjekt`) des Repos an. Trage mit dem Notepad++ (nicht Editor, weil der ein Dateinamen mit führendem Punkt und ohne Endung nicht speichern kann) die Dateien und Ordner ein, welche nicht synchronisiert werden sollen:
 
@@ -135,19 +130,21 @@ __pycache__
 db.sqlite3
 ```
 
-Das wars. Nun bauen wir die erste Seite. Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages bietet DjangoGirls den flüssigsten Einstieg in Django.
+Schritt 1 ist getan und die Werkstatt ist eingerichtet. Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages bietet DjangoGirls den flüssigsten Einstieg in Django.
 
-# 1. Lokales Django-Projekt erstellen
+# 2. Lokales Django-Projekt erstellen
 
-Erstellen eines Django-Projekt  `energieDigital` .
+Wir erstellen eine Webpage auf der ein Diagramm mit einer Sinusfunktion dargestellt wird. Als Eingabe können die Anzahl Zyklen eingegeben werden. Wir erstellen ein Django-Projekt  `energieDigital` .
 
     (.env) > django-admin startproject energieDigital .
 
-Der Punkt `.` ist sehr wichtig, weil er dem Skript mitteilt, dass Django in deinem aktuellen Verzeichnis installiert werden soll. (Der Punkt `.` ist eine Schnellreferenz dafür.)
+Der Punkt `.` ist sehr wichtig, weil er dem Skript mitteilt, dass Django in deinem aktuellen Verzeichnis installiert werden soll. Ansonst würde ein Ordner mit dem Projektnamen angelegt und darunter das Projekt.
+
+Django organisiert sich mit einer Ordnerstruktur worin vordefinierte Dateien liegen. Somit weiss Django wo welche Informationen, Funktionen und Daten liegen ohne das wir dieses genauer angeben müssen. Sieh dir die Ordnerstruktur und die Dateien an. Wir machen einige Anpassungen im vordefiniertem Projekt vor.
 
 ### settings.py
 
-Wir machen nun ein paar Änderungen in `settings.py`. 
+Wie der Name es sagt werden hier Grundeinstellungen vorgenommen. Wir machen nun ein paar Änderungen in `settings.py`. 
 
 ```python
 ALLOWED_HOSTS = [
@@ -156,7 +153,7 @@ ALLOWED_HOSTS = [
     ]
 ```
 
-Wir werden später die Seite unter pythonanywhere.com veröffentlichen. Du kannst dann deinen eigenen Namen davorstellen, anstatt "markstaler".
+Wir werden später die Seite unter pythonanywhere.com veröffentlichen. Du kannst dann deinen eigenen Namen davorstellen, anstatt "markstaler". Wir werden ein App erstellen, welches "energieDigital" heisst. Diese müssen wir hier registrieren, als neuer Baustein in unserem Baukastensystem.
 
 ```python
 INSTALLED_APPS = [
@@ -169,6 +166,8 @@ INSTALLED_APPS = [
 'energieDigital',
 ]
 ```
+
+Wir verwenden später Informationen welche nicht dynamisch angepasst werden, sondern unverändert verwendet werden, wie z.B. Bilder oder Darstellungscode (CSS, JS). Hierfür definieren wir die Webadresse für den Server (STATIC_URL) und den Ordner (STATIC_ROOT) worin diese liegen. Diesen Ordner legen wir dann später noch an.
 
 ```python
 STATIC_URL = '/static/'
@@ -190,9 +189,19 @@ urlpatterns = [
     ]
 ```
 
-#### views.py
 
-In der *Views* schreiben wir die Logik unserer Anwendung und erzeugen die Darstellung mit dem Diagramm. Wir fügen eine neue Datei  `energieDigital/views.py` hinzu. Hier schreiben wir den Code zur Darstellung einer Sinusfunktion als eigene Funktion 'makeChart(nCycle)' in welche der Sinus berechnet wird und das Bokeh-Diagramm erzeugt wird:
+
+Einfaches Beispiel
+
+
+
+Kochbuchrezept
+
+
+
+### views.py
+
+In der *Views* schreiben wir die Logik unserer Anwendung. Dies ist die Erzeugung eines Diagramm. Wir fügen eine neue Datei  `energieDigital/views.py` hinzu. Hier schreiben wir den Code zur Darstellung der Sinusfunktion als eigene Funktion 'makeChart(nCycle)' in welche der Sinus berechnet wird und das Bokeh-Diagramm erzeugt wird. Es wird noch eine weitere Funktion 'chart(request)' definiert, welche bei einer Anfrage (request) der Webpage ausgeführt wird. Diese Funktion erzeugt (render) den Inhalt der Webpage. Dort definieren wir auch das Design, das Template. Es ist die 'home.html' Datei zu der wir noch kommen.
 
 ```python
 from django.shortcuts import render
@@ -203,7 +212,7 @@ from bokeh.embed import components
 import numpy as np
 
 def chart(request):
-    if request.POST: # wenn button gedrückt
+    if request.POST: # wenn "Enter" gedrückt wird
         dic = request.POST # Werte von Page übernehmen
         print('mal sehen was das ist: ' + str(dic))
         nCycle = int(dic['nCycle'])
@@ -267,7 +276,7 @@ Als nächstes erstellen wir eine Datei `home.html`:
 </html>
 ```
 
-Dies ist ein reduziertes Template von www.html5up.com/eventually. Dieses referenziert auf css-Datein und js-Dateien. Diese werden im Ordner `static` abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "Eventually" und speichere die beiden Ordner `immages`und `assets` in einem neu angelegten Ordner `static`. Dies ist der Ordner bei dem Django css-Dateien, Bilder und weitere Dateien zur Darstellung sucht. Die Ordnersturktur sieht nun wir folgt aus:
+Dies ist ein reduziertes Template von www.html5up.com/eventually. Dieses referenziert auf css-Datein und js-Dateien. Diese werden im Ordner `static` abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "Eventually" und speichere die beiden Ordner `immages`und `assets` in einem neu angelegten Ordner `static`. Dies ist der Ordner bei dem Django die css-Dateien, Bilder und weitere Dateien zur Darstellung sucht. Die Ordnerstruktur sieht nun wir folgt aus:
 
 ```
 energieDigital 
@@ -277,7 +286,7 @@ energieDigital
    └── templates
 ```
 
-Öffne die Dateil `static/assets/js/main.js` mit dem Editor. Dort siehst du den Verweis auf die Hintergrundbilder `'images/bg01.jpg': 'center',`. Passe den Verweis an, wie folgt, da Django vom Projektverzeichnis ausgeht und unter `static` suchen soll:
+Öffne die Datei `static/assets/js/main.js` mit dem Editor. Dort siehst du den Verweis auf die Hintergrundbilder `'images/bg01.jpg': 'center',`. Passe den Verweis an, wie folgt, da Django vom Projektverzeichnis ausgeht und unter `static` suchen soll:
 
 ```js
 images: {
@@ -287,14 +296,14 @@ images: {
 },
 ```
 
-Speichere im images-Ordner deine gewünschten Hintergundbilder mit obigen Namen. 
+Speichere im images-Ordner deine gewünschten Hintergrundbilder mit obigen Namen. 
 
-Nun haben wir in views.py ein bokeh-Diagramm er stellt als html-Code. Zur Darstellung braucht es noch die js-Datein von Bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.0.0.min.js wobei die Versionsnummer zu beachten ist (oben bei der pip-Installation definiert in der requirements.txt Datei). Diese Seite im Bowser aufrufen und rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abspeichern.
+Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Datein von Bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.0.min.js wobei die Versionsnummer zu beachten ist (oben bei der pip-Installation definiert in der requirements.txt Datei). Diese Seite im Bowser aufrufen und rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abspeichern.
 
 Um den Developmentserver von Django zu starten muss auf der Konsole das Kommando `python manage.py runserver` eingegeben werden. Um nicht zeitaufwändig mit in der Konsole zum Projektlordner zu navigieren, die virtuelle Umgebung zu starten und anschliessend der Developmentserver, kann eine bat-Datei angelegt werden mit folgendem Inhalt in der `start.bat` Datei, welche zukünftig das starten übernimmt: 
 
 ```dos
-cd ablouterPfadProjektordnerWoManage.pyLiegt
+cd ablouterPfadProjektordnerWoManagePyLiegt
 start cmd /T:0E /K ".env\Scripts\activate&&python manage.py runserver"
 ```
 
@@ -304,24 +313,24 @@ Zuerst laden wir unser Projekt auf GitHub laden (push). Wir veröffentlichen die
 
 ??ganz oben recht: Account>API Token>Create a new API token??
 
-Beim Start von pythonanywhere landen wir auf dem "Dashboard" wo rechts unten eine console geöffnet werden kann. Wir öffnen "Bash" und laden unser Projekt von Github mit:
+Beim Start von pythonanywhere landen wir auf dem "Dashboard" wo rechts unten eine Konsole "bash" geöffnet werden kann. Wir laden unser Projekt von Github mit:
 `git clone https://github.com/markstaler/djangoProjekt.git`
-Eingabe GitHub-Name und Passwort wird abgefragt. Falls du später ein Update machen möchtest lautet das Kommando:
-`git pull`, jedoch muss du im djangoProjekt-Verzeichnis sein.
+Eingabe GitHub-Name und Passwort wird abgefragt. Falls du später ein Update machen möchtest, so gehe in das djangoProjekt-Verzeichnis und führe folgenden Befehl aus: `git pull`
 
-Unter dem Menüpunkt "Files" rechts oben, kann du die Ordnerstruktur auf dem Server ansehen, welche wie folgt aussieht:
+Unter dem Menüpunkt "Files" rechts oben, kannst du die Ordnerstruktur auf dem Server ansehen, welche wie folgt aussieht:
 
 ```
 /home 
    └─ markstaler
        ├── .virtualenvs/
        ├── djangoProjekt/
-       ├── ...  
+              ├── energieDigital
+              ├── ...  
 ```
 
 Als nächstes installieren wir die virtuelle Umgebung, dabei geben wir die Pythonversion an (3.7) und den Namen der virtuellen Umgebung (markstaler-env).
 `mkvirtualenv --python=/usr/bin/python3.7 markstaler-env
-Die Ornderstruktur sieht nun wie folgt aus:
+Die Orndnerstruktur sieht nun wie folgt aus:
 
 ```
 /home 
@@ -332,7 +341,7 @@ Die Ornderstruktur sieht nun wie folgt aus:
        ├── ...
 ```
 
-Auf der Konsole kann mit "ls" angezeigt werden wie "dir" bei Windows. Wir wechseln ins Verzeichnis `djangoProjekt` indem wir auf der Konsole "cd dj" eingeben und TABULATOR drücken. Der Verzeichnisname wird vervollständigt! Komfortabel. Nun installieren wir unsere Pakete, die Datei "requirements.txt" kommt von unserem Projekt:
+Auf der Konsole können die Dateien mit "ls" angezeigt werden, wie "dir" bei Windows. Wir wechseln ins Verzeichnis `djangoProjekt` indem wir auf der Konsole "cd dj" eingeben und TABULATOR drücken. Der Verzeichnisname wird vervollständigt! Komfortabel. Nun installieren wir unsere Pakete, die Datei "requirements.txt" kommt von unserem lokalen Projekt:
 `pip3.7 install -r requirements.txt`
 (Achtung auf dem Server/Linux die Version angeben "pip3.7")
 
@@ -383,7 +392,7 @@ Wir geben noch den Ort der virtuellen Umgebung an und den URL für static files 
 
 Neustart des Produktionsserver durch "Reload ..." oben.
 
-## 3. Security
+## Security
 
 Bei pythonanywhere wird der Produktionsserver durch den Anbieter betrieben und Django liegt dahinter. 
 
