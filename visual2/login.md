@@ -119,7 +119,7 @@ Nun sind wir eingerichtet. Mit `pip list`  kannst du die aktuell, installierten 
 
 Als zweiten Schritt installieren wir GitHub ein Tool zur Code-Ablage auf einem Server. Der einfache Einstieg, um git zu lernen ohne Schnick-Schnack findest du [hier](https://rogerdudler.github.io/git-guide/index.de.html). Git ermöglicht uns, dass wir lokal unser Django-Projekt erstellen können und später über GitHub den Code auf einen Produktionsserver ins Internet bringen, zur Veröffentlichung, genannt "deployment". 
 
-Wenn du deine Webpage lokal laufenlassen möchtest, ohne Veröffentlichung, so kannst du diesen Schritt auslassen. 
+Wenn du deine Webpage lokal laufenlassen möchtest, ohne Veröffentlichung, so kannst du diese Schritt auslassen. 
 
 GitHub Desktop findet man unter [https://git-scm.com/](https://git-scm.com/). Lege ein Username/Passwort an. Wir öffnen GitHub und legen ein neues Repository an mit dem Namen **djangoProjekt** als "Local path" geben wir den existierenden Ordner "D:\djangoProjekt" an. Das ist alles.
 
@@ -394,6 +394,97 @@ Bei pythonanywhere wird der Produktionsserver durch den Anbieter betrieben und D
 
 Es soll unter Web unten "HTTP to HTTPS" aktivieren werden.
 
+### login
+
+Der Inhalt der Webseite kann zusätzlich durch ein login ergänzt werden. Hierfür muss zuerst ein superuser angelegt werden. Über dieser kann anschliessend bei Webpage user generiert werden. Anlegen des Superuser:
+
+`python3.7 manage.py createsuperuser`
+
+Anschliessend wird im Browser die Django administration geöffnet:
+
+`markstaler.pythonanywhere/admin` und eingeloggen, als Superuser, anschliessend kann ein user angelegt werden.
+
+Für den login ergänzen wir die Datei `settings.py` durch folgende Zeile:
+
+```python
+LOGIN_REDIRECT_URL = '/'
+```
+
+In der Datei `urls.py` ergänzen wir folgendes:
+
+```python
+from django.contrib import admin
+from django.urls import path
+from django.contrib.auth import views
+from .views import chart
+
+urlpatterns = [
+    path('', chart),
+    path('admin/', admin.site.urls),
+    path('login/', views.LoginView.as_view(), name='loginPage'),
+    path('logout/', views.LogoutView.as_view(next_page = '/'), name='logoutPage'),
+    ]
+```
+
+Schliesslich erstellen wir einen Login/Logout Dialog im Template `home.html`:
+
+```html
+<!-- Footer -->
+
+<footer id="footer">
+    {% if user.is_authenticated %}
+        angemeldet als {{ user.get_username }}.
+        <a href="{% url 'logoutPage' %}">hier abmelden</span></a>
+
+    {% else %}
+
+        bitte <a href="{% url 'loginPage' %}">hier anmelden</span></a>
+
+    {% endif %}
+</footer> 
+```
+
+Im Ordner `templates` legen wir einen Unterordner `registration` an. Dort sucht Django standardmässig das login.html, welches wir wie folgt anlegen:
+
+```html
+{% load static %}
+<html>
+    <head>
+        <title>login - energieDigital</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="{% static "assets/css/main.css" %}"/>
+    </head>
+    <body>
+    {% block content %}
+        {% if form.errors %}
+            <font color="white">
+            <br>
+            <p>Benutzername und Passwort stinmmt nicht überein. Versuche es nochmals.</p>
+        {% endif %}
+
+        <form method="post" action="{% url 'loginPage' %}">
+        {% csrf_token %}               
+            Benutzername
+            {{ form.username }}
+            Passwort
+            {{ form.password }}
+            <br>                
+            <input type="submit" value="loginPage" />
+        </form>
+    {% endblock %}
+    </body>
+</html>
+```
+
+Mit der Autentifiezierung können unterschiedliche Aktionen durchgeführt werden. Im Folgenden eine Ergänzung im Code von `views.py`:
+
+```python
+    auth = request.user.is_authenticated # ist jemand angemeldet
+    if not(auth):
+        chart = '<br>Kein Diagramm, da nicht angemeldet'
+```
+
 # Zusammenfassung
 
 Die View-Model-Template Architektur von Django sieht nun wie folgt aus:
@@ -411,15 +502,17 @@ D:/djangoProjekt
    │     │      └─bokeh-1.4.0.min.js
    │     │
    │     ├── templates
-   │     │      └─home.html
+   │     │      ├─home.html
+   │     │      └── registration
+   │     │              └─login.html
    │     │
    │     ├─settings.py
    │     ├─urls.py
-   │     └─views.py
+   │     ├─views.py
+   │     └─wsgi.py
    │
    ├─db.sqlite3
    ├─manage.py
    ├─requirments.txt
    └─start.bat 
 ```
-
