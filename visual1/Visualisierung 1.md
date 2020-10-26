@@ -206,6 +206,8 @@ from django.shortcuts import render
 from bokeh.plotting import figure
 from bokeh.embed import components
 import numpy as np
+import matplotlib.pyplot as plt
+from django.conf import settings  # Ablageort der static-Files importieren, welches wir in settings definiert haben
 
 def chart(request):
     if request.POST: # wenn "Enter" gedrückt wird
@@ -228,6 +230,12 @@ def makeChart(nCycle):
 
     script, div = components(p1)
     chart = script + div
+    
+    # andere Möglichkeit: Diagramm als jpg-Datei in static/images-Ordner ablegen
+    plt.plot(x,y)
+    plt.savefig(settings.STATIC_ROOT+'images/sinus.jpg')
+    
+    
     return chart
 ```
 
@@ -264,6 +272,9 @@ Als nächstes erstellen wir eine Datei `home.html`. Dies ist die stark vereinfac
                         {% csrf_token %}
                         <input type="number" step = 1 min = 1 max = 20 name="nCycle" value={{ nCycle }} style = color:blue>    
                         {{ chart|safe }}
+                        <br>
+					  <!-- Diagramm als jpg-Datei, erzeugt über Matplotlib -->
+					  <img src="{% static "images/sinus.jpg" %}" width = 460/>
                     <form>        
                 </div>
         <!-- Scripts -->
@@ -413,14 +424,11 @@ D:/djangoProjekt
    │     │      ├── assets...
    │     │      ├── images...
    │     │      └─bokeh-1.4.0.min.js
-   │     │
    │     ├── templates
    │     │      └─home.html
-   │     │
    │     ├─settings.py
    │     ├─urls.py
    │     └─views.py
-   │
    ├─db.sqlite3
    ├─manage.py
    ├─requirments.txt

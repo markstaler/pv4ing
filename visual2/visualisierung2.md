@@ -4,7 +4,7 @@ Im ersten Teil der Visualisierung haben wir die View-Model-Template Architektur 
 
 ![](pic4.png)
 
-Umgesetz sieht die Dateistruktur zeigt sich wie folgt aus:
+Umgesetzt sieht die Dateistruktur zeigt sich wie folgt aus:
 
 ```
 D:/djangoProjekt 
@@ -13,17 +13,12 @@ D:/djangoProjekt
    │     ├── static
    │     │      ├── assets...
    │     │      ├── images...
-   │     │      └─bokeh-1.4.0.min.js
-   │     │
+   │     │      └─bokeh-2.1.1.min.js
    │     ├── templates
-   │     │      ├─home.html
-   │     │      └── registration
-   │     │              └─login.html
-   │     │
+   │     │      └─home.html
    │     ├─settings.py
    │     ├─urls.py
-   │     ├─views.py
-   │     └─wsgi.py
+   │     └─views.py
    │
    ├─db.sqlite3
    ├─manage.py
@@ -31,7 +26,17 @@ D:/djangoProjekt
    └─start.bat 
 ```
 
-Ein wesentlichen Teil fehlt noch, das "Model (Information)" mit den Datein "models.py" und "db.sqlite". D.h. der Teil der Datenspeicherung und Informationsgenerierung. Dies ergänzen wir nun. Wir erweitern die Webpage indem wir den Seitentext in einer Datenbank erstellen, ändern und abspeichern können und die die Webpage dynamisch den aktuellen Text übernimmt. Zusätzlich erstellen wir eine Unterseite mit einem Tagebuch.
+Ein wesentlicher Teil fehlt noch, das "Model (Information)" mit den Daten. Dies sind die beiden Dateien  "models.py" und "db.sqlite". 
+
+
+
+
+
+D.h. der Teil der Datenspeicherung und Informationsgenerierung. Dies ergänzen wir nun. 
+
+
+
+Wir erweitern die Webpage indem wir den Seitentext in einer Datenbank erstellen, ändern und abspeichern können und die Webpage dynamisch den aktuellen Text übernimmt. Zusätzlich erstellen wir eine Unterseite mit einem Tagebuch.
 
 
 
