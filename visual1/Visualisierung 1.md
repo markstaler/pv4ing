@@ -105,7 +105,7 @@ Nun starten wir die virtuelle Umgebung in unserem Projektverzeichnis mit
 Damit die verwendeten Versionen auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine *neue* Textdatei `requirements.txt`. Darin listen wir die SW-Pakete mit unseren gewünschten Versionen:
 
 ```text
-bokeh~=2.1.0
+bokeh~=2.1.1
 django~=3.1.0
 ```
 
@@ -251,7 +251,7 @@ Als nächstes erstellen wir eine Datei `home.html`. Dies ist die stark vereinfac
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
         <!-- BOKEH -->
-        <script type="text/javascript" src="{% static "bokeh-2.0.0.min.js" %}"></script>    
+        <script type="text/javascript" src="{% static "bokeh-2.1.1.min.js" %}"></script>    
     </head>
     <body class="is-preload">
         <!-- Header -->
@@ -294,7 +294,11 @@ images: {
 
 Speichere im images-Ordner deine gewünschten Hintergrundbilder mit obigen Namen. 
 
-Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Datein von Bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.0.min.js wobei die Versionsnummer zu beachten ist (oben bei der pip-Installation definiert in der requirements.txt Datei). Diese Seite im Bowser aufrufen und rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abspeichern.
+Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Datein von Bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js wobei die Versionsnummer zu beachten ist. 
+
+**Prüfe die installierte Bokeh-Version mit "pip list" und ** passe diese im "home.html" an und achte beim Download der Bokeh-js-Datei auf die richtige Version.
+
+Diese Seite im Bowser aufrufen und rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abspeichern.
 
 Um den Developmentserver von Django zu starten muss auf der Konsole das Kommando `python manage.py runserver` eingegeben werden. Um nicht zeitaufwändig mit in der Konsole zum Projektlordner zu navigieren, die virtuelle Umgebung zu starten und anschliessend der Developmentserver, kann eine bat-Datei angelegt werden mit folgendem Inhalt in der `start.bat` Datei, welche zukünftig das starten übernimmt: 
 
