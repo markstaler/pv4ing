@@ -84,9 +84,7 @@ Unter Models werden die Informationen verstanden. Diese werden als Daten in eine
 
 Nun werden eine Webpage erstellen. Zuerst richten wir und die Werkstatt ein (Leitsatz 3) um effektiv und wirksam (Leitsatz 2) arbeiten zu können. Anschliessend erstellen wir ein Django-Projekt, die eigentliche Webpage. 
 
-
-
-### Siehe DjangoGirls
+### DjangoGirls
 
 Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org/) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages bietet DjangoGirls den flüssigsten Einstieg in Django. 
 
@@ -103,30 +101,41 @@ conda install django
 
 # 2. Lokales Django-Projekt erstellen
 
-Wir erstellen eine Webpage auf der ein Diagramm mit einer Sinusfunktion dargestellt wird. Als Eingabe können die Anzahl Zyklen eingegeben werden. Wir erstellen ein Django-Projekt  `energieDigital` .
+Wir erstellen eine Webpage (Django-Projekt) auf der nur eine Anwendung (App) läuft, ein Diagramm mit einer Sinusfunktion. Wir erstellen ein Django-Projekt  `energieDigital` .
 
-    (.env) > django-admin startproject energieDigital .
+    django-admin startproject energieDigital .
 
-Der Punkt `.` ist sehr wichtig, weil er dem Skript mitteilt, dass Django in deinem aktuellen Verzeichnis installiert werden soll. Ansonst würde ein Ordner mit dem Projektnamen angelegt und darunter das Projekt.
+Der Punkt `.` ist sehr wichtig, weil er dem Skript mitteilt, dass Django im aktuellen Verzeichnis installiert werden soll. Ansonst würde ein Ordner mit dem Projektnamen angelegt und darunter das Projekt.
 
-Django organisiert sich mit einer Ordnerstruktur worin vordefinierte Dateien liegen. Somit weiss Django wo welche Informationen, Funktionen und Daten liegen ohne das wir dieses genauer angeben müssen. Sieh dir die Ordnerstruktur und die Dateien an. Wir machen einige Anpassungen im vordefiniertem Projekt vor.
+Django organisiert sich mit einer Ordnerstruktur worin vordefinierte Dateien liegen. Somit weiss Django wo welche Informationen, Funktionen und Daten liegen ohne das wir dieses genauer angeben müssen. Die relevanten Dateien sind:
 
-### settings.py
+- settings.py: für Einstellungen
+- urls.py: für die Auswertung der eingehenden urls und dem Starten der notwendigen Funktionen
+- views.py: Dort wird die Webpage "zusammengebaut". Diese Datei legen wir neu an.
+- *.html: Das Template mit dem Design
 
-Wie der Name es sagt werden hier Grundeinstellungen vorgenommen. Wir machen nun ein paar Änderungen in `settings.py`.  Wir werden später die Seite als "localhost" mit 127.0.0.1 aufrufen oder über die ip-Adresse des Rechner auf dem der Entwicklungsserver läuft 
+Sieh dir die Ordnerstruktur und die Dateien an. Wir machen einige Anpassungen im vordefiniertem Projekt.
+
+### Einstellungen
+
+In der Datei "settings.py" werden die Grundeinstellung der Webpage vorgenommen. Wir werden später die Seite als "localhost" mit 127.0.0.1 aufrufen oder über die ip-Adresse des Rechners auf dem der Entwicklungsserver läuft. Um die ip-Adresse zu ermittelt importieren wir die Bibliothek "socket". Anschliessend kommen die drei Code-Zeilen zur ip-Adressermittlung hinzu. Bei "ALLOWED_HOSTS"  ergänzen wir die zwei ip-Adressen.
 
 ```python
-import os
+import socket
+
+# Ermittelt IP-Adresse
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # erstellt Netzwerkverbindung
+s.connect(('1.1.1.1',1)) # fiktiver Internetzugriff
+ip = s.getsockname()[0] # ermittelt IP-Adresse
+
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'markstaler.pythonanywhere.com',
+    ip,
     ]
 ```
 
-Wir werden später die Seite unter pythonanywhere.com veröffentlichen. Du kannst dann deinen eigenen Namen davorstellen, anstatt "markstaler". 
-
-Wir werden ein App erstellen, welches "energieDigital" heisst. Diese müssen wir hier registrieren, als neuer Baustein in unserem Baukastensystem.
+Wir werden ein App erstellen, welches "energieDigital" heisst (gleich wie die Webpage). Diese müssen wir hier registrieren, als neuer Baustein in unserem Baukastensystem.
 
 ```python
 INSTALLED_APPS = [
@@ -140,7 +149,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-Wir verwenden später Informationen welche nicht dynamisch angepasst werden, sondern unverändert verwendet werden, wie z.B. Bilder oder Darstellungscode (CSS, JS). Hierfür definieren wir die Webadresse für den Server (STATIC_URL) und den Ordner (STATIC_ROOT) worin diese liegen. Diesen Ordner legen wir dann später noch an.
+Wir verwenden später Informationen welche nicht dynamisch angepasst werden, sondern statisch sind, wie z.B. Bilder oder Darstellungscode (CSS, JS). Hierfür definieren wir die Webadresse für den Server (STATIC_URL) und den Ordner (STATIC_ROOT) worin diese Dateien abgelegt werden. Den Ordner "static" legen wir dann später noch an.
 
 ```python
 STATIC_URL = '/static/'
@@ -149,11 +158,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static')
 
  
 
-## Webpage Test
+## Erste  Seite
 
-Wir wollen eine Webpage "test" erstellen mit dem Link: **127.0.0.1:8000/test**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "testfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die Test-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
-
-
+Wir wollen ein App "test" erstellen mit dem Link: **127.0.0.1:8000/test**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "testfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die Test-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
 
 Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "127.0.0.1:8000" verwendet, wir wollen jedoch "127.0.0.1:8000/test", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
 
@@ -169,10 +176,11 @@ urlpatterns = [
 
 ```
 
-Wenn diese Adresse beim Server kommt so soll die Python-Funktion "testfunktion" ausgeführt werden. Diese erstellen wir noch in der Datei views.py. Von dort importieren wir diese "testfunktion". Bevor wir die testfunktion in views.py definieren erstellen wir ein html-Template **test.html**. Wenn nicht genauer angegeben sucht Django das html-Template im Ordner `templates`. D.h. wir legen diesen Ordner an.
+Wenn diese Adresse beim Server ankommt wird die Python-Funktion "testfunktion" ausgeführt. Diese erstellen wir noch in der Datei views.py. Von dort importieren wir diese "testfunktion". Bevor wir die testfunktion in views.py definieren erstellen wir ein html-Template **test.html**. Wenn nicht genauer angegeben sucht Django das html-Template im Ordner `templates`. D.h. wir legen diesen Ordner an. Zusätzlich legen wir noch den Ordner `static` an, welcher wir später brauchen.
 
     energieDigital
-    └───templates
+      ├── static
+      └── templates
 
 Als nächstes erstellen wir eine Datei `test.html`.
 
@@ -195,11 +203,11 @@ Als nächstes erstellen wir eine Datei `test.html`.
 
 Im html-Code sind zwei Django-Kommandos eingebaut:
 
-{% load static %} Hier wird der Pfadname geladen, wo die statischen Dateien liegen. Diesen haben wir definiert in settings.py mit STATIC_ROOT. Nachfolgend wird der Dateiname mit dem Pfadnamen gebaut durch "{% static "sinus.jpg" %}". Somit können wir später das Projekt auf irgendeinen Server stellen und die Ordnerstruktur passt.
+{% load static %} Hier wird der Pfadname geladen, wo die statischen Dateien liegen. Diesen haben wir in settings.py definiert mit STATIC_ROOT. Es ist der so eben angelegt Ordner `static`. Nachfolgend wird der Dateiname mit dem Pfadnamen gebaut durch "{% static "sinus.jpg" %}". Somit können wir später das Projekt auf irgendeinen Server stellen und die Ordnerstruktur passt, weil wird dies nur an einer Stelle definiert haben, in settings.py.
 
-{% csrf_token %} Dies ist eine Sicherungsfunktion von Django, die Cross Site Request Forgery protection. Bei einer Server-Anfrage (request) wird hier ein csrf-Code mitgeschickt. Wenn später über "post" Daten vom Browser zum Server gesendet werden, so wird dieser csrf-Code mit gesendet und der Server, weiss dann dass die erhaltenen Daten sicher sind.
+{% csrf_token %} Dies ist eine Sicherungsfunktion von Django, die Cross Site Request Forgery protection. Bei einer Server-Anfrage (request) wird hier ein csrf-Code mitgeschickt. Wenn später über "post" Daten vom Browser zum Server gesendet werden, so wird dieser csrf-Code mit gesendet und der Server, weiss dann, dass die erhaltenen Daten sicher sind.
 
-Nun definieren wir die testfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Den Pfadnamen haben wir in settings.py definiert. Von dort importieren wir diesen mit settings.STATIC_ROOT. Mit der Funktion "render" aktualisieren wir die "test.html". Hier können wir auch Daten ans html-Template senden. Die Variablennamen findest du auch im test.html.
+Nun definieren wir die testfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Wie erwähnt ist der Pfadnamen in settings.py definiert. Von dort importieren wir diesen mit settings.STATIC_ROOT. Mit der Funktion "render" aktualisieren wir die "test.html". Hier senden wir auch dynamische Daten (nCycleHin) ans html-Template. Die Variablennamen findest du auch im test.html.
 
 ```python
 # -*- coding: utf-8 -*-
@@ -227,15 +235,51 @@ def testfunction(request):
     return render(request, 'test.html', {'nCycleZurueck': nCycle})
 ```
 
+### runserver
 
+Nun starten wir die Webpage und geben auf den Konsole folgendes Kommando ein:
+
+```
+python manage.py runserver
+```
+
+Auf der Konsole erscheinen folgende Zeilen. Es wird auch die url-Adresse der Webpage angegeben generiert vom Entwicklungsserver (development server). Dieses geben wir im Browser ein und wir können unsere Seite ansehen.
+
+```
+>>python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+Django version 2.2.5, using settings 'energieDigital.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+```
+
+Wir möchten nun von einem anderen Gerät aus die Webpage ansehen, z.B. von einem Handy aus. Über das Hausinterne Netzwerk geht dies, jedoch über den "localhost" (127.0.0.1). Wir müssen die ip-Adresse des Rechners/Notebook verwenden und den Entwicklungsserver mit dieser Adresse starten. Zuerst finden wir die ip-Adresse heraus mit und es folgen viele Zeilen wovon eine die IPv4 Adresse angibt:
+
+```
+>>ipconfig
+...
+   IPv4 Address. . . . . . . . . . . : 192.167.136.1
+...
+```
+
+Nun können wir den Entwicklungsserver mit dieser Adresse starten. Zusätzlich definieren wir den Port. Üblich ist Port:8000.
+
+```
+python manage.py runserver 192.167.136.1:8000
+```
+
+Die Webpage mit einem anderen Gerät im Netzwerk über diese ip-Adresse aufgerufen werden.
 
 ## Erweiterung
 
 Wir erweitern das Beispiel:
 
-- Als url definieren wir "127.0.0.1:8000"
+- Als url definieren wir  nur die Hauptadresse (ip-Adresse) ohne "/test"
 - Diese url ruft die Funktion "chart" auf
-- Das Diagramm wird als html-Code ans Template übergeben mit bokeh
+- Das Diagramm wird als html-Code direkt ans Template übergeben mit bokeh
 - Wir verwenden ein fertiges Template von html5up
 
 In urls.py ergänzen wir wie folgt:
@@ -271,14 +315,14 @@ def chart(request):
     p1.line(x, y)
     p1.toolbar.logo = None    
 
-    script, div = components(p1)
+    script, div = components(p1) # hier wird html-Code erzeugt
     chart = script + div
         
     return render(request, 'home.html', {'nCycle': nCycle, 'chart': chart})
 
 ```
 
-Als nächstes erstellen wir eine Datei `home.html`. Dies ist die stark vereinfachte Version vom Template "Eventually" by HTML5up :
+Als nächstes erstellen wir eine Datei home.html. Dies ist die vereinfachte Version vom Template "Eventually" by HTML5up :
 
 ```html
 <!DOCTYPE HTML>
@@ -305,17 +349,18 @@ Als nächstes erstellen wir eine Datei `home.html`. Dies ist die stark vereinfac
                         <input type="number" step = 1 min = 1 max = 20 name="nCycle" value={{ nCycle }} style = color:blue>    
                         {{ chart|safe }}
                         <br>
-					  <!-- Diagramm als jpg-Datei, erzeugt über Matplotlib und im Ordner image abgelegt -->
+					  <!-- Diagramm als jpg-Datei, erzeugt über Matplotlib -->
+					  <!-- und im Ordner static/images abgelegt -->
 					  <img src="{% static "images/sinus.jpg" %}" width = 460/>
                     <form>        
                 </div>
         <!-- Scripts -->
-            <script src="{% static "assets/js/main.js" %}"></script>
+        <script src="{% static "assets/js/main.js" %}"></script>
     </body>
 </html>
 ```
 
-Dieses referenziert auf css-Datein und js-Dateie von diesem Template. Diese werden im Ordner `static` abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "[Eventually](https://html5up.net/eventually)" und speichere die beiden Ordner `immages`und `assets` in einem neu angelegten Ordner `static`. Dies ist der Ordner bei dem Django die css-Dateien, Bilder und weitere Dateien zur Darstellung sucht. Die Ordnerstruktur sieht nun wir folgt aus:
+Diese referenziert auf css-Dateien und js-Dateien von diesem Template. Diese werden im Ordner `static` abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "[Eventually](https://html5up.net/eventually)" und speichere die beiden Ordner `immages`und `assets` in den Ordner `static`. Die Ordnerstruktur sieht nun wir folgt aus:
 
 ```
 energieDigital 
@@ -337,13 +382,13 @@ images: {
 
 Speichere im images-Ordner deine gewünschten Hintergrundbilder mit obigen Namen. 
 
-Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Datein von Bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js wobei die Versionsnummer zu beachten ist. **Prüfe die installierte Bokeh-Version mit "pip list" und ** passe diese im "home.html" an und achte beim Download der Bokeh-js-Datei auf die richtige Version. Diese Seite im Bowser aufrufen und rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abspeichern.
+Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Daten von bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js wobei die Versionsnummer zu beachten ist. **Prüfe die installierte bokeh-Version mit "pip list" und ** passe diese im "home.html" und beim Download an. Der download funktioniert durch rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abzuspeichern.
 
-Um den Developmentserver von Django zu starten muss auf der Konsole das Kommando `python manage.py runserver` eingegeben werden. Um nicht zeitaufwändig mit in der Konsole zum Projektlordner zu navigieren, die virtuelle Umgebung zu starten und anschliessend der Developmentserver, kann eine bat-Datei angelegt werden mit folgendem Inhalt in der `start.bat` Datei, welche zukünftig das starten übernimmt: 
+Um den Entwicklungsserver von Django zu starten muss auf der Konsole das Kommando `python manage.py runserver` eingegeben werden. Um nicht zeitaufwändig mit in der Konsole zum Projektordner zu navigieren und über die Konsole den Server zu starten, kann eine Datei `start.bat` angelegt werden, welche zukünftig das Starten übernimmt: 
 
 ```dos
-cd ablouterPfadProjektordnerWoManagePyLiegt
-start cmd /T:0E /K ".env\Scripts\activate&&python manage.py runserver"
+cd pfadname
+start cmd /T:0E /K "python manage.py runserver"
 ```
 
 # Zusammenfassung
