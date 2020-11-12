@@ -38,11 +38,11 @@ Es gibt noch weitere Punkte, gib auf der Python Konsole folgendes ein:
 
 `import this`
 
-Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeiten. Das heisst auch das wir nicht das Selbe zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzip wird als "Don't repeat yourself (DRY)" bezeichnet. DRY heisst nicht nur Effizienz indem der Code nur einmal geschrieben wird, sondern heisst auch weniger Fehlermöglichkeiten im Code und bessere Wartbarkeit.
+Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeiten. Das heisst auch das wir nicht das Selbe zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzip wird als "Don't repeat yourself (DRY)" bezeichnet. DRY heisst nicht nur Effizienz indem der Code nur einmal geschrieben wird, sondern heisst auch weniger Fehlermöglichkeiten im Code und bessere Wartbarkeit. Des verwenden wir ein Webframework.
 
 ### Webframework
 
-Zur Erstellung von Webpages wird deshalb ein Webframework verwendet. Dies ist ein Baukastensystem mit einer Vielzahl nützlicher Werkzeuge wie Benutzerverwaltung, Formulare, Upload von Dateien und einen integrierter Entwicklungsserver um die Webpage schnell und einfach darzustellen. Die Teile dieses Baukastensystems können einmal erstellt, für unterschiedliche Anwendungen eingesetzt werden.
+Ein Webframework ist ein Baukastensystem mit einer Vielzahl nützlicher Werkzeuge wie Benutzerverwaltung, Formulare, Upload von Dateien und einen integrierter Entwicklungsserver um die Webpage schnell und einfach darzustellen. Die Teile dieses Baukastensystems können einmal erstellt, für unterschiedliche Anwendungen eingesetzt werden.
 
 Der erste Schritt hierzu ist die Auftrennung von *Information*  und der *Darstellung*, wodurch beide Blöcke unabhängig voneinander wieder verwendbar sind. Die selbe Darstellung mit anderen Informationen oder dieselben Informationen bei unterschiedlicher Darstellung.
 
@@ -84,41 +84,22 @@ Unter Models werden die Informationen verstanden. Diese werden als Daten in eine
 
 Nun werden eine Webpage erstellen. Zuerst richten wir und die Werkstatt ein (Leitsatz 3) um effektiv und wirksam (Leitsatz 2) arbeiten zu können. Anschliessend erstellen wir ein Django-Projekt, die eigentliche Webpage. 
 
-Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org/) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages bietet DjangoGirls den flüssigsten Einstieg in Django. Beim Tutorial der DjangoGirls ist auch beschrieben, wie die lokal erstellte Webpage ins Internet veröffentlicht werden kann über den kostenfreien Django-Server [pythonanywhere](https://www.pythonanywhere.com/).
+
+
+### Siehe DjangoGirls
+
+Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org/) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages bietet DjangoGirls den flüssigsten Einstieg in Django. 
+
+- Für Einsteiger: Wenn du grundlegendes zum Internet, Konsolen-Kommandos usw. erfahren möchtest empfiehlt sich der Einstieg der Django Girls Tutorials und den verlinkten Videos.
+- Für Fortgeschrittene: Wie die Webpage veröffentlicht wird ist ebenfalls unter "Deployment" in den Tutorial erklärt. Es wird der kostenfreie Django-Server [pythonanywhere](https://www.pythonanywhere.com/) verwendet.
 
 # 1. Einrichten der Werkstatt
 
-Zuerst richten wir die Arbeitsumgebung ein, d.h. ein *virtual enviroment*. 
-
-### Virtuelle Umgebung
-
-Dies legt ein Ordner an indem unsere Python, Django, Bokeh Programme mit definierter Versionen abgelegt sind. Sollten wir auf dem PC später mal ein Update durchführen, so bleibt unser Projekt trotzdem auf dem Versionsstand auf dem wir es gebaut haben.
-
-Dies ist jetzt ein Mehraufwand, genau jetzt wo so viel Neues auf uns zukommt, aber es macht sich bezahlt. Wenn du später auf ein Projekt zurückgreifen möchtest haben sich die Versionen weiterentwickelt und der ursprüngliche Projekt-Code läuft nicht mehr, was nicht nur ärgerlich, sondern sehr zeitaufwändig ist und dies passt überhaupt nicht zu Django. Deshalb "frieren" wir den aktuelle Stand der Entwicklungsumgebung ein. 
-
-Wir erstellen zuerst unser Projektverzeichnis `djangoProjekt`. In diesem Verzeichnis erstellen wir eine virtuelle Umgebung namens `.env`. Im Anaconda-Paket ist die notwendige Software 'venv 'enthalten. Wir starten Python und weisen dieses an (mit -m) das die Software 'venv' ausgeführt werden soll:
-
-    python -m venv .env
-
-Nun starten wir die virtuelle Umgebung in unserem Projektverzeichnis mit 
-
-    D:\djangoProjekt> .env\Scripts\activate
-
-Damit die verwendeten Versionen auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine *neue* Textdatei `requirements.txt`. Darin listen wir die SW-Pakete mit unseren gewünschten Versionen:
-
-```text
-bokeh==2.1.1
-django==2.2.5
-pandas==1.0.5
-matplotlib==3.2.2
+Für die Installation von Django führen wir folgendes Kommando aus:
 
 ```
-
-Mit ""~= "geben wir an, dass auch kompatible Versionen installiert werden dürfen. Es ist auch "==", ">=" oder "!=" möglich. Nun installieren wir die Programme:
-
-     pip install -r requirements.txt
-
-Nun sind wir eingerichtet. Mit `pip list`  kannst du die aktuell, installierten Versionen ansehen. 
+conda install django
+```
 
 # 2. Lokales Django-Projekt erstellen
 
@@ -132,7 +113,7 @@ Django organisiert sich mit einer Ordnerstruktur worin vordefinierte Dateien lie
 
 ### settings.py
 
-Wie der Name es sagt werden hier Grundeinstellungen vorgenommen. Wir machen nun ein paar Änderungen in `settings.py`. 
+Wie der Name es sagt werden hier Grundeinstellungen vorgenommen. Wir machen nun ein paar Änderungen in `settings.py`.  Wir werden später die Seite als "localhost" mit 127.0.0.1 aufrufen oder über die ip-Adresse des Rechner auf dem der Entwicklungsserver läuft 
 
 ```python
 import os
@@ -143,7 +124,9 @@ ALLOWED_HOSTS = [
     ]
 ```
 
-Wir werden später die Seite unter pythonanywhere.com veröffentlichen. Du kannst dann deinen eigenen Namen davorstellen, anstatt "markstaler". Wir werden ein App erstellen, welches "energieDigital" heisst. Diese müssen wir hier registrieren, als neuer Baustein in unserem Baukastensystem.
+Wir werden später die Seite unter pythonanywhere.com veröffentlichen. Du kannst dann deinen eigenen Namen davorstellen, anstatt "markstaler". 
+
+Wir werden ein App erstellen, welches "energieDigital" heisst. Diese müssen wir hier registrieren, als neuer Baustein in unserem Baukastensystem.
 
 ```python
 INSTALLED_APPS = [

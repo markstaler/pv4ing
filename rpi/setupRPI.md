@@ -1,35 +1,25 @@
 # Setup RaspberryPi 
 
-Erstellt am 28.10.2020 für Raspberry Pi 3 Model B+.
+Erstellt am 12.11.2020 für Raspberry Pi 3 Model B+.
 
-Ziel ist eine Temperaturmessung und die Darstellung der Werte über ein Handy durch ansurfen einer Web-Page welche auf den Django-Entwicklungsserver auf dem RaspberryPi läuft.
-
+Ziel ist eine Temperaturmessung und die Darstellung der Werte über ein Handy durch "ansurfen" einer Web-Page welche auf den Django-Entwicklungsserver auf dem RaspberryPi läuft.
 
 # Installation
 SD-Karte formatieren im FAT32 Format über Windows-Explorer. Wenn SD-Card grösser als 32 GByte, so wird ein zusätzliches Tool benötigt wie z.B. [AOMEI Partition Assistant Standard Edition](https://www.diskpart.com/de/download-home.html) um mit dem erforderliche FAT32 Format formatieren zu können.
-
-Es gibt zwei Möglichkeiten den Raspberry Pi (RPI) in Betrieb zu nehmen. Sofern möglich sollte a) verwendet werden!
-a) Mit Bildschirm und Tastatur am RPI angeschlossen
-b) Headless, d.h. ohne Bildschirm und Tastatur.
-
 Wir schreiben die Installationsdateien auf die SD-Karte mit **Raspberry Pi Imager** von [www.raspberrypi.org](http://www.raspberrypi.org). Wir verwenden nicht NOOBS oder Raspbian. Falls das Imager-Programmfester ausserhalb des Bildschirms ist, kann dieses mit [Alt+Tab] angewählt und mit [Alt+Space] verschoben (Move) werden.
 
 Schreiben der SD-Karte dauert etwas länger....
 
+Es gibt zwei Möglichkeiten den Raspberry Pi (RPI) in Betrieb zu nehmen. Sofern möglich sollte b) verwendet werden!
+a) Headless, d.h. ohne Bildschirm und Tastatur.
+b) Mit Bildschirm und Tastatur am RPI angeschlossen
 
-### a) Mit Bildschirm und Tastatur
-Wir stecken die SD-Karte in den RPI und starten diesen. Wir folgen den Installationsanweisungen. Wichtig kein Update! Dies machen wir später. Wir öffnen die Konsole auf dem RPI um die IP-Adresse des RPI's herauszufinden. Dies geht mit folgendem Kommando:
+### a) Headless
+Dieser Teil ist nur relevant wenn kein Bildschirm und keine Tastatur angeschlossen sind, weil wir dann über Fernzugriff den Raspberry (RPI) bedienen werden um die Installation durchführen zu können. Hierzu müssen wir auf die Konsole des RPIs zugreifen. Dies wird über **ssh"**, d.h. Secure Shell durchgeführt. Auf unserem Rechner/Notebook starten wir  die Windowskonsole (oder anderes ssh-Programme wie putty) und  stellen eine sichere Verbindung zu RPI her und können dann auf unserem Rechner/Notbook Kommandos eingeben welche dirket auf dem RPI ausführt werden.
+Zuerst müssen wir auf dem RPI einen ssh-Zugriff freigeben. Die teilen wir dem RPI mit, indem wir eine leere Datei mit dem Namen "ssh" auf der SD-Karte speichern. Später beim Starten des RPI erkennt der RPI über die Datei, dass der ssh-Zugriff aktiviert werden soll (nach freischalten löscht der RPI die Datei). 
 
-```
-ifconfig
-```
-
-Nun gehen wir zum Rechner/Notebook und laden den "real VNC Viewer" aus dem Internet und installieren diesen auf dem Rechner/Notebook. Wir verbinden uns vom Rechner/Notebook zum RPI über die IP-Adresse des RPI und sind mit dem Rechner/Notebook auf dem Desktop des RPI. Ab nun können wir **remote** auf dem RPI arbeiten, ohne Bildschirm und Tastatur am RPI.
-
-Anschliessend fahren wir fort nach der Beschreibung unten in diesem Dokument "Weitere Einstellungen".
-
-### b) Headless
-Dieser Teil ist nur relevant wenn kein Bildschirm angeschlossen wird. Wir aktivieren einen ssh-Zugriff auf den RPI indem wir eine leere Datei mit den Namen "ssh" auf der SD-Karte speichern. Später beim Starten des RPI erkennt dieser über die Datei, dass der ssh-Zugriff aktiviert werden soll. Das Anlegen der Datei machen wir über die Windows-Konsole. Wir wechseln auf die SD-Karte (falls SD-Karte nicht im Dateimanager angezeigt wird, nochmals neu einstecken) und erzeugen eine leere Date durch:
+??
+Das Anlegen der ssh-Datei machen wir über die Windows-Konsole. Wir wechseln auf die SD-Karte (falls SD-Karte nicht im Dateimanager angezeigt wird, nochmals neu einstecken) und erzeugen eine leere Date durch:
 
 ```
 NUL >> ssh
@@ -80,6 +70,20 @@ Wir wählen die Interface-Optionen und aktivieren die VNC-Verbindung.
 
 
 Nun laden wir den **"real VNC Viewer"** (nicht VNC Server) aus dem Internet und installieren diesen. Wir verbinden uns zum RPI über die IP-Adresse und sind auf dem Desktop des RPI. Wir folgen den Installationsanweisungen. Nicht das WLAN wechseln, sonst verlieren wir die VNC-Remote-Verbindung. **Wichtig** kein Update! Dies machen wir später.
+
+### b) Mit Bildschirm und Tastatur
+
+Wir stecken die SD-Karte in den RPI und starten diesen. Wir folgen den Installationsanweisungen. Wichtig kein Update! Dies machen wir später. Wir öffnen die Konsole auf dem RPI um die IP-Adresse des RPI's herauszufinden. Dies geht mit folgendem Kommando:
+
+```
+ifconfig
+```
+
+Nun gehen wir zum Rechner/Notebook und laden den "real VNC Viewer" aus dem Internet und installieren diesen auf dem Rechner/Notebook. Wir verbinden uns vom Rechner/Notebook zum RPI über die IP-Adresse des RPI und sind mit dem Rechner/Notebook auf dem Desktop des RPI. Ab nun können wir **remote** auf dem RPI arbeiten, ohne Bildschirm und Tastatur am RPI.
+
+Anschliessend fahren wir fort nach der Beschreibung unten in diesem Dokument "Weitere Einstellungen".
+
+### 
 
 ## Weitere Einstellungen
 
@@ -240,7 +244,7 @@ Für I2C ist eine Datenleitung (SDA=Serial Data) und eine Clock-Leitung (SCL=Ser
 | 3V3  | Pin 1          | Pin 17   (rot)           |
 | SDA  | Pin 3 - GPIO 2 | Pin 16 - GPIO 23  (gelb) |
 | SLC  | Pin 5 - GPIO 3 | Pin 18 - GPIO 24  (grau) |
-| GND  | Pin 7          | Pin 20   (schwarz)       |
+| GND  | Pin 6          | Pin 20   (schwarz)       |
 
 Wir müssen dem Betriebssystem des RPI mitteilen, dass wir eine zweite I2C-Schnittstelle betreiben möchten. Dies erfolgt in der Datei **/boot/config.txt**. Hierfür müssen wir den Editor mit root-Rechte öffnen, sodass wir Änderungen abspeichern dürfen. Hierfür geben wir folgendes auf der RPI-Konsole ein:
 
