@@ -82,7 +82,9 @@ Das Template beinhaltet die Darstellung, das Design der Webpage. Dieses Template
 
 Unter Models werden die Informationen verstanden. Diese werden als Daten in einer Datenbank abgelegt. Um auf die Daten zugreifen zu können sind Datenbankabfragen wie z.B. SQL notwendig, welche kompliziert sind und Django soll jedoch einfach und schnell umsetzbar sein. Deshalb wird die Information als ein "Model" definiert um so auf die Daten zugreifen zu können unabhängig der Datenbankstruktur im Hintergrund. Modelle werden wir erst im Tutorial "Visualisierung 2" vorstellen.
 
-Nun werden wir in drei Schritten eine Webpage erstellen. Zuerst richten wir und die Werkstatt ein (Leitsatz 3) um effektiv und wirksam (Leitsatz 2) arbeiten zu können. Anschliessend erstellen wir ein Django-Projekt, die eigentliche Webpage. Als dritten Schritt veröffentlichen wir die Webpage, sodass diese eine Wirkung hat (Leitsatz 1).
+Nun werden eine Webpage erstellen. Zuerst richten wir und die Werkstatt ein (Leitsatz 3) um effektiv und wirksam (Leitsatz 2) arbeiten zu können. Anschliessend erstellen wir ein Django-Projekt, die eigentliche Webpage. 
+
+Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org/) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages bietet DjangoGirls den flüssigsten Einstieg in Django. Beim Tutorial der DjangoGirls ist auch beschrieben, wie die lokal erstellte Webpage ins Internet veröffentlicht werden kann über den kostenfreien Django-Server [pythonanywhere](https://www.pythonanywhere.com/).
 
 # 1. Einrichten der Werkstatt
 
@@ -105,8 +107,11 @@ Nun starten wir die virtuelle Umgebung in unserem Projektverzeichnis mit
 Damit die verwendeten Versionen auf dem gewünschten Stand sind und dieser dokumentiert ist, erstellen wir eine *neue* Textdatei `requirements.txt`. Darin listen wir die SW-Pakete mit unseren gewünschten Versionen:
 
 ```text
-bokeh~=2.1.1
-django~=3.1.0
+bokeh==2.1.1
+django==2.2.5
+pandas==1.0.5
+matplotlib==3.2.2
+
 ```
 
 Mit ""~= "geben wir an, dass auch kompatible Versionen installiert werden dürfen. Es ist auch "==", ">=" oder "!=" möglich. Nun installieren wir die Programme:
@@ -114,27 +119,6 @@ Mit ""~= "geben wir an, dass auch kompatible Versionen installiert werden dürfe
      pip install -r requirements.txt
 
 Nun sind wir eingerichtet. Mit `pip list`  kannst du die aktuell, installierten Versionen ansehen. 
-
-### GitHub
-
-Als zweiten Schritt installieren wir GitHub ein Tool zur Code-Ablage auf einem Server. Der einfache Einstieg, um git zu lernen ohne Schnick-Schnack findest du [hier](https://rogerdudler.github.io/git-guide/index.de.html). Git ermöglicht uns, dass wir lokal unser Django-Projekt erstellen können und später über GitHub den Code auf einen Produktionsserver ins Internet bringen, zur Veröffentlichung, genannt "deployment". 
-
-Wenn du deine Webpage lokal laufenlassen möchtest, ohne Veröffentlichung, so kannst du diesen Schritt auslassen. 
-
-GitHub Desktop findet man unter [https://git-scm.com/](https://git-scm.com/). Lege ein Username/Passwort an. Wir öffnen GitHub und legen ein neues Repository an mit dem Namen **djangoProjekt** als "Local path" geben wir den existierenden Ordner "D:\djangoProjekt" an. Das ist alles.
-
-![](newRepGitHub.PNG)
-Nun haben ein Repository angelegt, welches wir später mit dem Server synchronisieren können, jedoch gibt es einige Ordner und Dateien welche wir nicht auf den Server stellen möchten, wie z.B. die virtuelle Umgebung mit dem Ordner `.env` oder .bat-Datei, welche wir später erstellen. Dazu legen wir eine neue Datei `.gitignore` im Hauptordner (`djangoProjekt`) des Repos an. Trage mit dem Notepad++ (nicht Editor, weil der ein Dateinamen mit führendem Punkt und ohne Endung nicht speichern kann) die Dateien und Ordner ein, welche nicht synchronisiert werden sollen:
-
-```
-.env
-*.bat
-*.pyc
-__pycache__
-db.sqlite3
-```
-
-Schritt 1 ist getan und die Werkstatt ist eingerichtet. Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages bietet DjangoGirls den flüssigsten Einstieg in Django.
 
 # 2. Lokales Django-Projekt erstellen
 
@@ -180,34 +164,115 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static')
 ```
 
-### urls.py
+ 
 
-Öffne die `energieDigital/urls.py`-Datei und passe den Code an, wie folgt:
+## Webpage Test
+
+Wir wollen eine Webpage "test" erstellen mit dem Link: **127.0.0.1:8000/test**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "testfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die Test-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
+
+
+
+Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "127.0.0.1:8000" verwendet, wir wollen jedoch "127.0.0.1:8000/test", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
 
 ```python
 from django.contrib import admin
 from django.urls import path
-from .views import chart # hier importieren wir unsere Funktion
+from . import views
 
 urlpatterns = [
-    path('', chart),
+    path('test/', views.testfunction),
     path('admin/', admin.site.urls),
-    ]
+]
+
 ```
 
-Hier definieren wir wie die url ausgewertet wird. Wenn wir nicht angeben mit '  ' im Kommando "path('', chart)" wird die Funktion "chart" aufgerufen. Diese ist in der Datei "views.py" definiert, welche wir nun erstellen.
+Wenn diese Adresse beim Server kommt so soll die Python-Funktion "testfunktion" ausgeführt werden. Diese erstellen wir noch in der Datei views.py. Von dort importieren wir diese "testfunktion". Bevor wir die testfunktion in views.py definieren erstellen wir ein html-Template **test.html**. Wenn nicht genauer angegeben sucht Django das html-Template im Ordner `templates`. D.h. wir legen diesen Ordner an.
 
-###  views.py
+    energieDigital
+    └───templates
 
-In der *Views* schreiben wir die Logik unserer Anwendung. Dies ist die Erzeugung eines Diagramm. Wir fügen eine neue Datei  `energieDigital/views.py` hinzu. Hier schreiben wir den Code zur Darstellung der Sinusfunktion als eigene Funktion 'makeChart(nCycle)' in welche der Sinus berechnet wird und das Bokeh-Diagramm erzeugt wird. Es wird noch eine weitere Funktion 'chart(request)' definiert, welche bei einer Anfrage (request) der Webpage ausgeführt wird. Diese Funktion erzeugt (render) den Inhalt der Webpage. Dort definieren wir auch das Design, das Template. Es ist die 'home.html' Datei zu der wir noch kommen.
+Als nächstes erstellen wir eine Datei `test.html`.
+
+```html
+{% load static %}
+<html>
+    <head>
+        <title>Die ist eine Testseite</title>
+    </head>
+    <body>
+        <form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<input type="number" name="nCycleHin" value={{ nCycleZurueck }}>  
+			<br>
+			<img src="{% static "sinus.jpg" %}">
+        <form>        
+    </body>
+</html>
+```
+
+Im html-Code sind zwei Django-Kommandos eingebaut:
+
+{% load static %} Hier wird der Pfadname geladen, wo die statischen Dateien liegen. Diesen haben wir definiert in settings.py mit STATIC_ROOT. Nachfolgend wird der Dateiname mit dem Pfadnamen gebaut durch "{% static "sinus.jpg" %}". Somit können wir später das Projekt auf irgendeinen Server stellen und die Ordnerstruktur passt.
+
+{% csrf_token %} Dies ist eine Sicherungsfunktion von Django, die Cross Site Request Forgery protection. Bei einer Server-Anfrage (request) wird hier ein csrf-Code mitgeschickt. Wenn später über "post" Daten vom Browser zum Server gesendet werden, so wird dieser csrf-Code mit gesendet und der Server, weiss dann dass die erhaltenen Daten sicher sind.
+
+Nun definieren wir die testfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Den Pfadnamen haben wir in settings.py definiert. Von dort importieren wir diesen mit settings.STATIC_ROOT. Mit der Funktion "render" aktualisieren wir die "test.html". Hier können wir auch Daten ans html-Template senden. Die Variablennamen findest du auch im test.html.
+
+```python
+# -*- coding: utf-8 -*-
+from django.shortcuts import render
+import numpy as np
+import matplotlib.pyplot as plt
+from django.conf import settings
+
+def testfunction(request):
+    if request.POST: # wenn "Enter" gedrückt wird
+        dic = request.POST # Werte von Page übernehmen
+        print('mal sehen was das ist: ' + str(dic))
+        nCycle = int(dic['nCycleHin'])
+    else:
+        nCycle = int(0)   
+
+    x = np.linspace(0,2*3.14*nCycle,1000)
+    y = np.sin(x)
+    filename = settings.STATIC_ROOT + 'sinus.jpg'
+    
+    plt.plot(x,y)
+    plt.savefig(filename)
+    plt.clf() # Figure-Objekt schliessen
+    
+    return render(request, 'test.html', {'nCycleZurueck': nCycle})
+```
+
+
+
+## Erweiterung
+
+Wir erweitern das Beispiel:
+
+- Als url definieren wir "127.0.0.1:8000"
+- Diese url ruft die Funktion "chart" auf
+- Das Diagramm wird als html-Code ans Template übergeben mit bokeh
+- Wir verwenden ein fertiges Template von html5up
+
+In urls.py ergänzen wir wie folgt:
+
+```
+urlpatterns = [
+    path('', views.chart),
+    path('test/', views.testfunction),
+    path('admin/', admin.site.urls),
+]
+```
+
+In views.py schreiben wir den Code zur Darstellung der Sinusfunktion als Funktion 'chart' in welche der Sinus berechnet wird und das Bokeh-Diagramm erzeugt wird.
 
 ```python
 from django.shortcuts import render
 from bokeh.plotting import figure
 from bokeh.embed import components
 import numpy as np
-import matplotlib.pyplot as plt
-from django.conf import settings  # Ablageort der static-Files importieren, welches wir in settings definiert haben
+
 
 def chart(request):
     if request.POST: # wenn "Enter" gedrückt wird
@@ -217,11 +282,6 @@ def chart(request):
     else:
         nCycle = int(1)   
 
-    chart = makeChart(nCycle)        
-    return render(request, 'home.html', {'nCycle': nCycle, 'chart': chart})
-
-
-def makeChart(nCycle):
     x = np.linspace(0,100,100)
     y = np.sin(x/100*2*3.1415*nCycle)    
     p1 = figure(plot_width=460, plot_height=200)
@@ -230,21 +290,10 @@ def makeChart(nCycle):
 
     script, div = components(p1)
     chart = script + div
-    
-    # andere Möglichkeit: Diagramm als jpg-Datei in static/images-Ordner ablegen
-    plt.plot(x,y)
-    plt.savefig(settings.STATIC_ROOT+'images/sinus.jpg')
-    
-    
-    return chart
+        
+    return render(request, 'home.html', {'nCycle': nCycle, 'chart': chart})
+
 ```
-
-### Templates
-
-Wenn nicht genauer angegeben sucht Django das html-Template im Ordner `templates`. D.h. wir legen diesen Ordner an.
-
-    energieDigital
-    └───templates
 
 Als nächstes erstellen wir eine Datei `home.html`. Dies ist die stark vereinfachte Version vom Template "Eventually" by HTML5up :
 
@@ -273,7 +322,7 @@ Als nächstes erstellen wir eine Datei `home.html`. Dies ist die stark vereinfac
                         <input type="number" step = 1 min = 1 max = 20 name="nCycle" value={{ nCycle }} style = color:blue>    
                         {{ chart|safe }}
                         <br>
-					  <!-- Diagramm als jpg-Datei, erzeugt über Matplotlib -->
+					  <!-- Diagramm als jpg-Datei, erzeugt über Matplotlib und im Ordner image abgelegt -->
 					  <img src="{% static "images/sinus.jpg" %}" width = 460/>
                     <form>        
                 </div>
@@ -283,7 +332,7 @@ Als nächstes erstellen wir eine Datei `home.html`. Dies ist die stark vereinfac
 </html>
 ```
 
-Dieses referenziert auf css-Datein und js-Dateien. Diese werden im Ordner `static` abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "Eventually" und speichere die beiden Ordner `immages`und `assets` in einem neu angelegten Ordner `static`. Dies ist der Ordner bei dem Django die css-Dateien, Bilder und weitere Dateien zur Darstellung sucht. Die Ordnerstruktur sieht nun wir folgt aus:
+Dieses referenziert auf css-Datein und js-Dateie von diesem Template. Diese werden im Ordner `static` abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "[Eventually](https://html5up.net/eventually)" und speichere die beiden Ordner `immages`und `assets` in einem neu angelegten Ordner `static`. Dies ist der Ordner bei dem Django die css-Dateien, Bilder und weitere Dateien zur Darstellung sucht. Die Ordnerstruktur sieht nun wir folgt aus:
 
 ```
 energieDigital 
@@ -305,11 +354,7 @@ images: {
 
 Speichere im images-Ordner deine gewünschten Hintergrundbilder mit obigen Namen. 
 
-Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Datein von Bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js wobei die Versionsnummer zu beachten ist. 
-
-**Prüfe die installierte Bokeh-Version mit "pip list" und ** passe diese im "home.html" an und achte beim Download der Bokeh-js-Datei auf die richtige Version.
-
-Diese Seite im Bowser aufrufen und rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abspeichern.
+Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Datein von Bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js wobei die Versionsnummer zu beachten ist. **Prüfe die installierte Bokeh-Version mit "pip list" und ** passe diese im "home.html" an und achte beim Download der Bokeh-js-Datei auf die richtige Version. Diese Seite im Bowser aufrufen und rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abspeichern.
 
 Um den Developmentserver von Django zu starten muss auf der Konsole das Kommando `python manage.py runserver` eingegeben werden. Um nicht zeitaufwändig mit in der Konsole zum Projektlordner zu navigieren, die virtuelle Umgebung zu starten und anschliessend der Developmentserver, kann eine bat-Datei angelegt werden mit folgendem Inhalt in der `start.bat` Datei, welche zukünftig das starten übernimmt: 
 
@@ -317,97 +362,6 @@ Um den Developmentserver von Django zu starten muss auf der Konsole das Kommando
 cd ablouterPfadProjektordnerWoManagePyLiegt
 start cmd /T:0E /K ".env\Scripts\activate&&python manage.py runserver"
 ```
-
-# 3. Veröffentlichen
-
-Zuerst laden wir unser Projekt auf GitHub laden (push). Wir veröffentlichen die Webpage auf [pythonannywhere.com](https://www.pythonanywhere.com). Hierfür registrieren wir uns und reservieren den Namen der Webpage.
-
-??ganz oben recht: Account>API Token>Create a new API token??
-
-Beim Start von pythonanywhere landen wir auf dem "Dashboard" wo rechts unten eine Konsole "bash" geöffnet werden kann. Wir laden unser Projekt von Github mit:
-`git clone https://github.com/markstaler/djangoProjekt.git`
-Eingabe GitHub-Name und Passwort wird abgefragt. Falls du später ein Update machen möchtest, so gehe in das djangoProjekt-Verzeichnis und führe folgenden Befehl aus: `git pull`
-
-Unter dem Menüpunkt "Files" rechts oben, kannst du die Ordnerstruktur auf dem Server ansehen, welche wie folgt aussieht:
-
-```
-/home 
-   └─ markstaler
-       ├── .virtualenvs/
-       ├── djangoProjekt/
-              ├── energieDigital
-              ├── ...  
-```
-
-Als nächstes installieren wir die virtuelle Umgebung, dabei geben wir die Pythonversion an (3.7) und den Namen der virtuellen Umgebung (markstaler-env).
-`mkvirtualenv --python=/usr/bin/python3.7 markstaler-env
-Die Orndnerstruktur sieht nun wie folgt aus:
-
-```
-/home 
-   └─ markstaler
-       ├── .virtualenvs/
-       │       └─ markstaler-env
-       ├── djangoProjekt/
-       ├── ...
-```
-
-Auf der Konsole können die Dateien mit "ls" angezeigt werden, wie "dir" bei Windows. Wir wechseln ins Verzeichnis `djangoProjekt` indem wir auf der Konsole "cd dj" eingeben und TABULATOR drücken. Der Verzeichnisname wird vervollständigt! Komfortabel. Nun installieren wir unsere Pakete, die Datei "requirements.txt" kommt von unserem lokalen Projekt:
-`pip3.7 install -r requirements.txt`
-(Achtung auf dem Server/Linux die Version angeben "pip3.7")
-
-```
-/home 
-   └─ markstaler
-       ├── .virtualenvs/
-       │       └─ markstaler-env
-       │             └─ lib
-       │                  └─ python3.7
-       │                       └─ site-packages
-       │                            └─ *meine Pakete*      
-       ├── djangoProjekt/
-       ├── ...
-```
-
-Sollte was beim installieren nicht funktionieren, so können die Pakete gelöscht werden, durch Löschen des Paketordner unter `site-packages` . Navigieren mit oben rechts Menüpunkt "Files".
-
-Wir wechseln von der Bash-Console auf "Web" oben links. "Add a new web app" und wählen **Manual Configuration**, Python3.7. 
-
-Wir ergänzen: 
-
-`Source code: /home/markstaler/djangoProjekt`
-
-`Working directory: /home/markstaler`
-
-Nun wird auf dem Server eine Datei ...wsgi.py angelegt. Diese Datei ist wichtig da hier unser Django mit dem Produktionsserver verbunden wird. wsgi = Python Web Server Gateway Interface. Die Datei enthält neben Django-Einstellungen auch anderes, welches wir löschen. Die Datei sieht dann wie folgt aus, inklusiv Anpassungen für unser Projekt:
-
-```python
-# +++++++++++ DJANGO +++++++++++
-# To use your own django app use code like this:
-import os
-import sys
-
-## assuming your django settings file is at '/home/markstaler/mysite/mysite/settings.py'
-## and your manage.py is is at '/home/markstaler/mysite/manage.py'
-path = '/home/djangoProjekt'
-if path not in sys.path:
-    sys.path.append(path)
-
-os.environ['DJANGO_SETTINGS_MODULE'] = 'energieDigital.settings'
-
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
-```
-
-Wir geben noch den Ort der virtuellen Umgebung an und den URL für static files (/static/) und das Verzeichnis, das wars.
-
-Neustart des Produktionsserver durch "Reload ..." oben.
-
-## Security
-
-Bei pythonanywhere wird der Produktionsserver durch den Anbieter betrieben und Django liegt dahinter. 
-
-Es soll unter Web unten "HTTP to HTTPS" aktivieren werden.
 
 # Zusammenfassung
 
@@ -423,7 +377,7 @@ D:/djangoProjekt
    │     ├── static
    │     │      ├── assets...
    │     │      ├── images...
-   │     │      └─bokeh-1.4.0.min.js
+   │     │      └─bokeh-2.1.1.min.js
    │     ├── templates
    │     │      └─home.html
    │     ├─settings.py
