@@ -15,7 +15,7 @@ a) Headless, d.h. ohne Bildschirm und Tastatur.
 b) Mit Bildschirm und Tastatur am RPI angeschlossen
 
 ### a) Headless
-Dieser Teil ist nur relevant wenn kein Bildschirm und keine Tastatur angeschlossen sind, weil wir dann über Fernzugriff den Raspberry (RPI) bedienen werden um die Installation durchführen zu können. Hierzu müssen wir auf die Konsole des RPIs zugreifen. Dies wird über **ssh"**, d.h. Secure Shell durchgeführt. Auf unserem Rechner/Notebook starten wir  die Windows-Konsole (oder ein anderes ssh-Programm wie putty) und  stellen eine sichere Verbindung zum RPI her und können dann auf unserem Rechner/Notbook Kommandos eingeben welche direkt auf dem RPI ausführt werden.
+Dieser Teil ist nur relevant, wenn kein Bildschirm und keine Tastatur angeschlossen sind, weil wir dann über Fernzugriff den Raspberry (RPI) bedienen werden um die Installation durchführen zu können. Hierzu müssen wir auf die Konsole des RPIs zugreifen. Dies wird über **ssh"**, d.h. Secure Shell durchgeführt. Auf unserem Rechner/Notebook starten wir die Windows-Konsole (oder ein anderes ssh-Programm wie putty) und  stellen eine sichere Verbindung zum RPI her und können dann auf unserem Rechner/Notbook Kommandos eingeben welche direkt auf dem RPI ausführt werden.
 Zuerst müssen wir auf dem RPI den ssh-Zugriff freigeben. Dies teilen wir dem RPI mit, indem wir eine leere Datei mit dem Namen "ssh" auf der SD-Karte speichern. Später beim Starten, erkennt der RPI über die Datei, dass der ssh-Zugriff aktiviert werden soll (nach freischalten löscht der RPI die Datei). 
 Das Anlegen der ssh-Datei machen wir über die Windows-Konsole. Wir wechseln auf die SD-Karte (falls SD-Karte nicht im Dateimanager angezeigt wird, nochmals neu einstecken) und erzeugen eine leere Date durch:
 
@@ -258,7 +258,7 @@ Nun im Detail.
 
 ### a) autostartRPI.desktop
 
-Erstelle eine Datei **`autostartRPI.desktop`** im neu zu erstellenden Ordner **`/home/pi/.config/autostart`**. Hierfür muss beim "Dateimanager>Ansicht>Versteckte anzeigen" aktiviert werden. Inhalt der Datei:
+Erstelle eine Datei **`autostartRPI.desktop`** im neu zu erstellendem Ordner **`/home/pi/.config/autostart`**. Hierfür muss beim "Dateimanager>Ansicht>Versteckte anzeigen" aktiviert werden. Inhalt der Datei:
 
 ```
 [Desktop Entry]
