@@ -93,7 +93,7 @@ Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](ht
 
 # 1. Einrichten der Werkstatt
 
-Für die Installation von Django führen wir folgendes Kommando aus:
+Für die Installation von Django führen wir folgendes Kommando aus, sofern wir mit dem Anaconda Paket arbeiten:
 
 ```
 conda install django
@@ -128,11 +128,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # erstellt Netzwerkverbindu
 s.connect(('1.1.1.1',1)) # fiktiver Internetzugriff
 ip = s.getsockname()[0] # ermittelt IP-Adresse
 
-
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    ip,
-    ]
+ALLOWED_HOSTS = ['127.0.0.1', ip]
 ```
 
 Wir werden ein App erstellen, welches "energieDigital" heisst (gleich wie die Webpage). Diese müssen wir hier registrieren, als neuer Baustein in unserem Baukastensystem.
@@ -153,7 +149,7 @@ Wir verwenden später Informationen welche nicht dynamisch angepasst werden, son
 
 ```python
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static/')
 ```
 
  

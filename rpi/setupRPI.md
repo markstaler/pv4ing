@@ -1,14 +1,23 @@
+
+
 # Setup RaspberryPi 
 
-Erstellt am 12.11.2020 für Raspberry Pi 3 Model B+.
+Erstellt am 26.11.2020 für Raspberry Pi 3 Model B+.
 
-Ziel ist eine Temperaturmessung und die Darstellung der Werte über ein Handy durch "ansurfen" einer Web-Page welche auf den Django-Entwicklungsserver auf dem RaspberryPi läuft.
+Ziel ist eine Temperaturmessung und die Darstellung der Werte über ein Handy durch "ansurfen" einer Web-Page welche über den Django-Entwicklungsserver auf dem RaspberryPi läuft. Inhalt des Tutorials:
+
+- Installation Raspberry Pi (RPI) mit den notwendigen Python-Pakete
+- Ansteuerung Mini-Display PIOLED
+- Auslesen des Multisensor BME680 mit Temperatur, relative Luftfeuchte und Luftdruck
+- Abspeichern der Messdaten in eine csv-Datei und oder einer SQLite-Datenbank
+- Erstellen einer einfachen Webpage zur Darstellung der Messdaten als Diagramm
+- Automatisches Starten des Messung und des Entwicklungsserver für die Webpage beim Einschalten des Raspberry Pis.
 
 # Installation
-SD-Karte formatieren im FAT32 Format über Windows-Explorer. Wenn SD-Card grösser als 32 GByte, so wird ein zusätzliches Tool benötigt wie z.B. [AOMEI Partition Assistant Standard Edition](https://www.diskpart.com/de/download-home.html) um mit dem erforderliche FAT32 Format formatieren zu können.
+SD-Karte formatieren im FAT32 Format über den Windows-Explorer. Wenn SD-Card grösser als 32 GByte, so wird ein zusätzliches Tool benötigt wie z.B. [AOMEI Partition Assistant Standard Edition](https://www.diskpart.com/de/download-home.html) um mit dem erforderliche FAT32 Format formatieren zu können.
 Wir schreiben die Installationsdateien auf die SD-Karte mit **Raspberry Pi Imager** von [www.raspberrypi.org](http://www.raspberrypi.org). Wir verwenden nicht NOOBS oder Raspbian. Falls das Imager-Programmfester ausserhalb des Bildschirms ist, kann dieses mit [Alt+Tab] angewählt und mit [Alt+Space] verschoben (Move) werden.
 
-Schreiben der SD-Karte dauert etwas länger....
+Das Schreiben der SD-Karte dauert etwas länger....
 
 Es gibt zwei Möglichkeiten den Raspberry Pi (RPI) in Betrieb zu nehmen. Sofern möglich sollte b) verwendet werden!
 a) Headless, d.h. ohne Bildschirm und Tastatur.
@@ -16,8 +25,8 @@ b) Mit Bildschirm und Tastatur am RPI angeschlossen
 
 ### a) Headless
 Dieser Teil ist nur relevant, wenn kein Bildschirm und keine Tastatur angeschlossen sind, weil wir dann über Fernzugriff den Raspberry (RPI) bedienen werden um die Installation durchführen zu können. Hierzu müssen wir auf die Konsole des RPIs zugreifen. Dies wird über **ssh"**, d.h. Secure Shell durchgeführt. Auf unserem Rechner/Notebook starten wir die Windows-Konsole (oder ein anderes ssh-Programm wie putty) und  stellen eine sichere Verbindung zum RPI her und können dann auf unserem Rechner/Notbook Kommandos eingeben welche direkt auf dem RPI ausführt werden.
-Zuerst müssen wir auf dem RPI den ssh-Zugriff freigeben. Dies teilen wir dem RPI mit, indem wir eine leere Datei mit dem Namen "ssh" auf der SD-Karte speichern. Später beim Starten, erkennt der RPI über die Datei, dass der ssh-Zugriff aktiviert werden soll (nach freischalten löscht der RPI die Datei). 
-Das Anlegen der ssh-Datei machen wir über die Windows-Konsole. Wir wechseln auf die SD-Karte (falls SD-Karte nicht im Dateimanager angezeigt wird, nochmals neu einstecken) und erzeugen eine leere Date durch:
+Zuerst müssen wir auf dem RPI den ssh-Zugriff freigeben. Dies teilen wir dem RPI mit, indem wir eine leere Datei mit dem Namen "ssh" auf der SD-Karte speichern. Später beim Starten, erkennt der RPI über die Datei, dass der ssh-Zugriff aktiviert werden soll (nach dem Freischalten löscht der RPI die Datei). 
+Das Anlegen der ssh-Datei machen wir über die Windows-Konsole. Wir wechseln auf die SD-Karte (falls SD-Karte nicht im Dateimanager angezeigt wird, nochmals neu einstecken) und erzeugen eine leere Datei durch:
 
 ```
 NUL >> ssh
@@ -49,11 +58,11 @@ Wir stecken die SD-Karte in den RPI und starten diesen. Unter "Mobile hotspot" m
 ssh pi@192.168.137.207
 ```
 
-Den Username haben wir mit "pi" angegeben. Die IP-Adresse passen wir an. Das Standard-Passwort des RPI lautet "raspberry".
+Den Username haben wir mit "pi" angegeben. Die IP-Adresse passen wir an. Das Standard-Passwort des RPIs lautet "raspberry".
 
 ![ssh Verbindung zum RPI](hotspot2.jpg)
 
-Nun aktivieren wir den VNC-Zugriff, sodass wir mit unserem Rechner/Notebook auf den Desktop des RPI zugreifen können. Hierfür geben wir auf der ssh-Konsole folgendes ein:
+Nun aktivieren wir den VNC-Zugriff, sodass wir mit unserem Rechner/Notebook auf den Desktop des RPIs zugreifen können. Hierfür geben wir auf der ssh-Konsole folgendes ein:
 
 ```
 sudo raspi-config
@@ -65,7 +74,7 @@ Wir wählen die Interface-Optionen und aktivieren die VNC-Verbindung.
 
 ![VNC](config2.jpg)
 
-Nun laden wir den **"real VNC Viewer"** (nicht VNC Server) aus dem Internet und installieren diesen. Wir verbinden uns zum RPI über die IP-Adresse und sind auf dem Desktop des RPIs. Wir folgen den Installationsanweisungen. Nicht das WLAN wechseln, sonst verlieren wir die VNC-Remote-Verbindung. **Wichtig** kein Update! Dies machen wir später.
+Nun laden wir den **"real VNC Viewer"** (nicht VNC Server) aus dem Internet und installieren diesen auf unserem Rechner/Notebook. Wir verbinden uns zum RPI über die IP-Adresse und sind auf dem Desktop des RPIs. Wir folgen den Installationsanweisungen. Nicht das WLAN wechseln, sonst verlieren wir die VNC-Remote-Verbindung. **Wichtig** kein Update! Dies machen wir später.
 
 ### b) Mit Bildschirm und Tastatur
 
@@ -104,22 +113,22 @@ siehe: https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=5851. Für Änder
 Zuerst finden wir uns auf dem Desktop des RPIs zurecht. Wir öffnen den Dateimanager und legen einen Ordner `CAS` für uns an unter `/home/pi`. Dort legen wir eine neue Datei **requirements.txt** an um Bibliotheken zu installieren. Wir können als Texteditor "geany" verwenden, welcher bereits auf den RPI installierst ist:
 
 ```
-bokeh 
 django
 pandas
+pysqlite3
 adafruit-circuitpython-ssd1306
 bme680
+matplotlib
+bokeh
 ```
 
-Für die Python-Bibliotheken verwenden wir den Python-Package-Installer "pip3" für Python3. Mir "-r" teilen wir dem Python-Package-Installer mit, dass die Pakete in der Textdatei angegeben sind.
+Für die Python-Bibliotheken verwenden wir den Python-Package-Installer "pip3" für Python3. Mit "-r" teilen wir dem Python-Package-Installer mit, dass die Pakete in der Textdatei angegeben sind.
 
 ```
 sudo pip3 install -r requirements.txt
 ```
 
-Wir arbeiten mit Python 3.x. Um Bibliotheken hierfür zu installieren muss darauf geachtet werden das die "3"-Version verwendet wird. Z.B. **pip3 anstatt pip**. Ohne "3" wird die Version für Python 2.x verwendet. **Der Raspberry benötigt für das System beide Versionen!** Standardmässig wird Python2.x verwendet. Erkennbar durch "python --version", oder "python2 --version".
-
-![RPI SW Pakete installieren](rpi1.jpg)
+Wir arbeiten mit Python 3.x. Um Bibliotheken hierfür zu installieren muss darauf geachtet werden das die "3"-Version verwendet wird. Z.B. **pip3 anstatt pip**. Ohne "3" wird die Version für Python 2.x verwendet. **Der Raspberry benötigt für das System beide Versionen!** Standardmässig wird Python2.x verwendet. Erkennbar durch "python --version", oder "python3 --version".
 
 # PIOLED Display
 
@@ -184,13 +193,13 @@ Für I2C ist eine Datenleitung (SDA=Serial Data) und eine Clock-Leitung (SCL=Ser
 | SLC  | Pin 5 - GPIO 3 | Pin 18 - GPIO 24  (grau) |
 | GND  | Pin 6          | Pin 20   (schwarz)       |
 
-Wir müssen dem Betriebssystem des RPIs mitteilen, dass wir eine zweite I2C-Schnittstelle betreiben möchten. Dies erfolgt in der Datei **/boot/config.txt**. Hierfür müssen wir den Editor mit root-Rechte öffnen, sodass wir die Änderungen abspeichern dürfen. Hierfür geben wir folgendes auf der RPI-Konsole ein:
+Wir müssen dem Betriebssystem des RPIs mitteilen, dass wir eine zweite I2C-Schnittstelle betreiben möchten. Dies erfolgt in der Datei **/boot/config.txt**. Der Editor wird mit root-Rechte geöffnet, sodass die Änderungen abspeichert werden können. Befehl auf RPI-Konsole zum Öffnen des Editors mit Admin-Rechte:
 
 ```
 sudo geany 
 ```
 
-Im Editor Geany unter "öffnen" navigieren wir zur Datei **/boot/config.txt** öffnen diese und ergänzen folgende Zeile. Achtung KEIN Leerzeichen nach dem Kommas.
+Im Editor Geany unter "öffnen" navigieren wir zur Datei **/boot/config.txt** und öffnen diese und ergänzen folgende Zeile. Achtung KEIN Leerzeichen nach dem Kommas.
 
 ```
 dtoverlay=i2c-gpio,bus=2,i2c_gpio_delay_us=1,i2c_gpio_sda=23,i2c_gpio_scl=24
@@ -231,7 +240,6 @@ sensor.set_gas_heater_duration(150)
 sensor.select_gas_heater_profile(0)
 
 while True:  
-
     # Sensor    
     sensor.get_sensor_data() # Anweisung Sensor soll messen
     temp = sensor.data.temperature
@@ -258,13 +266,13 @@ Nun im Detail.
 
 ### a) autostartRPI.desktop
 
-Erstelle eine Datei **`autostartRPI.desktop`** im neu zu erstellendem Ordner **`/home/pi/.config/autostart`**. Hierfür muss beim "Dateimanager>Ansicht>Versteckte anzeigen" aktiviert werden. Inhalt der Datei:
+Erstelle eine Datei **`autostartRPI.desktop`** im neu zu erstellendem Ordner **`/home/pi/.config/autostart`**. Hierfür muss beim "Dateimanager>Ansicht>Versteckte anzeigen" aktiviert werden. Inhalt der Datei **autostartRPI.desktop**:
 
 ```
 [Desktop Entry]
 Encoding=UTF-8
 Name=autostartRPI
-Exec=lxterminal -e "sh /home/pi/energieDigital/startRPI"
+Exec=lxterminal -e "sh /home/pi/CAS/startRPI"
 Icon=lxterminal
 Type=Application
 Categories=Utility;
@@ -276,15 +284,182 @@ lxterminal ist die RPI-Konsole, "-e" bedeutet execute und "sh" heisst die Skript
 
 ### b) startRPI
 
-Wir erstellen die Shelldatei **startRPI**, (ohne Endung) im Ordner **energieDigital** (muss neu angelegt werden). Diese funktioniert wie eine *.bat-Datei unter Windows. In der Datei ist der Befehl "cd...." welcher in unser Verzeichnis wechselt (sicher ist sicher) und anschliessend wird python3 gestartet mit unserem Python-Skript "start.py", welches wir vorhin erstellt haben.
+Wir erstellen die Shelldatei **startRPI**, (ohne Endung) im Ordner **CAS** (muss neu angelegt werden). Diese funktioniert wie eine *.bat-Datei unter Windows. In der Datei ist der Befehl "cd...." welcher in unser Verzeichnis wechselt (sicher ist sicher) und anschliessend wird python3 gestartet mit unserem Python-Skript "start.py", welches wir vorhin erstellt haben.
 
 ```
 #! /bin/sh
-cd /home/pi/energieDigital
+cd /home/pi/CAS
 python3 start.py
 ```
 
 Auch hier müssen die Rechte auf **Jeder** gesetzt werden. Dateimanager>Datei markieren und rechte Maustaste.
 
 ![RPI Rechte setzen](rpi2b.jpg)
+
+# Messdaten speichern
+
+Daten können, direkt lesbar in einer Textdatei gespeichert werden, oder in einer Datenbank.
+
+## Textdatei
+
+Die gemessenen Sensordaten werden in einer Textdatei im  csv-Format gespeichert (csv=Comma-separated values). Aus der Zeit und den Messwerten wird ein Text-String erzeugt, dabei legen wir das Format fest, sodass nur 2 Nachkommastellen abgespeichert werden. Im Text-String erfolgt die Formatierung innerhalb der geschweiften Klammern. Die Werte werden mit der Funktion .format() übergeben.
+
+![](format.jpg)
+
+Anschliessend wird die csv-Datei mit der Python Build-In Funktion open. Hier wird der Dateiname angegeben. Python sucht im Ordner, wo die Python-Skript-Datei abgelegt ist. Ist die Datei noch nicht angelegt, so wird eine neue Datei erzeugt. Mit dem Schalter "a+", wird angegeben das Daten angehängt werden (a=append). + steht für updating (reading and writing). Am Ende muss die Datei geschlossen werden. 
+
+```python
+text = '{0:s}, {1:0.2f}, {2:0.2f}, {3:0.2f}, {4:0.2f}\n'.format(zeit, temp, humi, prea, vocR)
+f = open('messdaten.csv','a+')
+f.write(text)
+f.close()
+```
+
+Dies ist eine schnelle und Speicherplatz sparende Art Daten zu speichern. Nachteil ist, dass nicht zur selben Zeit Daten geschrieben (=gespeichert) und gelesen werden können. Hierbei kann die Datei unlesbar gemacht werden und die Messdaten wären dann verloren. Eine Lösung hierfür ist eine Datenbank.
+
+## Datenbank
+
+Wir verwenden SQLite als Datenbank. Dies ist eine Single File Database mit dem Vorteil das bei einem Backup nur eine Daten gespeichert werden muss. Die Datenbank ermöglicht komplexe Datenbankabfragen über SQL (Structured Query Language). Wir werden die Datenbearbeitung und Analyse in Python durchführen, nicht mit SQL! Demzufolge laden wir die gesamten Daten mit dem Befehl SELECT. Das Schreiben der Daten in die Datenbank erfolgt mit INSERT. Zuvor wird die Datenbank-Tabelle mit CREATE angelegt. Das sind alle drei relevanten SQL-Befehle.
+
+Wir prüfen ob die Datenbankdatei vorhanden ist, wenn nicht wird die Datenbank angelegt. Für die einzelnen Spalten wird das Format definiert. Siehe Formatdefinitionen im Internet unter "sqlite create table", speziell der Parameter UNIQUE.
+
+```python
+import sqlite3 # pip3 install pysqlite3
+
+filename = 'messdaten.sqlite3'
+if not(os.path.isfile(filename)):
+    sql = '''CREATE TABLE tabelle (
+    	zeit DATETIME UNIQUE,
+    	temp REAL,
+    	humi REAL,
+    	prea REAL,
+    	vocR REAL)'''
+    db = sqlite3.connect(filename)
+    cur = db.cursor()
+    cur.execute(sql)
+    db.commit()
+    cur.close()
+    db.close()
+```
+
+Schreiben der Messdaten in die Datenbank:
+
+```python
+zeit = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+sql = '''INSERT INTO tabelle (zeit, temp, humi, prea, vocR) VALUES (
+    strftime("%Y-%m-%d %H:%M:%f", "{0:s}"),
+    {1:0.2f},
+    {2:0.2f},
+    {3:0.2f},
+    {4:0.2f})'''.format(zeit, temp, humi, prea, vocR)
+db = sqlite3.connect(filename)
+cur = db.cursor()
+cur.execute(sql)
+db.commit()
+cur.close()
+db.close() 
+```
+
+Um die Daten in der Datenbank anzusehen eignet sich das Tool **SQLiteBrowser**, zu finden im Internet. Das Auslesen der Daten aus der Datenbank erfolgt über pandas. Die Daten stehen als Dataframe zur Verfügung.
+
+```python
+zeit = dt.datetime.now() - dt.timedelta(days=3) # Daten der letzten 3 Tage
+zeit = zeit.strftime('%Y-%m-%d')
+db = sqlite3.connect(filename)
+df = pd.read_sql_query('SELECT * FROM tabelle WHERE zeit>strftime("%Y-%m-%d","{0:s}")'.format(zeit), db)
+db.close() 
+```
+
+# Lokale Webpage
+
+Nun werden die Daten als Django-Webpage dargestellt über den lokalen Entwicklungsserver welcher auf dem RPI läuft. Wir können unserer bestehendes Projekt auf den RPI kopieren oder wie erzeugen ein neues Projekt wir folgt:
+
+```
+django-admin startproject energieDigital .
+```
+
+Dann folgen Ergänzungen in den beiden Dateien: 
+
+- **settings.py**:  ergänzen unserer App 'energieDigital' bei INSTALLED_APPS. Wir führen den Pfadname für unsere statischen Dateien hinzu: 
+  `STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static/')` 
+- **urls.py**: Importieren der noch zu erstellenden Funktion "chart" aus der Datei views.py: ` from . import view` . Weiter soll beim Aufruf der url die importierte Funktion ausgeführt werden. Hierzu ergänzen wir die urlpatterns um `path('', views.chart)`.
+
+Nun legen wir zwei Ordner an. Der Ordner `templates` für die Datei `home.html`und der Ordner `static`indem das Diagramm als jpg-Datei abgespeichert wird.
+
+```
+energieDigital 
+   ├── static 
+   └── templates
+```
+
+Nun legen wir noch zwei neue Dateien an.
+
+**views.py**
+
+```python
+from django.shortcuts import render
+from django.conf import settings
+import pandas as pd
+import datetime as dt
+import sqlite3
+import matplotlib.pyplot as plt
+
+def chart(request):    
+    zeit = dt.datetime.now() - dt.timedelta(days=3) # Daten der letzten 3 Tage
+    zeit = zeit.strftime('%Y-%m-%d')
+    db = sqlite3.connect('messdaten.sqlite3')
+    df = pd.read_sql_query('SELECT * FROM tabelle WHERE zeit>strftime("%Y-%m-%d","{0:s}")'.format(zeit), db)
+    db.close() 
+    
+    df = df.set_index(df['zeit']) 
+    df.plot(subplots=True)
+    plt.savefig(settings.STATIC_ROOT +'allCharts.jpg', bbox_inches='tight')
+    
+    return render(request, 'home.html')
+```
+
+**home.html**
+
+Diese Datei liegt im Unterordner `templates`.
+
+```html
+{% load static %}
+<html>
+    <head>
+        <title>Energie digital</title>    
+    </head>
+    <body>
+        <img src="{% static "allCharts.jpg" %}">
+    </body>
+</html>
+```
+
+# Autostart - die Zweite
+
+Nun soll die Webpage automatisch mit dem Hochstarten des RPIs gestartet werden. Zusätzlich soll die Webpage mit einem weiteren beliebigen Endgerät aufgerufen werden, über die IP-Adresse des RPIs. Hierfür "erlauben" wir Django diese IP-Adresse. Dies wird in **settings.py** ergänzt:
+
+```python
+import socket
+
+# Ermittelt IP-Adresse
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # erstellt Netzwerkverbindung
+s.connect(('1.1.1.1',1)) # fiktiver Internetzugriff
+ip = s.getsockname()[0] # ermittelt IP-Adresse
+
+ALLOWED_HOSTS = ['127.0.0.1', ip]
+```
+
+**start.py**
+
+In der bereits erstellten Datei start.py werden die Sensoren ausgelesen. Wenn nicht schon umgesetzt, können hier die Messwerte in die Datenbank geschrieben werden. Die Datei sollte im selben Ordner liegen wir die Datei **messdaten.sqlite3** und die Django-Datei **mange.py**. In dieser Datei ergänzen wir folgende Zeilen zur Ermittlung der IP-Adresse und das Starten des Django Entwicklungsservers.
+
+```python
+import subprocess
+import socket
+
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # erstellt Netzwerkverbindung
+s.connect(('1.1.1.1',1)) # fiktiver Internetzugriff
+ip = s.getsockname()[0] # ermittelt IP-Adresse
+subprocess.Popen(['python3', 'manage.py', 'runserver', ip+':8000'])
+```
 
