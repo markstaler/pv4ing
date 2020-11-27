@@ -80,6 +80,18 @@ Nun laden wir den **"real VNC Viewer"** (nicht VNC Server) aus dem Internet und 
 
 Wir stecken die SD-Karte in den RPI und starten diesen. Wir folgen den Installationsanweisungen. Wichtig kein Update! Dies machen wir später. 
 
+## Ab nun Remote!
+
+Das Grundsystem ist auf dem RPI installiert. Ab nun arbeiten wir Remote, d.h. der RPI hat kein Bildschirm oder Tastatur und Maus. Wir verbinden uns Remote auf den RPI über den **real VNC Viewer"** (nicht VNC Server) welcher über das Internet geladen und anschliessend auf dem Rechner installiert wird. 
+
+![remote](remoteRPI.jpg)Um uns mit der RPI zu Verbinden müssen wir die IP-Adresse des Raspberry Pi kennen. Wir öffnen die RPI-Konsole (Terminal) mit der Tastenkombination **Strg+Alt+T** (oder Links oben aufs Icon klicken) und geben folgenden Befehl ein um die IP-Adresse des wlan0 zu erhalten:
+
+```
+ifconfig
+```
+
+Mit VNC können auch Dateien übertragen werden, jedoch einfacher geht es mit sFTP-Tool wie **WinSCP** oder **FileZilla**.
+
 ## Weitere Einstellungen
 
 Wir nehmen folgende Einstellungen vor über das Menü **Einstellungen>Raspberry-Pi-Konfiguration>Schnittstellen**:
