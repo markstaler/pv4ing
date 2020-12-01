@@ -491,4 +491,8 @@ Nach Installation wird das Programm gestartet:
 owncloud
 ```
 
-Hier wird die Serveradresse **https://drive.switch.ch** angegeben und anschliessend führen wir ein Login durch. Nun können noch die zu synchronisierenden Ordner ausgewählt werden und der Datentransfer ist erfolgreich umgesetzt!
+Hier wird die Serveradresse **https://drive.switch.ch** angegeben und anschliessend führen wir ein Login durch. 
+
+![](cloud1.jpg)
+
+Nun können noch die zu synchronisierenden Ordner ausgewählt werden und der Datentransfer ist erfolgreich umgesetzt!
