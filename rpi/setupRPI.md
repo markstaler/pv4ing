@@ -475,3 +475,20 @@ ip = s.getsockname()[0] # ermittelt IP-Adresse
 subprocess.Popen(['python3', 'manage.py', 'runserver', ip+':8000'])
 ```
 
+# Daten- Fernübertragung übers Internet
+
+Das bisher umgesetzte Konzept ermöglicht das Messen von Daten und Darstellen der Ergebnisse über eine Webpage im eigenem WLAN bzw. Heimnetzwerk. Möchte man die Daten über eine längere Distanz übertragen bietet sich das Internet an, jedoch soll der RPI hinter der Firewall des eigenen Modems betrieben werden, d.h. er verbleibt im Heimnetz aus Sicherheitsgründen. Für eine sichere Datenverbindung übers Internet, verwenden wir eine abgesicherte Cloud-Lösung. Auf dem RPI wird ein Ordner angelegt, welcher über die Cloud synchronisiert wird und so können die Daten vom RPI von einen anderen Rechner verwendet werden.
+
+Als Cloud-Dienst verwenden wir [SwitchDrive](https://www.switch.ch/drive/), die Schweizer Cloud-Lösung der Hochschulangehörigen. Dort ist auch die Installation auf dem Rechner beschrieben. Auf dem RPI erfolgt die Installation durch:
+
+```
+sudo apt-get install owncloud-client
+```
+
+Nach Installation wird das Programm gestartet:
+
+```
+owncloud
+```
+
+Hier wird die Serveradresse **https://drive.switch.ch** angegeben und anschliessend führen wir ein Login durch. Nun können noch die zu synchronisierenden Ordner ausgewählt werden und der Datentransfer ist erfolgreich umgesetzt!
