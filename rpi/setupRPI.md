@@ -500,6 +500,6 @@ owncloud
 
 Hier wird die Serveradresse **https://drive.switch.ch** angegeben und anschliessend führen wir ein Login durch. 
 
-![](cloud1.jpg)
+![](cloud.jpg)
 
 Nun können noch die zu synchronisierenden Ordner ausgewählt werden und der Datentransfer ist erfolgreich umgesetzt!
