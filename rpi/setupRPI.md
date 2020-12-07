@@ -14,7 +14,6 @@ Ziel ist eine Temperaturmessung und die Darstellung der Werte über ein Handy du
 - Automatisches Starten des Messung und des Entwicklungsserver für die Webpage beim Einschalten des Raspberry Pis.
 
 # Installation
-SD-Karte formatieren im FAT32 Format über den Windows-Explorer. Wenn SD-Card grösser als 32 GByte, so wird ein zusätzliches Tool benötigt wie z.B. [AOMEI Partition Assistant Standard Edition](https://www.diskpart.com/de/download-home.html) um mit dem erforderliche FAT32 Format formatieren zu können.
 Wir schreiben die Installationsdateien auf die SD-Karte mit **Raspberry Pi Imager** von [www.raspberrypi.org](http://www.raspberrypi.org). Wir verwenden nicht NOOBS oder Raspbian. Falls das Imager-Programmfester ausserhalb des Bildschirms ist, kann dieses mit [Alt+Tab] angewählt und mit [Alt+Space] verschoben (Move) werden.
 
 Das Schreiben der SD-Karte dauert etwas länger....
@@ -144,7 +143,7 @@ Wir arbeiten mit Python 3.x. Um Bibliotheken hierfür zu installieren muss darau
 
 # PIOLED Display
 
-Der Schreck von der Headless-Inbetriebnahme sitzt noch in den Knochen. Für einen zukünftigen Remote-Zugriff müssen wir die IP-Adresse kennen und diesen wollen wir mit dem Display PIOLED anzeigen. Bei Interesse findest du ergänzende Informationen zum PIOLED [hier](https://learn.adafruit.com/adafruit-pioled-128x32-mini-oled-for-raspberry-pi). 
+Der Schreck von der Headless-Inbetriebnahme sitzt noch in den Knochen. Für einen zukünftigen Remote-Zugriff müssen wir die IP-Adresse kennen und diesen wollen wir mit dem Display PIOLED anzeigen. Bei Interesse findest du ergänzende Informationen zum PIOLED [hier](https://learn.adafruit.com/adafruit-pioled-128x32-mini-oled-for-raspberry-pi/usage). 
 
 Wir erstellen ein Python-Skrip namens **start.py**. Als Pythoneditor verwenden wir Entwicklung>mu oder Entwicklung>Thonny Python IDE. Wir Initialisieren das Display und stellen die ip-Adresse dar, sowie die Uhrzeit.
 
@@ -226,6 +225,14 @@ Die Änderungen werden erst nach dem nächsten Start übernommen, d.h. RPI Neust
 ```
 sudo reboot
 ```
+
+Abschliessend sehen wir nach ob die I2C-Schnittstelle den angeschlossenen Sensor findet indem wir die Adressen (als hex) abfragen. "-y" sodass nicht mit "yes" bestätigt werden muss und "2" für die zweite I2C-Schnittstelle.
+
+```
+sudo i2cdetect -y 2
+```
+
+
 
 Aus den Code-Beispielen zum BME680-Breakout habe ich folgende Code-Blöcke für die Initialisierung des Sensors und die Messung entnommen. Dieser Code können wir im Python-Skript **start.py** ergänzen oder ein neues Python-Skript erstellen:
 
