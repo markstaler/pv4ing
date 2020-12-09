@@ -275,7 +275,7 @@ Wir sehen das beim BME680 eine I2C-Schnittstelle über smbus-Bibliothek angelegt
 
 # Autostart
 
-Nun soll das Python-Skript **start.py** automatisch gestartet werden wenn der RPI eingeschalten wird. Hierfür sind zwei Linux-Dateien notwendig:
+Nun soll das Python-Skript **start.py** automatisch gestartet werden wenn der RPI eingeschalten wird. Es gibt unterschiedliche Wege um ein Autostart beim RPI zu implementieren. Wir wollen dass das Python-Programm (start.py) gestartet wird und die gemessenen Werte in der RPI-Konsole, bzw. Terminalfenster dargestellt werden, deshalb muss zuerst das Betriebssystem des RPI mit der Bedienoberfläche Desktop gestartet werden, anschliessend soll die RPI-Konsole als Terminalfenster geöffnet werden und schlussendlich die start.py gestartet werden. Hierfür sind zwei Linux-Dateien notwendig:
 
 a) autostartRPI.desktop: Diese Datei wird beim Start ausgeführt und öffnet ein "LX Terminal"-Fenster, das ist die RPI-Konsole, sodass du später im Betrieb auf dem Desktop die Konsole mit dem Python-Programm siehst. In der Konsole wird die nächste Datei aufgerufen...
 
