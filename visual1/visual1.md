@@ -2,9 +2,9 @@
 
 Um entscheiden oder handeln zu können sind Informationen notwendig. Z.B. Energiemonitoring um die Effizienz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen ebenfalls um Entscheidungen zu fällen. Im Ingenieurwesen sind Informationen in der Regel als ein Diagramm dargestellt. In den beiden Tutorials auf [pv4ing.ch](https://pv4ing.ch) wurden die für uns relevanten Diagramme vorgestellt. Zusätzlich sollte bei einer Visualisierung noch ein erklärender Text hinzu, nicht zu viel aber ein bisschen macht Sinn.
 
-Denken wir an Energiemonitoring, so sollte die Visualisierung günstig sein, d.h. kein zusätzlicher Bildschirm und PC um den Zählerstand darzustellen. Das günstigste Display ist dies, welches wir bereits dabei haben, das Mobil oder ein PC.
+Denken wir an Energiemonitoring, so sollte die Visualisierung günstig sein, d.h. kein zusätzlicher Bildschirm und PC um den Zählerstand darzustellen. Das günstigste Display ist dies, welches wir bereits dabei haben, das Mobil oder ein Notebook.
 
-Deshalb bauen wir nicht ein eigenes GUI (Graphical User Interface), sondern erstellen eine Webpage. Auf der Messeinheit läuft ein Server, welcher die Information als Webpage darstellt. Mit dem Mobil oder dem PC wird dieser Server "angesurft", welcher die Informationen als Webpage über einen Browser darstellt.
+Deshalb bauen wir nicht ein eigenes GUI (Graphical User Interface), sondern erstellen eine Webpage. Auf der Messeinheit (z.B. RaspberryPi) läuft ein Server, welcher die Information als Webpage darstellt. Mit dem Mobil oder dem Notebook wird dieser Server "angesurft", welcher die Informationen als Webpage über einen Browser darstellt.
 
 Dabei ist neben der eigentlichen Information, die Darstellung der Webpage wichtig um eine gute Lesbarkeit auf unterschiedlichen Endgeräten (PC, Notebook, Smartphone) zu erreichen. Dies wird als Responsiv Design bezeichnet.
 
@@ -20,9 +20,9 @@ Das Bauen einer Website kann zu einer sehr aufwändigen Sache werden, vor allem 
 
 3. Für jeden Handgriff das richtige Werkzeug
 
-Der erste Punkt hat nichts mit programmieren oder Webpage zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizzieren. Eine Verschriftlichung der Kernaussage ist sehr empfehlenswert.
+Der erste Punkt hat nichts mit programmieren oder Webpage zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizzieren. Eine Verschriftlichung der Kernaussage ist sehr empfehlenswert! Auch hier zählt: Weniger ist mehr. Ein Konzept mit mehr als einem A4 Papier muss nochmals überarbeitet werden. Ebenfalls wenn das Konzept in einer Datei beschrieben wird.
 
-Beim zweiten Punkt "Effektiv und wirksam" geht es darum in kurzer Zeit eine Webpage zu erstellen mit Wirkung. Wirkung kommt durch Punkt 1, Konzentration auf das Wesentliche und dies zielführend dargestellt. Effektiv heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
+Beim zweiten Punkt "Effektiv und wirksam" geht es darum, in kurzer Zeit eine Webpage zu erstellen, mit Wirkung. Wirkung kommt durch Punkt 1, Konzentration auf das Wesentliche und dies zielführend dargestellt. Effektiv heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
 
 1. Beautiful is better than ugly. 
 
@@ -38,7 +38,7 @@ Es gibt noch weitere Punkte, gib auf der Python Konsole folgendes ein:
 
 `import this`
 
-Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeiten. Das heisst auch das wir nicht dasselbe zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzip wird als "Don't repeat yourself (DRY)" bezeichnet. DRY heisst nicht nur Effizienz indem der Code nur einmal geschrieben wird, sondern heisst auch weniger Fehlermöglichkeiten im Code und bessere Wartbarkeit. Des verwenden wir ein Webframework.
+Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeiten. Das heisst auch, dass wir nicht dasselbe Arbeit zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzip wird als "Don't repeat yourself (DRY)" bezeichnet. DRY heisst nicht nur Effizienz indem der Code nur einmal geschrieben wird, sondern heisst auch weniger Fehlermöglichkeiten, bessere Wartbarkeit, weniger Abhängigkeiten. Deshalb verwenden wir als Werkzeug ein Webframework.
 
 ### Webframework
 
@@ -86,9 +86,9 @@ Nun wird eine Webpage erstellen. Zuerst richten wir und die Werkstatt ein (Leits
 
 ### DjangoGirls
 
-Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org/) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages bietet DjangoGirls den flüssigsten Einstieg in Django. 
+Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org/) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages für einen Django-Einstieg bietet DjangoGirls den flüssigsten Einstieg in Django. 
 
-- Für Einsteiger: Wenn du grundlegendes zum Internet, Konsolen-Kommandos usw. erfahren möchtest empfiehlt sich der Einstieg der Django Girls Tutorials und den verlinkten Videos.
+- Für Einsteiger: Wenn du grundlegendes zum Internet usw. erfahren möchtest empfiehlt sich der Einstieg der Django Girls Tutorials und den verlinkten Videos.
 - Für Fortgeschrittene: Wie die Webpage veröffentlicht wird ist ebenfalls unter "Deployment" in den Tutorial erklärt. Es wird der kostenfreie Django-Server [pythonanywhere](https://www.pythonanywhere.com/) verwendet.
 
 # 1. Einrichten der Werkstatt
@@ -99,9 +99,11 @@ Für die Installation von Django führen wir folgendes Kommando aus, sofern wir 
 conda install django
 ```
 
+Für eine richtige Werkstatt sind noch zwei Punkte notwendig: Erstens eine virtuelle Umgebung und zweitens git, eine "Verzeichnis" bzw. Code-Ablage um als Team gemeinsam an einem SW-Projekt zu arbeiten. Jedoch machen wir dies in einem anderen Tutorial und sehen uns nun die Webpage-Erstellung an.
+
 # 2. Lokales Django-Projekt erstellen
 
-Wir erstellen eine Webpage (Django-Projekt) auf der nur eine Anwendung (App) läuft, ein Diagramm mit einer Sinusfunktion. Wir erstellen ein Django-Projekt  `energieDigital`.
+Wir erstellen ein Webpage-Projekt (Django-Projekt) auf der nur eine Anwendung (App) läuft, ein Diagramm mit einer Sinusfunktion. Wir erstellen ein Django-Projekt  `energieDigital`.
 
     django-admin startproject energieDigital .
 
@@ -131,7 +133,7 @@ ip = s.getsockname()[0] # ermittelt IP-Adresse
 ALLOWED_HOSTS = ['127.0.0.1', ip]
 ```
 
-Wir werden ein App erstellen, welches "energieDigital" heisst (gleich wie die Webpage). Diese müssen wir hier registrieren, als neuer Baustein in unserem Baukastensystem.
+Wir werden eine App erstellen, welches "energieDigital" heisst (gleich wie das Webpage-Projekt). Diese müssen wir hier registrieren, als neuer Baustein in unserem Baukastensystem.
 
 ```python
 INSTALLED_APPS = [
@@ -156,7 +158,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static/')
 
 ## Erste  Seite
 
-Wir wollen ein App "test" erstellen mit dem Link: **127.0.0.1:8000/test**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "testfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die Test-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
+Wir wollen eine App "test" erstellen mit dem Link: **127.0.0.1:8000/test**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "testfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die Test-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
 
 Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "127.0.0.1:8000" verwendet, wir wollen jedoch "127.0.0.1:8000/test", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
 
@@ -233,13 +235,13 @@ def testfunction(request):
 
 ### runserver
 
-Nun starten wir die Webpage und geben auf den Konsole folgendes Kommando ein:
+Nun starten wir die Webpage und geben auf dem Terminal folgendes Kommando ein:
 
 ```
 python manage.py runserver
 ```
 
-Auf der Konsole erscheinen folgende Zeilen. Es wird auch die url-Adresse der Webpage angegeben generiert vom Entwicklungsserver (development server). Dieses geben wir im Browser ein und wir können unsere Seite ansehen.
+Auf dem Terminal erscheinen folgende Zeilen. Es wird auch die url-Adresse der Webpage angegeben generiert vom Entwicklungsserver (development server). Dieses geben wir im Browser ein und wir können unsere Seite ansehen.
 
 ```
 >>python manage.py runserver
@@ -380,7 +382,7 @@ Speichere im images-Ordner deine gewünschten Hintergrundbilder mit obigen Namen
 
 Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Daten von bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js wobei die Versionsnummer zu beachten ist. **Prüfe die installierte bokeh-Version mit "pip list" und ** passe diese im "home.html" und beim Download an. Der download funktioniert durch rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abzuspeichern.
 
-Um den Entwicklungsserver von Django zu starten muss auf der Konsole das Kommando `python manage.py runserver` eingegeben werden. Um nicht zeitaufwändig mit in der Konsole zum Projektordner zu navigieren und über die Konsole den Server zu starten, kann eine Datei `start.bat` angelegt werden, welche zukünftig das Starten übernimmt: 
+Um den Entwicklungsserver von Django zu starten muss auf dem Terminal das Kommando `python manage.py runserver` eingegeben werden. Um nicht zeitaufwändig mit in dem Terminal zum Projektordner zu navigieren und den Server zu starten, kann eine Datei `start.bat` angelegt werden, welche zukünftig das Starten übernimmt: 
 
 ```dos
 cd pfadname
@@ -413,3 +415,4 @@ D:/djangoProjekt
    └─start.bat 
 ```
 
+Dieses Tutorial wurde für den Unterricht **CAS Energie digital** erstellt. Markus Markstaler 2020.
