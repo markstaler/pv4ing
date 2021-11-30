@@ -1,3 +1,5 @@
+
+
 # Setup RaspberryPi 
 
 Erstellt am 26.11.2020 für Raspberry Pi 3 Model B+ für den Unterricht im **CAS Energie digital**.
@@ -30,7 +32,7 @@ Das Anlegen der ssh-Datei machen wir über das Windows-Terminal. Wir wechseln au
 NUL >> ssh
 ```
 
-Als nächstes definieren wir den WLAN-Zugriff des RPIs. Wir erzeugen mit unserem Notebook ein "Mobile hotspot" (unter Settings > Network & Internet). Wir definieren ein eigenen "Network name" und ein "Network password", sowie die WLAN-Frequenz mit 2.4 GHz (sofern möglich). Verwendet einen eigenen Netzwerkname und nicht "setupRPI", sodass wir uns untereinander mit dem WLAN nicht stören.
+Als nächstes definieren wir den WLAN-Zugriff des RPIs. Wir erzeugen mit unserem Notebook ein "Mobile hotspot" (unter Settings > Network & Internet).Wir definieren ein "Network name" und ein "Network password", sowie die WLAN-Frequenz mit 2.4 GHz (sofern möglich):
 
 ![Mobile Hotspot unter Windows 10 einrichten](hotspot.jpg)
 
@@ -129,8 +131,7 @@ django
 pysqlite3
 adafruit-circuitpython-ssd1306
 pimoroni-bme280
-pimoroni-sgp30
-smbus2
+bokeh
 ```
 
 Für die Python-Bibliotheken verwenden wir den Python-Package-Installer "pip3" für Python3. Mit "-r" teilen wir dem Python-Package-Installer mit, dass die Pakete in der Textdatei "requirement.txt" angegeben sind. Hierfür bewegen wir und mit dem Terminal in den Ordner `CAS`  mit den Kommando "cd". Anstatt "dir" gilt bei UNIX "ls" für list. Autocomplete bei Dateinamen mit Tabulator funktioniert ebenfalls.
@@ -191,9 +192,95 @@ while True:
     time.sleep(5)
 ```
 
+# Multisensor
+
+Wir verwenden den Multisensor BME680 von Bosch, welcher Temperatur, relative Luftfeuchtigkeit, Luftdruck und VOC misst. VOC steht für volatile organic compounds, d.h. flüchtige organische Verbindungen oder kohlenstoffhaltige Dämpfe. Beispiel hierfür sind Lösungsmittel, Ausgasung bei Kunststoffen oder Alkohole. Informationen zum Sensor sind [hier](https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-bme680-breakout). 
+
+
+
+Wir lesen die Messwerte digital aus, über den I2C-Bus. Am I2C-Bus haben wir bereits das PIOLED-Display angeschlossen. Wir könnten den BME dazu hängen, d.h. allerdings wir müssten Löten. Wir definieren deshalb eine zweite I2C-Schnittstelle. Die Stiftleiste beim RPI ist durchnummeriert mit Pin 1 bis Pin 40. Einige Pins sind mit GPIO bezeichnet für General Purpose Input Output. Diese können für verschiedene Funktionen verwendet werden. Hier definieren wir die zweite I2C-Schnittstelle.
+
+![Pinout RPI](pinout.jpg)
+
+Für I2C ist eine Datenleitung (SDA=Serial Data) und eine Clock-Leitung (SCL=Serial Clock) notwendig. Hinzu kommt die Sensor-Versorgung mit 3.3V und Ground.
+
+|      | PIOLED         | BME680                   |
+| ---- | -------------- | ------------------------ |
+| 3V3  | Pin 1          | Pin 17   (rot)           |
+| SDA  | Pin 3 - GPIO 2 | Pin 16 - GPIO 23  (gelb) |
+| SLC  | Pin 5 - GPIO 3 | Pin 18 - GPIO 24  (grau) |
+| GND  | Pin 6          | Pin 20   (schwarz)       |
+
+Wir müssen dem Betriebssystem des RPIs mitteilen, dass wir eine zweite I2C-Schnittstelle betreiben möchten. Dies erfolgt in der Datei **/boot/config.txt**. Der Editor wird mit root-Rechte geöffnet, sodass die Änderungen abspeichert werden können. Befehl auf dem RPI-Terminal zum Öffnen des Editors mit Admin-Rechte:
+
+```
+sudo geany 
+```
+
+Im Editor Geany unter "öffnen" navigieren wir zur Datei **/boot/config.txt** und öffnen diese und ergänzen folgende Zeile. Achtung KEIN Leerzeichen nach dem Kommas.
+
+```
+dtoverlay=i2c-gpio,bus=2,i2c_gpio_delay_us=1,i2c_gpio_sda=23,i2c_gpio_scl=24
+```
+
+"bus=2" heisst eine zweite I2C-Schnittstelle auf GPIO 23 für SDA und GPIO 24 für SCL. Die erste I2C-Schnittstelle ist bereits vorgegeben. Der Eintrag sieht wie folgt aus:
+
+![](rpi3.jpg)
+
+Die Änderungen werden erst nach dem nächsten Start übernommen, d.h. RPI Neustarten:
+
+```
+sudo reboot
+```
+
+Abschliessend sehen wir nach ob die I2C-Schnittstelle den angeschlossenen Sensor findet indem wir die Adressen (als hex) abfragen. "-y" sodass nicht mit "yes" bestätigt werden muss und "2" für die zweite I2C-Schnittstelle.
+
+```
+sudo i2cdetect -y 2
+```
+
+Aus den Code-Beispielen zum BME680-Breakout habe ich folgende Code-Blöcke für die Initialisierung des Sensors und die Messung entnommen. Dieser Code können wir im Python-Skript **start.py** ergänzen (oder ein neues Python-Skript erstellen):
+
+```python
+import datetime as dt
+import time
+import bme680 # sudo pip3 install bme680
+import smbus
+
+""" Initialisierung BME680
+ i2c auf Standardkonfiguration: SMBus(1) SDA=GPIO2=Pin3 und SCL=GPIO3=Pin5
+ i2c auf SMBus(2) SDA=GPIO23=Pin16 und SCL=GPIO24=Pin18. Muss beim Rasperry Pi konfiguriert werden unter /boot/config.txt:
+ dtoverlay=i2c-gpio,bus=2,i2c_gpio_delay_us=1,i2c_gpio_sda=23,i2c_gpio_scl=24
+"""
+smbus2 = smbus.SMBus(2)
+sensor = bme680.BME680(bme680.I2C_ADDR_PRIMARY, smbus2)
+sensor.set_humidity_oversample(bme680.OS_2X)
+sensor.set_pressure_oversample(bme680.OS_4X)
+sensor.set_temperature_oversample(bme680.OS_8X)
+sensor.set_filter(bme680.FILTER_SIZE_3)
+sensor.set_gas_status(bme680.ENABLE_GAS_MEAS)
+sensor.set_gas_heater_temperature(320)
+sensor.set_gas_heater_duration(150)
+sensor.select_gas_heater_profile(0)
+
+while True:  
+    # Sensor    
+    sensor.get_sensor_data() # Anweisung Sensor soll messen
+    temp = sensor.data.temperature
+    humi = sensor.data.humidity
+    prea = sensor.data.pressure
+    vocR = sensor.data.gas_resistance/10000  # 10kOhm    
+    zeit = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+  
+    print('%s | %3.1f °C | %3.1f %% | %3.1f hPa | %3.1f voc'%(zeit, temp, humi, prea, vocR))
+    time.sleep(5)
+```
+
+Wir sehen dass, beim BME680 eine I2C-Schnittstelle über smbus-Bibliothek angelegt wird. Beim PIOLED wurde dies über die busio-Bibliothek durchgeführt. Es gibt verschiedene Wege zur Lösung und wir verwenden den Code aus den Hersteller-Beispielen vom BME und PIOLED.
+
 # Autostart
 
-Nun soll das Python-Skript **start.py** automatisch gestartet werden wenn der RPI eingeschalten wird. Es gibt unterschiedliche Wege um ein Autostart beim RPI zu implementieren. Wir wollen dass, das Python-Programm (start.py) gestartet wird und die gemessenen Werte in dem RPI-Terminal dargestellt werden, deshalb muss zuerst das Betriebssystem des RPI mit der Bedienoberfläche "Desktop" gestartet werden, anschliessend soll das RPI-Terminalfenster geöffnet werden und schlussendlich die start.py gestartet werden. Hierfür sind zwei Linux-Dateien notwendig:
+Nun soll das Python-Skript **start.py** automatisch gestartet werden wenn der RPI eingeschalten wird. Es gibt unterschiedliche Wege um ein Autostart beim RPI zu implementieren. Wir wollen dass, das Python-Programm (start.py) gestartet wird und die gemessenen Werte in dem RPI-Terminal dargestellt werden, deshalb muss zuerst das Betriebssystem des RPI mit der Bedienoberfläche Desktop gestartet werden, anschliessend soll das RPI-Terminalfenster geöffnet werden und schlussendlich die start.py gestartet werden. Hierfür sind zwei Linux-Dateien notwendig:
 
 a) autostartRPI.desktop: Diese Datei wird beim Start ausgeführt und öffnet ein "LX Terminal"-Fenster, das ist das RPI-Terminal, sodass du später im Betrieb auf dem Desktop das Terminalfenster mit dem Python-Programm siehst. Im Terminal wird die nächste Datei aufgerufen...
 
@@ -217,9 +304,7 @@ Categories=Utility;
 
 lxterminal ist das RPI-Terminal, "-e" bedeutet execute und "sh" heisst die Skriptdatei "startRPI" ausführen. Für diese Datei müssen wir noch die Rechte setzten durch markieren der Datei im Dateimanager, dann rechte Maustaste>Dateieigenschaften>Berechtigung. Wir setzen alles auf "Jeder":
 
-![](rpi2a.jpg)
-
-Wir sehen wie das Betriebssystem Linux funktioniert. Für alles gibt es eine Datei, welche angibt was passieren soll und Linux ist auch über Ordner organisiert wie am Beispiel "autostart" zu sehen ist. Nach dem Booten und dem Aufstarten des Desktop wird durch den Ordner "autostart" dem Betriebssystem mitgeteilt das ein Programm (das Terminal) gestartet werden soll.
+![RPI Rechte setzen](rpi2a.jpg)
 
 ### b) startRPI
 
@@ -234,76 +319,6 @@ python3 start.py
 Auch hier müssen die Rechte auf **Jeder** gesetzt werden. Dateimanager>Datei markieren und rechte Maustaste.
 
 ![RPI Rechte setzen](rpi2b.jpg)
-
-
-
-# Multisensor
-
-Wir verwenden den Multisensor BME280 von Bosch und den Sensirion-Sensor SGP30. Wir lesen die Messwerte digital aus, über den I2C-Bus. Am I2C-Bus haben wir bereits das PIOLED-Display angeschlossen. Wir könnten die Sensoren dazu hängen, d.h. allerdings müssten wir Löten. Wir definieren deshalb eine zweite I2C-Schnittstelle. Die Stiftleiste beim RPI ist durchnummeriert mit Pin 1 bis Pin 40. Einige Pins sind mit GPIO bezeichnet für General Purpose Input Output. Diese können für verschiedene Funktionen verwendet werden. Hier definieren wir die zweite I2C-Schnittstelle.
-
-![Pinout RPI](pinout.jpg)
-
-Für I2C ist eine Datenleitung (SDA=Serial Data) und eine Clock-Leitung (SCL=Serial Clock) notwendig. Hinzu kommt die Sensor-Versorgung mit 3.3V und Ground.
-
-|      | PIOLED         | I2C-Multisensoren        |
-| ---- | -------------- | ------------------------ |
-| 3V3  | Pin 1          | Pin 17   (rot)           |
-| SDA  | Pin 3 - GPIO 2 | Pin 16 - GPIO 23  (gelb) |
-| SLC  | Pin 5 - GPIO 3 | Pin 18 - GPIO 24  (grau) |
-| GND  | Pin 6          | Pin 20   (schwarz)       |
-
-Wir müssen dem Betriebssystem des RPIs mitteilen, dass wir eine zweite I2C-Schnittstelle betreiben möchten. Dies erfolgt in der Datei **/boot/config.txt**. Der Editor wird mit root-Rechte geöffnet, sodass die Änderungen abspeichert werden können. Befehl auf dem RPI-Terminal zum Öffnen des Editors mit Admin-Rechte:
-
-```
-sudo geany 
-```
-
-Im Editor Geany unter "öffnen" navigieren wir zur Datei **/boot/config.txt** und öffnen diese und ergänzen folgende Zeile. Achtung KEIN Leerzeichen nach dem Kommas.
-
-```
-dtoverlay=i2c-gpio,bus=2,i2c_gpio_delay_us=1,i2c_gpio_sda=23,i2c_gpio_scl=24
-```
-
-"bus=2" heisst eine zweite I2C-Schnittstelle auf GPIO 23 für SDA und GPIO 24 für SCL. Die erste I2C-Schnittstelle ist bereits vorgegeben. Der Eintrag sieht wie folgt aus:
-
-![](rpi3.jpg)
-
-Die Änderungen werden erst **nach dem nächsten Start** übernommen, d.h. RPI Neustarten:
-
-```
-sudo reboot
-```
-
-Abschliessend sehen wir nach ob die I2C-Schnittstelle den angeschlossenen Sensor findet indem wir die Adressen (als hex) abfragen. "-y" sodass nicht mit "yes" bestätigt werden muss und "2" für die zweite I2C-Schnittstelle.
-
-```
-sudo i2cdetect -y 2
-```
-
-Aus den Code-Beispielen zu den Multisensoren habe ich folgende Code-Blöcke für die Messung entnommen. Dieser Code können wir im Python-Skript **start.py** ergänzen (oder ein neues Python-Skript erstellen):
-
-```python
-import time
-import smbus2
-import bme280
-import sgp30
-
-# Initialise
-bus = smbus2.SMBus(2)
-bme280 = bme280.BME280(i2c_dev=bus)
-sgp  = sgp30.SGP30()
-sgp._i2c_dev = bus
-
-while True:
-    temperature = bme280.get_temperature()
-    pressure = bme280.get_pressure()
-    humidity = bme280.get_humidity()
-    co2, voc = sgp.command('measure_air_quality')
-    print('{:5.1f}°C {:5.0f}hPa {:5.0f}% {:5.0f}ppm {:5.0f}ppb'.format(temperature, pressure, humidity, co2, voc))
-    time.sleep(1)
-```
-
-Wir sehen dass, bei den Sensoren eine I2C-Schnittstelle über smbus2-Bibliothek angelegt wird. Beim PIOLED wurde dies über die busio-Bibliothek durchgeführt. Es gibt verschiedene Wege zur Lösung und wir verwenden den Code aus den Hersteller-Beispielen der Sensoren.
 
 # Messdaten speichern
 
@@ -328,7 +343,7 @@ CSV ist eine schnelle und Speicherplatz sparende Art Daten zu speichern. Nachtei
 
 ## Datenbank
 
-Wir verwenden SQLite als Datenbank. Dies ist eine Single File Database mit dem Vorteil das bei einem Backup nur eine Datei gespeichert werden muss. Die Datenbank ermöglicht komplexe Datenbankabfragen über SQL (Structured Query Language). Wir werden die Datenbearbeitung/Analyse in Python durchführen, nicht mit SQL! Demzufolge laden wir die gesamten Daten mit dem Befehl SELECT. Das Schreiben der Daten in die Datenbank erfolgt mit INSERT. Zuvor wird die Datenbank-Tabelle mit CREATE angelegt. Das sind alle drei relevanten SQL-Befehle.
+Wir verwenden SQLite als Datenbank. Dies ist eine Single File Database mit dem Vorteil das bei einem Backup nur eine Daten gespeichert werden muss. Die Datenbank ermöglicht komplexe Datenbankabfragen über SQL (Structured Query Language). Wir werden die Datenbearbeitung/Analyse in Python durchführen, nicht mit SQL! Demzufolge laden wir die gesamten Daten mit dem Befehl SELECT. Das Schreiben der Daten in die Datenbank erfolgt mit INSERT. Zuvor wird die Datenbank-Tabelle mit CREATE angelegt. Das sind alle drei relevanten SQL-Befehle.
 
 Wir prüfen ob die Datenbankdatei vorhanden ist, wenn nicht, wird die Datenbank erzeugt. Für die einzelnen Spalten wird das Format definiert (Formatdefinitionen siehe im Internet unter "sqlite create table", speziell der Parameter UNIQUE).
 
@@ -495,12 +510,3 @@ Hier wird die Serveradresse **https://drive.switch.ch** angegeben und anschliess
 ![](cloud.jpg)
 
 Nun können noch die zu synchronisierenden Ordner ausgewählt werden und der Datentransfer ist erfolgreich umgesetzt!
-
-# Update des RaspberryPi
-
-Wenn nun ausreichend Zeit vorhanden ist, kann das System upgedatet werden. Mit "update" wird die SW-Liste aktualisiert und mit "upgrade" werden die neuen Versionen geladen und installiert:
-
-```
-sudo apt-get update
-sudo apt-get full-upgrade
-```
