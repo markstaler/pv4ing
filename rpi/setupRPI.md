@@ -1,6 +1,6 @@
 # Setup RaspberryPi 
 
-Erstellt am 26.11.2020 für Raspberry Pi 3 Model B+ für den Unterricht im **CAS Energie digital**.
+Erstellt am 15.12.2021 für Raspberry Pi 3 Model B+ für den Unterricht im **CAS Energie digital**.
 
 Ziel ist mit dem RaspberryPi eine Luftmessstation zu bauen. Die Messwerte für Temperatur, Feuchte, Luftdruck werden über ein Handy durch "ansurfen" einer Web-Page dargestellt. Die Webpage läuft über den Django-Entwicklungsserver auf dem RaspberryPi. Inhalt des Tutorials:
 
@@ -13,6 +13,8 @@ Ziel ist mit dem RaspberryPi eine Luftmessstation zu bauen. Die Messwerte für T
 
 # Installation
 Wir schreiben die Installationsdateien auf die SD-Karte mit **Raspberry Pi Imager** von [www.raspberrypi.org](http://www.raspberrypi.org). Wir verwenden nicht NOOBS oder Raspbian. Falls das Imager-Programmfester ausserhalb des Bildschirms ist, kann dieses mit [Alt+Tab] angewählt und mit [Alt+Space] verschoben (Move) werden.
+
+**Wichtig!** Im November 2021 erfolgte die neue OS-Version "Debian Bullseye", welche derzeit noch für uns relevante Bugs hat (VNC-Auflösung, 2nd I2C-Port, owncloud), d.h. installiere **Raspberry Pi OS (other) > Raspberry Pi OS (Legacy)** basierden dem "Debian Buster".
 
 Das Schreiben der SD-Karte dauert etwas länger....
 
@@ -239,7 +241,7 @@ Auch hier müssen die Rechte auf **Jeder** gesetzt werden. Dateimanager>Datei ma
 
 # Multisensor
 
-Wir verwenden den Multisensor BME280 von Bosch und den Sensirion-Sensor SGP30. Wir lesen die Messwerte digital aus, über den I2C-Bus. Am I2C-Bus haben wir bereits das PIOLED-Display angeschlossen. Wir könnten die Sensoren dazu hängen, d.h. allerdings müssten wir Löten. Wir definieren deshalb eine zweite I2C-Schnittstelle. Die Stiftleiste beim RPI ist durchnummeriert mit Pin 1 bis Pin 40. Einige Pins sind mit GPIO bezeichnet für General Purpose Input Output. Diese können für verschiedene Funktionen verwendet werden. Hier definieren wir die zweite I2C-Schnittstelle.
+Wir verwenden den Multisensor BME280 von Bosch. Wir lesen die Messwerte digital aus, über den I2C-Bus. Am I2C-Bus haben wir bereits das PIOLED-Display angeschlossen. Wir könnten die Sensoren dazu hängen, d.h. allerdings müssten wir Löten. Wir definieren deshalb eine zweite I2C-Schnittstelle. Die Stiftleiste beim RPI ist durchnummeriert mit Pin 1 bis Pin 40. Einige Pins sind mit GPIO bezeichnet für General Purpose Input Output. Diese können für verschiedene Funktionen verwendet werden. Hier definieren wir die zweite I2C-Schnittstelle.
 
 ![Pinout RPI](pinout.jpg)
 
@@ -286,20 +288,16 @@ Aus den Code-Beispielen zu den Multisensoren habe ich folgende Code-Blöcke für
 import time
 import smbus2
 import bme280
-import sgp30
 
 # Initialise
 bus = smbus2.SMBus(2)
 bme280 = bme280.BME280(i2c_dev=bus)
-sgp  = sgp30.SGP30()
-sgp._i2c_dev = bus
 
 while True:
     temperature = bme280.get_temperature()
     pressure = bme280.get_pressure()
     humidity = bme280.get_humidity()
-    co2, voc = sgp.command('measure_air_quality')
-    print('{:5.1f}°C {:5.0f}hPa {:5.0f}% {:5.0f}ppm {:5.0f}ppb'.format(temperature, pressure, humidity, co2, voc))
+    print('{:5.1f}°C {:5.0f}hPa {:5.0f}%'.format(temperature, pressure, humidity))
     time.sleep(1)
 ```
 
@@ -318,7 +316,7 @@ Die gemessenen Sensordaten werden in einer Textdatei im  csv-Format gespeichert 
 Anschliessend wird die csv-Datei mit der Python Build-In Funktion open erstellt/geöffnet. Hier wird der Dateiname angegeben. Python sucht im Ordner, wo die Python-Skript-Datei abgelegt ist. Ist die Datei noch nicht angelegt, so wird eine neue Datei erzeugt. Mit dem Schalter "a+", wird angegeben dass Daten angehängt werden,  "a" für append, "+" für updating (reading and writing). Am Ende muss die Datei geschlossen werden. 
 
 ```python
-text = '{0:s}, {1:0.2f}, {2:0.2f}, {3:0.2f}, {4:0.2f}\n'.format(zeit, temp, humi, prea, vocR)
+text = '{0:s}, {1:0.2f}, {2:0.2f}, {3:0.2f}\n'.format(zeit, temp, humi, prea)
 f = open('messdaten.csv','a+')
 f.write(text)
 f.close()
@@ -341,8 +339,7 @@ if not(os.path.isfile(filename)):
     	zeit DATETIME UNIQUE,
     	temp REAL,
     	humi REAL,
-    	prea REAL,
-    	vocR REAL)'''
+    	prea REAL)'''
     db = sqlite3.connect(filename)
     cur = db.cursor()
     cur.execute(sql)
@@ -355,12 +352,11 @@ Schreiben der Messdaten in die Datenbank:
 
 ```python
 zeit = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-sql = '''INSERT INTO tabelle (zeit, temp, humi, prea, vocR) VALUES (
+sql = '''INSERT INTO tabelle (zeit, temp, humi, prea) VALUES (
     strftime("%Y-%m-%d %H:%M:%f", "{0:s}"),
     {1:0.2f},
     {2:0.2f},
-    {3:0.2f},
-    {4:0.2f})'''.format(zeit, temp, humi, prea, vocR)
+    {3:0.2f}'''.format(zeit, temp, humi, prea)
 db = sqlite3.connect(filename)
 cur = db.cursor()
 cur.execute(sql)
