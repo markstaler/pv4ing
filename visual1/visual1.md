@@ -1,6 +1,6 @@
 # Visualisierung 1
 
-Um entscheiden und handeln zu können sind Informationen notwendig. Z.B. Energiemonitoring um die Effizienz zu beurteilen oder ein Niederschlagradar um eine geeignete Tourenwahl zu treffen. Werden Berechnungen oder Modellierungen ausgeführt so helfen diese Informationen ebenfalls um Entscheidungen zu fällen. Im Ingenieurwesen sind Informationen in der Regel als ein Diagramm dargestellt. In den beiden Tutorials auf [pv4ing.ch](https://pv4ing.ch) wurden die für uns relevanten Diagramme vorgestellt. Zusätzlich sollte bei einer Visualisierung noch ein erklärender Text hinzu, nicht zu viel aber ein bisschen macht Sinn.
+Um entscheiden und handeln zu können sind Informationen notwendig. Berechnungen oder Modellierungen generieren Informationen in der Regel als Diagramm. Dies ist es was wir mit einer Visualisierung machen; ein Diagramm und noch ein erklärender Text hinzu, nicht zu viel aber ein bisschen macht Sinn.
 
 Denken wir an Energiemonitoring, so sollte die Visualisierung günstig sein, d.h. kein zusätzlicher Bildschirm und PC um den Zählerstand darzustellen. Das günstigste Display ist dies, welches wir bereits dabei haben, das Mobil oder ein Notebook.
 
@@ -12,33 +12,11 @@ Dabei ist neben der eigentlichen Information, die Darstellung der Webpage wichti
 
 ### Leitsatz
 
-Das Bauen einer Website kann zu einer sehr aufwändigen Sache werden, vor allem wenn wir uns in der Gestaltung verlieren. Deshalb einige Leitsätze:
+Das Bauen einer Website kann zu einer sehr aufwändigen Sache werden, vor allem wenn wir uns in der Gestaltung verlieren. Deshalb ist ein Leitsatz wichtig **Konzentration auf das Wesentliche: Was ist die Kernaussage der Webpage? Design wird "zugekauft"**
 
-1. Konzentration auf das Wesentliche: Was ist die Kernaussage der Webpage? Design wird "zugekauft"
+Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizzieren. Eine Verschriftlichung der Kernaussage ist sehr empfehlenswert! Auch hier zählt: Weniger ist mehr. Ein Konzept mit mehr als einem A4 Papier muss nochmals überarbeitet werden. 
 
-2. Effektiv und wirksam
-
-3. Für jeden Handgriff das richtige Werkzeug
-
-Der erste Punkt hat nichts mit programmieren oder Webpage zu tun.  Hierfür nimmt man Papier und Bleistift um die Kernaussage zu skizzieren. Eine Verschriftlichung der Kernaussage ist sehr empfehlenswert! Auch hier zählt: Weniger ist mehr. Ein Konzept mit mehr als einem A4 Papier muss nochmals überarbeitet werden. Ebenfalls wenn das Konzept in einer Datei beschrieben wird.
-
-Beim zweiten Punkt "Effektiv und wirksam" geht es darum, in kurzer Zeit eine Webpage zu erstellen, mit Wirkung. Wirkung kommt durch Punkt 1, Konzentration auf das Wesentliche und dies zielführend dargestellt. Effektiv heisst Einfachheit im Aufbau mit wenig Code. Dies wird durch Python unterstützt da Python selbst dieses Ziel verfolgt beschrieben als "The Zen of Python":
-
-1. Beautiful is better than ugly. 
-
-2. Explicit (ausdrücklich) is better than implicit (indirekt).
-
-3. Simple is better than complex. 
-
-4. Complex is better than complicated. 
-
-5. Flat is better than nested (verschachtelt).
-
-Es gibt noch weitere Punkte, gib auf der Python Konsole folgendes ein:
-
-`import this`
-
-Der dritte Punkt "die richtigen Werkzeuge" zu verwendet unterstützt ein effektives arbeiten. Das heisst auch, dass wir nicht dasselbe Arbeit zweimal machen. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzip wird als "Don't repeat yourself (DRY)" bezeichnet. DRY heisst nicht nur Effizienz indem der Code nur einmal geschrieben wird, sondern heisst auch weniger Fehlermöglichkeiten, bessere Wartbarkeit, weniger Abhängigkeiten. Deshalb verwenden wir als Werkzeug ein Webframework.
+Um bei den Webfunktionalitäten nicht alles von Grund auf zu entwickeln verwenden wir ein Webframework. Ein geschriebener Code sollte mehrmals für unterschiedliche Webpages einsetzbar sein. Dieses Prinzip wird als "Don't repeat yourself (DRY)" bezeichnet. Wenig neugeschriebenen Code heisst auch weniger Fehlermöglichkeiten, bessere Wartbarkeit, weniger Abhängigkeiten.
 
 ### Webframework
 
@@ -76,172 +54,51 @@ In der allgemeinen Literatur wird das Django-MTV-Modell häufiger als MVC-Modell
 
 #### Template
 
-Das Template beinhaltet die Darstellung, das Design der Webpage. Dieses Template werden wir nicht bauen, sondern fertig beziehen. Beispiel für eine Quelle ist [www.html5up.net](http://www.html5up.net).
+Das Template beinhaltet die Darstellung, das Design der Webpage. Dieses Template werden wir nicht bauen, sondern fertig beziehen. Beispiel für eine Quelle ist [www.html5up.net/eventually](http://www.html5up.net/eventually).
 
 #### Models
 
 Unter Models werden die Informationen verstanden. Diese werden als Daten in einer Datenbank abgelegt. Um auf die Daten zugreifen zu können sind Datenbankabfragen wie z.B. SQL notwendig, welche kompliziert sind und Django soll jedoch einfach und schnell umsetzbar sein. Deshalb wird die Information als ein "Model" definiert umso auf die Daten zugreifen zu können unabhängig der Datenbankstruktur im Hintergrund. Modelle werden wir  in diesem Tutorial nicht behandeln.
 
-Nun wird eine Webpage erstellen. Zuerst richten wir und die Werkstatt ein (Leitsatz 3) um effektiv und wirksam (Leitsatz 2) arbeiten zu können. Anschliessend erstellen wir ein Django-Projekt, die eigentliche Webpage. 
-
 ### DjangoGirls
 
 Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org/) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages für einen Django-Einstieg bietet DjangoGirls den flüssigsten Einstieg in Django. 
 
-- Für Einsteiger: Wenn du grundlegendes zum Internet usw. erfahren möchtest empfiehlt sich der Einstieg der Django Girls Tutorials und den verlinkten Videos.
-- Für Fortgeschrittene: Modelle in Django und veröffentlichen, d.h. "Deployment"  wird ebenfalls in den DjangoGirls-Tutorial erklärt.
+# 1. Installation
 
-# 1. Einrichten der Werkstatt
-
-Für die Installation von Django führen wir folgendes Kommando aus, sofern wir mit dem Anaconda Paket arbeiten:
+Für die Installation von Django führen wir folgendes Kommando aus, sofern wir mit dem Anaconda Paket arbeiten. Wir öffnen das System-Terminal (bei Windows: Windowstaste und dann cmd eingeben). Der Package-Manager "conda" können wir von einem beliebigem Ordner aus aufrufen weil Conda das Django-Programm an der richtigen Stelle installiert.
 
 ```
 conda install django
 ```
 
-Für eine richtige Werkstatt sind noch zwei Punkte notwendig: Erstens eine virtuelle Umgebung und zweitens git, eine "Verzeichnis" bzw. Code-Ablage um als Team gemeinsam an einem SW-Projekt zu arbeiten. Jedoch machen wir dies in einem anderen Tutorial und sehen uns nun die Webpage-Erstellung an.
+
 
 # 2. Lokales Django-Projekt erstellen
 
-Wir erstellen ein Webpage-Projekt (Django-Projekt) auf der nur eine Anwendung (App) läuft, ein Diagramm mit einer Sinusfunktion. Wir erstellen ein Django-Projekt  `energieDigital`.
+Wir erstellen ein Webpage-Projekt auf der nur eine Anwendung (App) läuft, ein Diagramm mit einer Sinusfunktion, dabei kann die Anzahl Perioden eingegeben werden und anschliessend wird ein Diagramm erstellt mit der Sinusfunktion.
+
+![](sinusPage.jpg)
+
+
+
+Wir erstellen einen neuen Ordner `myPage` und gehen mit dem System-Terminal in diesen Ordner. Dort rufen wird das Django-Programm "django-admin" auf, welches uns das Webpage-Projekt anlegt, dabei müssen wir den Namen des Webpage-Projekt angeben (energieDigital).
 
     django-admin startproject energieDigital .
 
-Der Punkt `.` ist sehr wichtig, weil er dem Skript mitteilt, dass Django im aktuellen Verzeichnis installiert werden soll. Ansonst würde ein Ordner mit dem Projektnamen angelegt und darunter das Projekt.
+Der Punkt `.` ist sehr wichtig, weil er dem Django-Programm mitteilt, dass im aktuellen Verzeichnis das Webpage-Projekt installiert werden soll. Ansonst würde ein Ordner mit dem Projektnamen angelegt und darunter das Projekt.
 
-Django organisiert sich mit einer Ordnerstruktur worin vordefinierte Dateien liegen. Somit weiss Django wo welche Informationen, Funktionen und Daten liegen ohne dass wir dieses genauer angeben müssen. Die relevanten Dateien sind:
-
-- settings.py: für Einstellungen
-- urls.py: für die Auswertung der eingehenden urls und dem Starten der notwendigen Funktionen
-- views.py: Dort wird die Webpage "zusammengebaut". Diese Datei legen wir neu an.
-- *.html: Das Template mit dem Design
-
-Sieh dir die Ordnerstruktur und die Dateien an. Wir machen einige Anpassungen im vordefinierten Projekt.
-
-### Einstellungen
-
-In der Datei "settings.py" werden die Grundeinstellung der Webpage vorgenommen. Wir werden später die Seite als "localhost" mit 127.0.0.1 aufrufen oder über die ip-Adresse des Rechners auf dem der Entwicklungsserver läuft. Um die ip-Adresse zu ermittelt importieren wir die Bibliothek "socket". Anschliessend kommen die drei Code-Zeilen zur ip-Adressermittlung hinzu. Bei "ALLOWED_HOSTS" ergänzen wir die zwei ip-Adressen.
-
-```python
-import socket
-
-# Ermittelt IP-Adresse
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # erstellt Netzwerkverbindung
-s.connect(('1.1.1.1',1)) # fiktiver Internetzugriff
-ip = s.getsockname()[0] # ermittelt IP-Adresse
-
-ALLOWED_HOSTS = ['127.0.0.1', ip]
-```
-
-Wir werden eine App erstellen, welches "energieDigital" heisst (gleich wie das Webpage-Projekt). Diese müssen wir hier registrieren, als neuer Baustein in unserem Baukastensystem.
-
-```python
-INSTALLED_APPS = [
-'django.contrib.admin',
-'django.contrib.auth',
-'django.contrib.contenttypes',
-'django.contrib.sessions',
-'django.contrib.messages', 
-'django.contrib.staticfiles',
-'energieDigital',
-]
-```
-
-Wir verwenden später Informationen welche nicht dynamisch angepasst werden, sondern statisch sind, wie z.B. Bilder oder Darstellungscode (CSS, JS). Hierfür definieren wir die Webadresse für den Server (STATIC_URL) und den Ordner (STATIC_ROOT) worin diese Dateien abgelegt werden. Den Ordner "static" legen wir dann später noch an.
-
-```python
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static/')
-```
-
- 
-
-## Erste  Seite
-
-Wir wollen eine App "test" erstellen mit dem Link: **127.0.0.1:8000/test**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "testfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die Test-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
-
-Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "127.0.0.1:8000" verwendet, wir wollen jedoch "127.0.0.1:8000/test", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
-
-```python
-from django.contrib import admin
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path('test/', views.testfunction),
-    path('admin/', admin.site.urls),
-]
-
-```
-
-Wenn diese Adresse beim Server ankommt wird die Python-Funktion "testfunktion" ausgeführt. Diese erstellen wir noch in der Datei views.py. Von dort importieren wir diese "testfunktion". Bevor wir die testfunktion in views.py definieren erstellen wir ein html-Template **test.html**. Wenn nicht genauer angegeben sucht Django das html-Template im Ordner `templates`. D.h. wir legen diesen Ordner an. Zusätzlich legen wir noch den Ordner `static` an, welcher wir später brauchen.
-
-    energieDigital
-      ├── static
-      └── templates
-
-Als nächstes erstellen wir eine Datei `test.html`.
-
-```html
-{% load static %}
-<html>
-    <head>
-        <title>Die ist eine Testseite</title>
-    </head>
-    <body>
-        <form method="post" enctype="multipart/form-data">
-			{% csrf_token %}
-			<input type="number" name="nCycleHin" value={{ nCycleZurueck }}>  
-			<br>
-			<img src="{% static "sinus.jpg" %}">
-        <form>        
-    </body>
-</html>
-```
-
-Im html-Code sind zwei Django-Kommandos eingebaut:
-
-{% load static %} Hier wird der Pfadname geladen, wo die statischen Dateien liegen. Diesen haben wir in settings.py definiert mit STATIC_ROOT. Es ist der so eben angelegt Ordner `static`. Nachfolgend wird der Dateiname mit dem Pfadnamen gebaut durch "{% static "sinus.jpg" %}". Somit können wir später das Projekt auf irgendeinen Server stellen und die Ordnerstruktur passt, weil wird dies nur an einer Stelle definiert haben, in settings.py.
-
-{% csrf_token %} Dies ist eine Sicherungsfunktion von Django, die Cross Site Request Forgery protection. Bei einer Server-Anfrage (request) wird hier ein csrf-Code mitgeschickt. Wenn später über "post" Daten vom Browser zum Server gesendet werden, so wird dieser csrf-Code mit gesendet und der Server, weiss dann, dass die erhaltenen Daten sicher sind.
-
-Nun definieren wir die testfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Wie erwähnt ist der Pfadnamen in settings.py definiert. Von dort importieren wir diesen mit settings.STATIC_ROOT. Mit der Funktion "render" aktualisieren wir die "test.html". Hier senden wir auch dynamische Daten (nCycleHin) ans html-Template. Die Variablennamen findest du auch im test.html.
-
-```python
-# -*- coding: utf-8 -*-
-from django.shortcuts import render
-import numpy as np
-import matplotlib.pyplot as plt
-from django.conf import settings
-
-def testfunction(request):
-    if request.POST: # wenn "Enter" gedrückt wird
-        dic = request.POST # Werte von Page übernehmen
-        print('mal sehen was das ist: ' + str(dic))
-        nCycle = int(dic['nCycleHin'])
-    else:
-        nCycle = int(0)   
-
-    x = np.linspace(0,2*3.14*nCycle,1000)
-    y = np.sin(x)
-    filename = settings.STATIC_ROOT + 'sinus.jpg'
-    
-    plt.plot(x,y)
-    plt.savefig(filename)
-    plt.clf() # Figure-Objekt schliessen
-    
-    return render(request, 'test.html', {'nCycleZurueck': nCycle})
-```
+Django organisiert sich mit einer Ordnerstruktur worin vordefinierte Dateien liegen. Somit weiss Django wo welche Informationen, Funktionen und Daten liegen, ohne dass wir dieses genauer angeben müssen.  
 
 ### runserver
 
-Nun starten wir die Webpage und geben auf dem Terminal folgendes Kommando ein:
+Nun starten wir die Webpage und geben auf dem Terminal. Wir sind in unserem Ordner `myPage`  und geben folgendes Kommando ins System-Terminal ein:
 
 ```
 python manage.py runserver
 ```
 
-Auf dem Terminal erscheinen folgende Zeilen. Es wird auch die url-Adresse der Webpage angegeben generiert vom Entwicklungsserver (development server). Dieses geben wir im Browser ein und wir können unsere Seite ansehen.
+Auf dem Terminal erscheinen folgende Zeilen. Es wird der Django-Entwicklungsserver (development server) gestartet und auch die url-Adresse unserer Webpage ist angegeben. Diese geben wir im Browser ein und wir können unsere Seite ansehen.
 
 ```
 >>python manage.py runserver
@@ -254,29 +111,133 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 ```
 
-Wir möchten nun von einem anderen Gerät aus die Webpage ansehen, z.B. von einem Handy aus. Über das Hausinterne Netzwerk geht dies, jedoch über den "localhost" (127.0.0.1). Wir müssen die ip-Adresse des Rechners/Notebook verwenden und den Entwicklungsserver mit dieser Adresse starten. Zuerst finden wir die ip-Adresse heraus mit und es folgen viele Zeilen wovon eine die IPv4 Adresse angibt:
+Gratulation! Webserver gestartet und die Seite wird angezeigt.
+
+![](start.jpg)
+
+Nun ist dies die "Standardseite" welche Django liefert. Wir bauen nun aber unsere eigene Seite. Django orientiert sich an Ordnernamen und sucht das html-Template im Ordner  `templates`, d.h. wir legen in  `energieDigital`  einen Unterordner  `templates`  an. In diesem Ordner erstellen wir eine neue Datei  `sinus.html`.
+
+```html
+{% load static %}
+<html>
+    <head>
+        <title>Sinus</title>
+    </head>
+    <body>
+        <form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<input type="number" name="nB2S" value=3>  
+			<br>
+			<img src="{% static "sinus.jpg" %}">
+        <form>        
+    </body>
+</html>
+```
+
+Im html-Code sind zwei Django-Kommandos eingebaut:
+
+{% csrf_token %} Dies ist eine Sicherungsfunktion von Django, die Cross Site Request Forgery protection. Bei einer Server-Anfrage (request) wird hier ein csrf-Code mitgeschickt. Wenn später über "post" Daten vom Browser zum Server gesendet werden, so wird dieser csrf-Code mit gesendet und der Server, weiss dann, dass die erhaltenen Daten sicher sind.
+
+{% load static %} Hier wird der Pfadname geladen, wo die statischen Dateien liegen. Das Diagramm wird als Grafikdatei `sinus.jpg` im Ordner `static` abgelegt. Diesen Ordner müssen wir ebenfalls anlegen. Wir können probehalber irgendeine Grafik-Datei mit diesem Dateinamen abspeichern.
+
+Diesen Speicherort "static" geben wir in der **settings.py** Datei an als Variabel STATIC_ROOT. In der html-Datei wird der Dateiname mit dem Pfadnamen zusammengebaut durch "{% static "sinus.jpg" %}". Somit können wir später das Projekt auf irgendeinen Server stellen und die Ordnerstruktur passt, weil der Ort nur an einer Stelle definiert ist, in settings.py.
+
+Nun machen wir die Einstellungen in **settings.py**
+
+### Einstellungen
+
+In der Datei "settings.py" werden die Grundeinstellung der Webpage vorgenommen. . Bei "ALLOWED_HOSTS" ergänzen wir den url-Namen unserer Seite. Wir verwenden den localhost '127.0.0.1', da wir mit dem Entwicklungsserver arbeiten. 
+
+Wir werden eine App erstellen, welche "energieDigital" heisst (gleich wie das Webpage-Projekt). Diese müssen wir bei "INSTALLED_APPS" registrieren, als neuer Baustein in unserem Baukastensystem.
+
+```python
+ALLOWED_HOSTS = ['127.0.0.1', 'www.meineSeite.ch']
+
+INSTALLED_APPS = [
+'django.contrib.admin',
+'django.contrib.auth',
+'django.contrib.contenttypes',
+'django.contrib.sessions',
+'django.contrib.messages', 
+'django.contrib.staticfiles',
+'energieDigital',
+]
+```
+
+Nun geben wir noch den Speicherort für unsere Bilddatei "sinus.jpg" an. Hierfür definieren wir die Webadresse für den Server (STATIC_URL) und den Ordner (STATIC_ROOT) worin diese Dateien abgelegt werden. Den Ordner "static" haben wir selber angelegt.
+
+```python
+import os
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static/')
+```
+
+ Nun funktioniert unsere Seite noch nicht. Es fehlen noch zwei Punkte:
+
+1. Bei der Eingabe der url soll eine Funktion aufgerufen werden welche die Seite erstellt. Der Aufruf wird in der **urls.py** definiert.
+2. Die Funktion selbst, welche die Seite erstellt wird in der Datei **views.py** definiert.
+
+## 3. Erste  Seite
+
+Wir wollen eine App "sinus" erstellen mit dem url: **127.0.0.1:8000/sinus**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "sinusfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die html-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
+
+Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "127.0.0.1:8000" verwendet, wir wollen jedoch "127.0.0.1:8000/sinus", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
+
+```python
+from django.contrib import admin
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('sinus/', views.sinusfunction),
+    path('admin/', admin.site.urls),
+]
+```
+
+Wenn diese Adresse beim Server ankommt wird die Python-Funktion "sinusfunktion" ausgeführt. Diese erstellen wir in der Datei views.py, welche wir noch neu anlegen müssen. Von views importieren wir die "sinusfunktion". 
+
+Nun definieren wir die sinusfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Wie erwähnt ist der Pfadnamen in settings.py definiert. Von dort importieren wir diesen mit settings.STATIC_ROOT. Mit der Funktion "render" aktualisieren wir die "sinus.html". Hier bauen wir mit {{ nS2B }} dynamische Daten ins html ein.  "nS2B" steht für Anzahl Zyklen von Server zum Browser. Die Variablennamen findest du auch im sinus.html.
+
+```python
+# -*- coding: utf-8 -*-
+from django.shortcuts import render
+import numpy as np
+import matplotlib.pyplot as plt
+from django.conf import settings
+
+def sinusfunction(request):
+    if request.POST: # wenn "Enter" gedrückt wird
+        dic = request.POST # Werte von Page übernehmen
+        print('mal sehen was das ist: ' + str(dic))
+        nCycle = int(dic['nB2S'])
+    else:
+        nCycle = int(0)   
+
+    x = np.linspace(0,2*3.14*nCycle,1000)
+    y = np.sin(x)
+    filename = settings.STATIC_ROOT + 'sinus.jpg'
+    
+    plt.plot(x,y)
+    plt.savefig(filename)
+    plt.clf() # Figure-Objekt schliessen
+    
+    return render(request, 'test.html', {'nS2B': nCycle})
+```
+
+Nun starten wir die Webpage und geben auf dem Terminal folgendes Kommando ein:
 
 ```
->>ipconfig
-...
-   IPv4 Address. . . . . . . . . . . : 192.167.136.1
-...
+python manage.py runserver
 ```
 
-Nun können wir den Entwicklungsserver mit dieser Adresse starten. Zusätzlich definieren wir den Port. Üblich ist Port:8000.
+Die Webpage öffnet sich mit **http://127.0.0.1:8000/sinus/**.
 
-```
-python manage.py runserver 192.167.136.1:8000
-```
-
-Die Webpage mit einem anderen Gerät im Netzwerk über diese ip-Adresse aufgerufen werden.
-
-## Erweiterung
+## 4. Erweiterung
 
 Wir erweitern das Beispiel:
 
-- Als url definieren wir  nur die Hauptadresse (ip-Adresse) ohne "/test"
-- Diese url ruft die Funktion "chart" auf
+- Als url definieren wir nur die Hauptadresse (ip-Adresse) ohne "/sinus"
 - Das Diagramm wird als html-Code direkt ans Template übergeben mit bokeh
 - Wir verwenden ein fertiges Template von html5up
 
@@ -380,7 +341,7 @@ images: {
 
 Speichere im images-Ordner deine gewünschten Hintergrundbilder mit obigen Namen. 
 
-Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Daten von bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js wobei die Versionsnummer zu beachten ist. **Prüfe die installierte bokeh-Version mit "pip list" und ** passe diese im "home.html" und beim Download an. Der download funktioniert durch rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abzuspeichern.
+Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Daten von bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js wobei die Versionsnummer zu beachten ist. **Prüfe die installierte bokeh-Version mit "pip list" und ** passe diese im "home.html" und beim Download an. Der Download funktioniert durch rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abzuspeichern.
 
 Um den Entwicklungsserver von Django zu starten muss auf dem Terminal das Kommando `python manage.py runserver` eingegeben werden. Um nicht zeitaufwändig mit in dem Terminal zum Projektordner zu navigieren und den Server zu starten, kann eine Datei `start.bat` angelegt werden, welche zukünftig das Starten übernimmt: 
 
@@ -389,7 +350,7 @@ cd pfadname
 start cmd /T:0E /K "python manage.py runserver"
 ```
 
-# Zusammenfassung
+# 5. Zusammenfassung
 
 Die View-Model-Template Architektur von Django sieht nun wie folgt aus:
 ![](pic4.png)
@@ -403,7 +364,7 @@ D:/djangoProjekt
    │     ├── static
    │     │      ├── assets...
    │     │      ├── images...
-   │     │      └─bokeh-2.1.1.min.js
+   │     │      └─bokeh-x.x.x.min.js
    │     ├── templates
    │     │      └─home.html
    │     ├─settings.py
@@ -415,4 +376,4 @@ D:/djangoProjekt
    └─start.bat 
 ```
 
-Dieses Tutorial wurde für den Unterricht **CAS Energie digital** erstellt. Markus Markstaler 2020.
+Dieses Tutorial wurde für den Unterricht **CAS Energie digital** erstellt. Markus Markstaler 2022.
