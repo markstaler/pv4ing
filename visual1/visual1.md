@@ -26,7 +26,7 @@ Der erste Schritt hierzu ist die Auftrennung von *Information* und der *Darstell
 
 ![](pic2.png)
 
-Als Webframework verwenden wir Django basierend auf Python. Dieses Framework wird bei hunderten von Webpages eingesetzt wie Youtube, Dropbox, Google, Netflix, Spotify, Pinterest, NASA, u.v.m. Der Untertitel von Django heisst *"The web framework for perfectionists with deadlines"* und zeigt die Stärken von Django, wie:
+Als Webframework verwenden wir **Django** basierend auf Python. Dieses Framework wird bei hunderten von Webpages eingesetzt wie Youtube, Dropbox, Google, Netflix, Spotify, Pinterest, NASA, u.v.m. Der Untertitel von Django heisst *"The web framework for perfectionists with deadlines"* und zeigt die Stärken von Django, wie:
 
 - Schnell umsetzbar mit wenig Code
 
@@ -64,41 +64,27 @@ Unter Models werden die Informationen verstanden. Diese werden als Daten in eine
 
 Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org/) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages für einen Django-Einstieg bietet DjangoGirls den flüssigsten Einstieg in Django. 
 
-# 1. Installation
+# 1. Lokales Django-Projekt erstellen
 
-Für die Installation von Django führen wir folgendes Kommando aus, sofern wir mit dem Anaconda Paket arbeiten. Wir öffnen das System-Terminal (bei Windows: Windowstaste und dann cmd eingeben). Der Package-Manager "conda" können wir von einem beliebigem Ordner aus aufrufen weil Conda das Django-Programm an der richtigen Stelle installiert.
-
-```
-conda install django
-```
+Als Entwicklungsumgebung verwenden wir **PyCharm Professional**  von JetBrains, dies ist das Ideale Werkzeug für Python allgemein und vor allem Webanwendungen. Dies Installation führen wir über den ANACONDA.NAVIGATOR durch. Für OST-Studierende fallen keine Kosten an.
 
 
-
-# 2. Lokales Django-Projekt erstellen
 
 Wir erstellen ein Webpage-Projekt auf der nur eine Anwendung (App) läuft, ein Diagramm mit einer Sinusfunktion, dabei kann die Anzahl Perioden eingegeben werden und anschliessend wird ein Diagramm erstellt mit der Sinusfunktion.
 
 ![](sinusPage.jpg)
 
+Wir öffnen PyCharm und legen ein neues Django-Projekt an mit dem Namen `energieDigital`, PyCharm legt nun das Django-Projekt an.
 
+Nun gehen wir in PyCharm auf die auf die manage.py-Console (unter Tools) und geben dort `startapp visual`. PyCharm ruft nun Django auf, welche eine definiert Ordnerstruktur anlegt mit vordefinierte Dateien. Somit weiss Django wo welche Informationen, Funktionen und Daten liegen, ohne dass wir dieses genauer angeben müssen.  Siehe in PyCharm im linken Fenster die Ordnerstruktur an.
 
-Wir erstellen einen neuen Ordner `myPage` und gehen mit dem System-Terminal in diesen Ordner. Dort rufen wird das Django-Programm "django-admin" auf, welches uns das Webpage-Projekt anlegt, dabei müssen wir den Namen des Webpage-Projekt angeben (energieDigital).
+Nun machen wir die Einstellungen in **settings.py**. Bei "ALLOWED_HOSTS" ergänzen wir den url-Namen unserer Seite. Wir verwenden den localhost  (oder '127.0.0.1'), da wir mit dem Entwicklungsserver arbeiten. 
 
-    django-admin startproject energieDigital .
+`ALLOWED_HOSTS = ['localhost', 'www.meineSeite.ch']`
 
-Der Punkt `.` ist sehr wichtig, weil er dem Django-Programm mitteilt, dass im aktuellen Verzeichnis das Webpage-Projekt installiert werden soll. Ansonst würde ein Ordner mit dem Projektnamen angelegt und darunter das Projekt.
+Nun können wir unsere Webpage starten mit der grünen Pfeiltaste rechts oben.
 
-Django organisiert sich mit einer Ordnerstruktur worin vordefinierte Dateien liegen. Somit weiss Django wo welche Informationen, Funktionen und Daten liegen, ohne dass wir dieses genauer angeben müssen.  
-
-### runserver
-
-Nun starten wir die Webpage und geben auf dem Terminal. Wir sind in unserem Ordner `myPage`  und geben folgendes Kommando ins System-Terminal ein:
-
-```
-python manage.py runserver
-```
-
-Auf dem Terminal erscheinen folgende Zeilen. Es wird der Django-Entwicklungsserver (development server) gestartet und auch die url-Adresse unserer Webpage ist angegeben. Diese geben wir im Browser ein und wir können unsere Seite ansehen.
+Auf der Console erscheinen folgende Zeilen. Es wird der Django-Entwicklungsserver (development server) gestartet und auch die url-Adresse unserer Webpage ist angegeben. Diese geben wir im Browser ein und wir können unsere Seite ansehen.
 
 ```
 >>python manage.py runserver
@@ -107,7 +93,7 @@ Performing system checks...
 
 System check identified no issues (0 silenced).
 Django version 2.2.5, using settings 'energieDigital.settings'
-Starting development server at http://127.0.0.1:8000/
+Starting development server at http://localhost:8000/
 Quit the server with CTRL-BREAK.
 ```
 
@@ -115,7 +101,25 @@ Gratulation! Webserver gestartet und die Seite wird angezeigt.
 
 ![](start.jpg)
 
-Nun ist dies die "Standardseite" welche Django liefert. Wir bauen nun aber unsere eigene Seite. Django orientiert sich an Ordnernamen und sucht das html-Template im Ordner  `templates`, d.h. wir legen in  `energieDigital`  einen Unterordner  `templates`  an. In diesem Ordner erstellen wir eine neue Datei  `sinus.html`.
+Nun ist dies die "Standardseite" welche Django liefert. 
+
+## 2. Eigene App
+
+Wir bauen nun aber unsere eigene App. Django orientiert sich an Ordnernamen und sucht das html-Template im Ordner  "templates", d.h. wir legen im  visual-Ordner  einen Unterordner  `templates`  an und zusätzlich `static` welcher wir später brauchen. 
+
+Die Ordnerstruktur sieht nun wir folgt aus:
+
+```
+energieDigital 
+   ├── energieDigital  
+   └── visual
+   	     ├── templates 
+         └── static
+```
+
+### html-Template
+
+In diesem Ordner erstellen wir eine neue Datei  `sinus.html`.
 
 ```html
 {% load static %}
@@ -138,56 +142,23 @@ Im html-Code sind zwei Django-Kommandos eingebaut:
 
 {% csrf_token %} Dies ist eine Sicherungsfunktion von Django, die Cross Site Request Forgery protection. Bei einer Server-Anfrage (request) wird hier ein csrf-Code mitgeschickt. Wenn später über "post" Daten vom Browser zum Server gesendet werden, so wird dieser csrf-Code mit gesendet und der Server, weiss dann, dass die erhaltenen Daten sicher sind.
 
-{% load static %} Hier wird der Pfadname geladen, wo die statischen Dateien liegen. Das Diagramm wird als Grafikdatei `sinus.jpg` im Ordner `static` abgelegt. Diesen Ordner müssen wir ebenfalls anlegen. Wir können probehalber irgendeine Grafik-Datei mit diesem Dateinamen abspeichern.
+{% load static %} Hier wird der Pfadname geladen, wo die statischen Dateien liegen. Das Diagramm wird als Grafikdatei `sinus.jpg` im Ordner `static` abgelegt. 
 
-Diesen Speicherort "static" geben wir in der **settings.py** Datei an als Variabel STATIC_ROOT. In der html-Datei wird der Dateiname mit dem Pfadnamen zusammengebaut durch "{% static "sinus.jpg" %}". Somit können wir später das Projekt auf irgendeinen Server stellen und die Ordnerstruktur passt, weil der Ort nur an einer Stelle definiert ist, in settings.py.
+Nun funktioniert unsere Seite noch nicht. Es fehlen noch zwei Punkte:
 
-Nun machen wir die Einstellungen in **settings.py**
-
-### Einstellungen
-
-In der Datei "settings.py" werden die Grundeinstellung der Webpage vorgenommen. . Bei "ALLOWED_HOSTS" ergänzen wir den url-Namen unserer Seite. Wir verwenden den localhost '127.0.0.1', da wir mit dem Entwicklungsserver arbeiten. 
-
-Wir werden eine App erstellen, welche "energieDigital" heisst (gleich wie das Webpage-Projekt). Diese müssen wir bei "INSTALLED_APPS" registrieren, als neuer Baustein in unserem Baukastensystem.
-
-```python
-ALLOWED_HOSTS = ['127.0.0.1', 'www.meineSeite.ch']
-
-INSTALLED_APPS = [
-'django.contrib.admin',
-'django.contrib.auth',
-'django.contrib.contenttypes',
-'django.contrib.sessions',
-'django.contrib.messages', 
-'django.contrib.staticfiles',
-'energieDigital',
-]
-```
-
-Nun geben wir noch den Speicherort für unsere Bilddatei "sinus.jpg" an. Hierfür definieren wir die Webadresse für den Server (STATIC_URL) und den Ordner (STATIC_ROOT) worin diese Dateien abgelegt werden. Den Ordner "static" haben wir selber angelegt.
-
-```python
-import os
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static/')
-```
-
- Nun funktioniert unsere Seite noch nicht. Es fehlen noch zwei Punkte:
-
-1. Bei der Eingabe der url soll eine Funktion aufgerufen werden welche die Seite erstellt. Der Aufruf wird in der **urls.py** definiert.
-2. Die Funktion selbst, welche die Seite erstellt wird in der Datei **views.py** definiert.
+1. Bei der Eingabe der url soll eine Funktion aufgerufen werden, welche die Seite erstellt. Der Aufruf wird in der **urls.py** definiert.
+2. Die Funktion selbst, welche die Seite erstellt wird in der Datei **views.py** definiert. Dort läuft unserer Python-Code.
 
 ## 3. Erste  Seite
 
-Wir wollen eine App "sinus" erstellen mit dem url: **127.0.0.1:8000/sinus**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "sinusfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die html-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
+Wir wollen eine App "sinus" erstellen mit dem url: **localhost:8000/sinus**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "sinusfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die html-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
 
-Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "127.0.0.1:8000" verwendet, wir wollen jedoch "127.0.0.1:8000/sinus", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
+Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "localhost:8000" verwendet, wir wollen jedoch "localhost:8000/sinus", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
 
 ```python
 from django.contrib import admin
 from django.urls import path
-from . import views
+from visual import views
 
 urlpatterns = [
     path('sinus/', views.sinusfunction),
@@ -197,14 +168,13 @@ urlpatterns = [
 
 Wenn diese Adresse beim Server ankommt wird die Python-Funktion "sinusfunktion" ausgeführt. Diese erstellen wir in der Datei views.py, welche wir noch neu anlegen müssen. Von views importieren wir die "sinusfunktion". 
 
-Nun definieren wir die sinusfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Wie erwähnt ist der Pfadnamen in settings.py definiert. Von dort importieren wir diesen mit settings.STATIC_ROOT. Mit der Funktion "render" aktualisieren wir die "sinus.html". Hier bauen wir mit {{ nS2B }} dynamische Daten ins html ein.  "nS2B" steht für Anzahl Zyklen von Server zum Browser. Die Variablennamen findest du auch im sinus.html.
+Nun definieren wir die sinusfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Mit der Funktion "render" aktualisieren wir die "sinus.html". Hier bauen wir mit {{ nS2B }} dynamische Daten ins html ein.  "nS2B" steht für Anzahl Zyklen von Server zum Browser. Die Variablennamen findest du auch im sinus.html.
 
 ```python
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 import numpy as np
 import matplotlib.pyplot as plt
-from django.conf import settings
 
 def sinusfunction(request):
     if request.POST: # wenn "Enter" gedrückt wird
@@ -216,7 +186,7 @@ def sinusfunction(request):
 
     x = np.linspace(0,2*3.14*nCycle,1000)
     y = np.sin(x)
-    filename = settings.STATIC_ROOT + 'sinus.jpg'
+    filename = 'static/sinus.jpg'
     
     plt.plot(x,y)
     plt.savefig(filename)
@@ -225,13 +195,9 @@ def sinusfunction(request):
     return render(request, 'test.html', {'nS2B': nCycle})
 ```
 
-Nun starten wir die Webpage und geben auf dem Terminal folgendes Kommando ein:
+Nun haben wir einiges angepasst. PyCharm erkennt Änderungen in den Dateien und startet den Webserver neu. Wir können nun die Webpage öffnen mit https://localhost:8000/sinus.
 
-```
-python manage.py runserver
-```
 
-Die Webpage öffnet sich mit **http://127.0.0.1:8000/sinus/**.
 
 ## 4. Erweiterung
 
@@ -281,7 +247,7 @@ def chart(request):
 
 ```
 
-Als nächstes erstellen wir eine Datei home.html. Dies ist die vereinfachte Version vom Template "Eventually" by HTML5up :
+Als nächstes erstellen wir eine Datei home.html. Dies ist die vereinfachte Version vom Template "[Eventually](https://html5up.net/eventually)" by HTML5up :
 
 ```html
 <!DOCTYPE HTML>
@@ -293,8 +259,8 @@ Als nächstes erstellen wir eine Datei home.html. Dies ist die vereinfachte Vers
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
-        <!-- BOKEH -->
-        <script type="text/javascript" src="{% static "bokeh-2.1.1.min.js" %}"></script>    
+        <!-- BOKEH  x.y.z durch die aktuelle Version ersetzen -->
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-x.y.z.min.js"></script>    
     </head>
     <body class="is-preload">
         <!-- Header -->
@@ -309,8 +275,8 @@ Als nächstes erstellen wir eine Datei home.html. Dies ist die vereinfachte Vers
                         {{ chart|safe }}
                         <br>
 					  <!-- Diagramm als jpg-Datei, erzeugt über Matplotlib -->
-					  <!-- und im Ordner static/images abgelegt -->
-					  <img src="{% static "images/sinus.jpg" %}" width = 460/>
+					  <!-- und im Ordner static abgelegt -->
+					  <img src="{% static "sinus.jpg" %}" width = 460/>
                     <form>        
                 </div>
         <!-- Scripts -->
@@ -319,14 +285,16 @@ Als nächstes erstellen wir eine Datei home.html. Dies ist die vereinfachte Vers
 </html>
 ```
 
-Diese referenziert auf css-Dateien und js-Dateien von diesem Template. Diese werden im Ordner `static` abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "[Eventually](https://html5up.net/eventually)" und speichere die beiden Ordner `immages`und `assets` in den Ordner `static`. Die Ordnerstruktur sieht nun wir folgt aus:
+Diese referenziert auf css-Dateien und js-Dateien von diesem Template. Diese werden im Ordner `static` abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "[Eventually](https://html5up.net/eventually)" und speichere die beiden Ordner `images`und `assets` in den Ordner `static`. Die Ordnerstruktur sieht nun wir folgt aus:
 
 ```
 energieDigital 
-   ├── static 
-   │     ├── images
-   │     └── assets
-   └── templates
+   ├── energieDigital  
+   └── visual
+        ├── static 
+        │     ├── images
+        │     └── assets
+        └── templates
 ```
 
 Öffne die Datei `static/assets/js/main.js` mit dem Editor. Dort siehst du den Verweis auf die Hintergrundbilder `'images/bg01.jpg': 'center',`. Passe den Verweis an, wie folgt, da Django vom Projektverzeichnis ausgeht und unter `static` suchen soll:
@@ -341,14 +309,7 @@ images: {
 
 Speichere im images-Ordner deine gewünschten Hintergrundbilder mit obigen Namen. 
 
-Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. Zur Darstellung braucht es noch die js-Daten von bokeh im `static`Ordner. Diese ist im Internet unter https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js wobei die Versionsnummer zu beachten ist. **Prüfe die installierte bokeh-Version mit "pip list" und ** passe diese im "home.html" und beim Download an. Der Download funktioniert durch rechte Maustaste "speichern unter" um so die Datei im Ordner `static` abzuspeichern.
-
-Um den Entwicklungsserver von Django zu starten muss auf dem Terminal das Kommando `python manage.py runserver` eingegeben werden. Um nicht zeitaufwändig mit in dem Terminal zum Projektordner zu navigieren und den Server zu starten, kann eine Datei `start.bat` angelegt werden, welche zukünftig das Starten übernimmt: 
-
-```dos
-cd pfadname
-start cmd /T:0E /K "python manage.py runserver"
-```
+Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. 
 
 # 5. Zusammenfassung
 
@@ -358,22 +319,19 @@ Die View-Model-Template Architektur von Django sieht nun wie folgt aus:
 Die Dateistruktur zeigt sich wie folgt:
 
 ```
-D:/djangoProjekt 
-   ├── .env
-   ├── energieDigital   
-   │     ├── static
-   │     │      ├── assets...
-   │     │      ├── images...
-   │     │      └─bokeh-x.x.x.min.js
-   │     ├── templates
-   │     │      └─home.html
+energieDigital 
+   ├── energieDigital  
    │     ├─settings.py
-   │     ├─urls.py
-   │     └─views.py
-   ├─db.sqlite3
-   ├─manage.py
-   ├─requirments.txt
-   └─start.bat 
+   │     └─urls.py
+   └── visual 
+        ├── static
+        │      ├── assets...
+        │      └── images...
+        │      
+        ├── templates
+        │      └─home.html
+        └─views.py
+
 ```
 
-Dieses Tutorial wurde für den Unterricht **CAS Energie digital** erstellt. Markus Markstaler 2022.
+Dieses Tutorial wurde für den Unterricht **CAS Energie digital** erstellt. Markus Markstaler 2024.
