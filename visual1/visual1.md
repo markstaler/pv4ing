@@ -182,7 +182,7 @@ def sinusfunction(request):
         print('mal sehen was das ist: ' + str(dic))
         nCycle = int(dic['nB2S'])
     else:
-        nCycle = int(0)   
+        nCycle = int(2)   
 
     x = np.linspace(0,2*3.14*nCycle,1000)
     y = np.sin(x)
