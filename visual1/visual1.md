@@ -42,45 +42,61 @@ Django ist benannt nach dem französischen Gitarristen Django Reinhardt.
 
 ### Architektur Django
 
-Die Architektur von Django teilt die *Darstellung (Template)* von den *Informationen (Model)*, welche, je nach Anfrage (request) unterschiedlich zusammengebaut (*View*) werden. Das Konzept wird als MTV bezeichnet für *Model, Template, View* und ist eine lose gekoppelte Struktur, sodass einzelne Teile wiederverwendet werden können.
+Die Architektur von Django teilt die *Darstellung (Template)* von den *Informationen (Model)*, welche, je nach Anfrage (request) unterschiedlich zusammengebaut, durch eine Steuerung (*View*). Das Konzept wird als MTV bezeichnet für *Model, Template, View* und ist eine lose gekoppelte Struktur, sodass einzelne Teile wiederverwendet werden können.
 
 ![](pic3.png)
 
+Diese Model-Template-View-Struktur wird durch die Dateien und Ordner organisiert. Wenn ein Django-Projekt erstellt wird, so werden die Dateien und Ordner angelegt mit all den Funktionen welche benötigt werden. Die einzelnen Dateien werden punktuell auf die eigenen Bedürfnisse angepasst. 
+
 #### Views
 
-Die Views ist die Programmeinheit bei Django, welche die Webpage zusammenbaut und darstellt, deshalb views. Hier werden auch die Anfragen (request) behandelt und die Webadresse geprüft.
-
-In der allgemeinen Literatur wird das Django-MTV-Modell häufiger als MVC-Modell bezeichnet für Model, View, Control. Hier entspricht View dem Django-Template und Control der Django-Views.
+Die Views ist die Steuerung bei Django, welche die Webpage zusammenbaut und darstellt, deshalb views. Der Code hierfür liegt in views.py-Datei. In Es werden auch Anfragen (request) vom Browser behandelt, wo die Webadresse geprüft wird. Die Konfiguration ist in der urls.py-Datei.
 
 #### Template
 
-Das Template beinhaltet die Darstellung, das Design der Webpage. Dieses Template werden wir nicht bauen, sondern fertig beziehen. Beispiel für eine Quelle ist [www.html5up.net/eventually](http://www.html5up.net/eventually).
+Das Template beinhaltet die Darstellung, das Design der Webpage. Dies wird nicht von Django erstellt, sondern Django sucht im Ordner "templates". Dieses Template werden wir nicht bauen, sondern fertig beziehen. Beispiel für eine Quelle ist [www.html5up.net/eventually](http://www.html5up.net/eventually). 
 
 #### Models
 
-Unter Models werden die Informationen verstanden. Diese werden als Daten in einer Datenbank abgelegt. Um auf die Daten zugreifen zu können sind Datenbankabfragen wie z.B. SQL notwendig, welche kompliziert sind und Django soll jedoch einfach und schnell umsetzbar sein. Deshalb wird die Information als ein "Model" definiert umso auf die Daten zugreifen zu können unabhängig der Datenbankstruktur im Hintergrund. Modelle werden wir  in diesem Tutorial nicht behandeln.
+Unter Models werden die Informationen verstanden. Diese werden als Daten in einer Datenbank abgelegt. Um auf die Daten zugreifen zu können sind Datenbankabfragen wie z.B. SQL notwendig, welche kompliziert sind und Django soll jedoch einfach und schnell umsetzbar sein. Deshalb wird die Information als ein "Model" definiert umso auf die Daten zugreifen zu können unabhängig der Datenbankstruktur im Hintergrund. Die Konfiguration liegt in der models.py-Datei. Modelle werden wir  in diesem Tutorial nicht behandeln.
 
 ### DjangoGirls
 
 Dieses Tutorial baut auf dem sehr empfehlenswerten Tutorial von [DjangoGirls](https://djangogirls.org/) auf, welches in vielen Sprachen verfügbar ist. Nach eigenem durcharbeiten von Videos, Bücher, Webpages für einen Django-Einstieg bietet DjangoGirls den flüssigsten Einstieg in Django. 
 
-# 1. Lokales Django-Projekt erstellen
+## 1. Lokales Django-Projekt erstellen
 
-Als Entwicklungsumgebung verwenden wir **PyCharm Professional**  von JetBrains, dies ist das Ideale Werkzeug für Python allgemein und vor allem Webanwendungen. Dies Installation führen wir über den ANACONDA.NAVIGATOR durch. Für OST-Studierende fallen keine Kosten an.
-
-
+Als Entwicklungsumgebung verwenden wir **PyCharm Professional**  von JetBrains, dies ist das Ideale Werkzeug für Python allgemein und vor allem Webanwendungen. Zuvor müssen wir allerdings Python installieren.
 
 Wir erstellen ein Webpage-Projekt auf der nur eine Anwendung (App) läuft, ein Diagramm mit einer Sinusfunktion, dabei kann die Anzahl Perioden eingegeben werden und anschliessend wird ein Diagramm erstellt mit der Sinusfunktion.
 
 ![](sinusPage.jpg)
 
-Wir öffnen PyCharm und legen ein neues Django-Projekt an mit dem Namen `energieDigital`, PyCharm legt nun das Django-Projekt an.
+Wir öffnen PyCharm und legen ein neues Django-Projekt an mit dem Namen `energieDigital`, PyCharm legt nun das Django-Projekt an mit den Dateien settings.py, urls.py und dem templates-Ordner (es sind noch weitere Dateien, welche wir nicht betrachten).
 
-Nun gehen wir in PyCharm auf die auf die manage.py-Console (unter Tools) und geben dort `startapp visual`. PyCharm ruft nun Django auf, welche eine definiert Ordnerstruktur anlegt mit vordefinierte Dateien. Somit weiss Django wo welche Informationen, Funktionen und Daten liegen, ohne dass wir dieses genauer angeben müssen.  Siehe in PyCharm im linken Fenster die Ordnerstruktur an.
+In **settings.py** bei "ALLOWED_HOSTS" ergänzen wir den url-Namen unserer Seite. Dies können mehrere urls sein, welche zum Aufruf der Seite führen. z.B. Seitenname mit www und ohne www. Wir verwenden den localhost  (oder '127.0.0.1'), da wir mit dem lokalen Entwicklungsserver von Django arbeiten. 
 
-Nun machen wir die Einstellungen in **settings.py**. Bei "ALLOWED_HOSTS" ergänzen wir den url-Namen unserer Seite. Wir verwenden den localhost  (oder '127.0.0.1'), da wir mit dem Entwicklungsserver arbeiten. 
+`ALLOWED_HOSTS = ['localhost']`
 
-`ALLOWED_HOSTS = ['localhost', 'www.meineSeite.ch']`
+## 2. Erstellen der App "visual"
+Auf einem Web-Portal (Django-Projekt) können mehrere Webseiten laufen wie z.B. Produkt-Dokumentation, Unternehmensbeschreibung, Shop,...Diese einzelnen Seiten werden App genannt. Wir erstellen die App "visual".
+
+![](app.jpg)
+
+In PyCharm gehen wir auf das Terminal recht unten, dort ist ein Pfeilnachunten-Symbol mit welchem wir "manage.py" auswählen. Nun wird die manage.py-Konsole geöffnet. Dort können wir das App visual mit folgendem Befehl anlegen `startapp visual`. In dieser Konsole können weitere Django-Befehle ausgeführt werden, wie z.B. `migrate` um eine Django-Datenbank anzulegen. Hier sieht man den Komfort von PyCharm. 
+
+Dasselbe kann mit einem normalen Terminal ausgeführt werden mit dem Kommando `python.exe manage.py migrate`.
+
+Es wurde nun eine definiert Ordnerstruktur anlegt mit vordefinierte Dateien. Somit weiss Django wo welche Informationen, Funktionen und Daten liegen, ohne dass wir dieses genauer angeben müssen.  Siehe in PyCharm im linken Fenster die Ordnerstruktur an.
+
+```
+energieDigital 
+   ├── energieDigital  
+   │     ├─settings.py
+   │     └─urls.py
+   └── visual 
+         └─views.py
+```
 
 Nun können wir unsere Webpage starten mit der grünen Pfeiltaste rechts oben.
 
@@ -103,9 +119,9 @@ Gratulation! Webserver gestartet und die Seite wird angezeigt.
 
 Nun ist dies die "Standardseite" welche Django liefert. 
 
-## 2. Eigene App
+## 3. Eigene App gestalten
 
-Wir bauen nun aber unsere eigene App. Django orientiert sich an Ordnernamen und sucht das html-Template im Ordner  "templates", d.h. wir legen im  visual-Ordner  einen Unterordner  `templates`  an und zusätzlich `static` welcher wir später brauchen. 
+Wir bauen nun aber unsere eigene App. Django orientiert sich an Ordnernamen und sucht das html-Template im Ordner  "templates", d.h. wir legen im  visual-Ordner  einen Unterordner  `templates`  an und zusätzlich `static` welcher wir später brauchen. Im Django-Projekt "energieDigital" hat es einen Ordner, jedoch sollte die App ein eigenes Aussehen haben, d.h. einen eigenen Ordner. Wir können den Ordner über das Local-Terminal anlegen mit den Windowsbefehl "cd visual" um ins Verzeichnis zu wechseln und mit "md templates" und "md static" um die Ordner anzulegen.
 
 Die Ordnerstruktur sieht nun wir folgt aus:
 
@@ -119,7 +135,7 @@ energieDigital
 
 ### html-Template
 
-In diesem Ordner erstellen wir eine neue Datei  `sinus.html`.
+In diesem Ordner erstellen wir eine neue Datei  `home.html`.
 
 ```html
 {% load static %}
@@ -130,7 +146,7 @@ In diesem Ordner erstellen wir eine neue Datei  `sinus.html`.
     <body>
         <form method="post" enctype="multipart/form-data">
 			{% csrf_token %}
-			<input type="number" name="nB2S" value=3>  
+			<input type="number" name="nB2S" value={{ nS2B }}>  
 			<br>
 			<img src="{% static "sinus.jpg" %}">
         <form>        
@@ -142,18 +158,50 @@ Im html-Code sind zwei Django-Kommandos eingebaut:
 
 {% csrf_token %} Dies ist eine Sicherungsfunktion von Django, die Cross Site Request Forgery protection. Bei einer Server-Anfrage (request) wird hier ein csrf-Code mitgeschickt. Wenn später über "post" Daten vom Browser zum Server gesendet werden, so wird dieser csrf-Code mit gesendet und der Server, weiss dann, dass die erhaltenen Daten sicher sind.
 
-{% load static %} Hier wird der Pfadname geladen, wo die statischen Dateien liegen. Das Diagramm wird als Grafikdatei `sinus.jpg` im Ordner `static` abgelegt. 
+{% load static %} Hier wird der Pfadname geladen, wo die statischen Dateien liegen. Das Diagramm wird als Grafikdatei `sinus.jpg` im Ordner `static` abgelegt. Diese Funktion schreiben wir noch im views.py. 
+
+Mit <input...> definieren wir eine html-Eingabe, wobei wir number definieren, kein Text. Die Eingabe wird mit dem Variablennamen **nB2S** vom Browser an den Server übergeben, deshalb der Name **n**umber**B**rowser**2S**erver. Bei Django kommt dies als Dictioinary an (z.B. dic = {'nB2S:['5']). Beim Aufstarten der html-Seite steht im input-Feld der Wert value={{ nS2B }}. Die Doppelgeschweiften Klammern heissen, dass hier ein Wert von Django eingebaut wird, welcher in der Variabel **n**umber**S**erver**2B**rowser definiert wird. Dies definieren wir im Python-Code in views.ps.
 
 Nun funktioniert unsere Seite noch nicht. Es fehlen noch zwei Punkte:
 
-1. Bei der Eingabe der url soll eine Funktion aufgerufen werden, welche die Seite erstellt. Der Aufruf wird in der **urls.py** definiert.
-2. Die Funktion selbst, welche die Seite erstellt wird in der Datei **views.py** definiert. Dort läuft unserer Python-Code.
+1. Programmieren der Funktion, welche die Seite erstellt. Dies wird in der Datei **views.py** definiert. Dort läuft unserer Python-Code.
+2. Bei der Eingabe der url soll dann diese Funktion aufgerufen werden. Der Aufruf wird in der **urls.py** definiert.
 
 ## 3. Erste  Seite
 
 Wir wollen eine App "sinus" erstellen mit dem url: **localhost:8000/sinus**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "sinusfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die html-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
 
-Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "localhost:8000" verwendet, wir wollen jedoch "localhost:8000/sinus", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
+Nun definieren wir die sinusfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Mit der Funktion "render" aktualisieren wir die "home.html". Hier bauen wir mit {{ nS2B }} dynamische Daten ins html ein.  "nS2B" steht für Anzahl Zyklen von Server zum Browser. Die Variablennamen findest du auch im sinus.html.
+
+```python
+from django.shortcuts import render
+import numpy as np
+import matplotlib.pyplot as plt
+
+def sinusfunction(request):
+    if request.POST:  # wenn "Enter" gedrückt wird
+        dic = request.POST  # Werte von Page übernehmen
+        print('mal sehen was das ist: ' + str(dic))
+        nB2S = int(dic['nB2S'])
+        nS2B = nB2S
+    else:
+        nB2S = 2
+        nS2B = 4
+
+    x = np.linspace(0, 2 * 3.14 * nB2S, 1000)
+    y = np.sin(x)
+    filename = 'visual/static/sinus.jpg'
+
+    plt.plot(x, y)
+    plt.savefig(filename)
+    plt.clf()  # Figure-Objekt schliessen, damit nicht zuviel Objekte auf dem Server laufen
+
+    return render(request, 'home.html', {'nS2B' : nS2B,'nB2S' : nB2S})
+```
+
+
+
+Nun passen wir die **urls.py** an. Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "localhost:8000" verwendet, wir wollen jedoch "localhost:8000/sinus", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
 
 ```python
 from django.contrib import admin
@@ -166,152 +214,23 @@ urlpatterns = [
 ]
 ```
 
-Wenn diese Adresse beim Server ankommt wird die Python-Funktion "sinusfunktion" ausgeführt. Diese erstellen wir in der Datei views.py, welche wir noch neu anlegen müssen. Von views importieren wir die "sinusfunktion". 
 
-Nun definieren wir die sinusfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Mit der Funktion "render" aktualisieren wir die "sinus.html". Hier bauen wir mit {{ nS2B }} dynamische Daten ins html ein.  "nS2B" steht für Anzahl Zyklen von Server zum Browser. Die Variablennamen findest du auch im sinus.html.
 
-```python
-# -*- coding: utf-8 -*-
-from django.shortcuts import render
-import numpy as np
-import matplotlib.pyplot as plt
+Wenn diese Adresse beim Server ankommt wird die Python-Funktion "sinusfunktion" ausgeführt und die home.html-Datei neu gerendert und vom Server an den Browser geschickt.
 
-def sinusfunction(request):
-    if request.POST: # wenn "Enter" gedrückt wird
-        dic = request.POST # Werte von Page übernehmen
-        print('mal sehen was das ist: ' + str(dic))
-        nCycle = int(dic['nB2S'])
-    else:
-        nCycle = int(2)   
+Nun haben wir einiges angepasst. PyCharm erkennt Änderungen in den Dateien und startet den Webserver neu. Ev. folgt noch eine Fehlermeldung, dass die numpy und matplotlib Bibliotheken nicht installiert sind, d.h. beim Code das Red Bulb Icon anklicken und die Bibliotheken installieren.
 
-    x = np.linspace(0,2*3.14*nCycle,1000)
-    y = np.sin(x)
-    filename = 'static/sinus.jpg'
-    
-    plt.plot(x,y)
-    plt.savefig(filename)
-    plt.clf() # Figure-Objekt schliessen
-    
-    return render(request, 'test.html', {'nS2B': nCycle})
-```
-
-Nun haben wir einiges angepasst. PyCharm erkennt Änderungen in den Dateien und startet den Webserver neu. Wir können nun die Webpage öffnen mit https://localhost:8000/sinus.
+Wir können nun die Webpage öffnen mit https://localhost:8000/sinus.
 
 
 
-## 4. Erweiterung
+## 4. Zusammenfassung
 
-Wir erweitern das Beispiel:
+Versuche dies nachzuvollziehen....Passt die Anzahl Zyklen im Eingabefeld mit der Grafik überein? Sieh dir die beiden Variablen nS2B und nB2S an und wie sie funktionieren. Einmal mit {{..}} im html-Code und einmal als dic (Dictionary) in Python.
 
-- Als url definieren wir nur die Hauptadresse (ip-Adresse) ohne "/sinus"
-- Das Diagramm wird als html-Code direkt ans Template übergeben mit bokeh
-- Wir verwenden ein fertiges Template von html5up
-
-In urls.py ergänzen wir wie folgt:
-
-```
-urlpatterns = [
-    path('', views.chart),
-    path('test/', views.testfunction),
-    path('admin/', admin.site.urls),
-]
-```
-
-In views.py schreiben wir den Code zur Darstellung der Sinusfunktion als Funktion 'chart' in welche der Sinus berechnet wird und das Bokeh-Diagramm erzeugt wird.
-
-```python
-from django.shortcuts import render
-from bokeh.plotting import figure
-from bokeh.embed import components
-import numpy as np
+Passe die Seite so an, dass diese direkt mit localhost geöffnet wird, ohne /sinus.
 
 
-def chart(request):
-    if request.POST: # wenn "Enter" gedrückt wird
-        dic = request.POST # Werte von Page übernehmen
-        print('mal sehen was das ist: ' + str(dic))
-        nCycle = int(dic['nCycle'])
-    else:
-        nCycle = int(1)   
-
-    x = np.linspace(0,100,100)
-    y = np.sin(x/100*2*3.1415*nCycle)    
-    p1 = figure(plot_width=460, plot_height=200)
-    p1.line(x, y)
-    p1.toolbar.logo = None    
-
-    script, div = components(p1) # hier wird html-Code erzeugt
-    chart = script + div
-        
-    return render(request, 'home.html', {'nCycle': nCycle, 'chart': chart})
-
-```
-
-Als nächstes erstellen wir eine Datei home.html. Dies ist die vereinfachte Version vom Template "[Eventually](https://html5up.net/eventually)" by HTML5up :
-
-```html
-<!DOCTYPE HTML>
-<!-- Eventually by HTML5 UP -->
-{% load static %}
-<html>
-    <head>
-        <title>Energie Digital</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
-        <!-- BOKEH  x.y.z durch die aktuelle Version ersetzen -->
-        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-x.y.z.min.js"></script>    
-    </head>
-    <body class="is-preload">
-        <!-- Header -->
-            <header id="header">
-                <h1>Energie Digital</h1>
-                <p>Programmierbeispiel im CAS Energie digital zu Visualisierung mit Django</p>                                        
-            </header>
-                <div style="background-color:rgba(0,0,0,0.5);padding: 20px">
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="number" step = 1 min = 1 max = 20 name="nCycle" value={{ nCycle }} style = color:blue>    
-                        {{ chart|safe }}
-                        <br>
-					  <!-- Diagramm als jpg-Datei, erzeugt über Matplotlib -->
-					  <!-- und im Ordner static abgelegt -->
-					  <img src="{% static "sinus.jpg" %}" width = 460/>
-                    <form>        
-                </div>
-        <!-- Scripts -->
-        <script src="{% static "assets/js/main.js" %}"></script>
-    </body>
-</html>
-```
-
-Diese referenziert auf css-Dateien und js-Dateien von diesem Template. Diese werden im Ordner `static` abgelegt, dem Ort wo Django standardmässig diese Dateien sucht. Lade das Template "[Eventually](https://html5up.net/eventually)" und speichere die beiden Ordner `images`und `assets` in den Ordner `static`. Die Ordnerstruktur sieht nun wir folgt aus:
-
-```
-energieDigital 
-   ├── energieDigital  
-   └── visual
-        ├── static 
-        │     ├── images
-        │     └── assets
-        └── templates
-```
-
-Öffne die Datei `static/assets/js/main.js` mit dem Editor. Dort siehst du den Verweis auf die Hintergrundbilder `'images/bg01.jpg': 'center',`. Passe den Verweis an, wie folgt, da Django vom Projektverzeichnis ausgeht und unter `static` suchen soll:
-
-```js
-images: {
-    'static/images/bg01.jpg': 'center',
-    'static/images/bg02.jpg': 'center',
-    'static/images/bg03.jpg': 'center'
-},
-```
-
-Speichere im images-Ordner deine gewünschten Hintergrundbilder mit obigen Namen. 
-
-Nun haben wir in views.py ein bokeh-Diagramm erstellt als html-Code. 
-
-# 5. Zusammenfassung
 
 Die View-Model-Template Architektur von Django sieht nun wie folgt aus:
 ![](pic4.png)
@@ -324,10 +243,7 @@ energieDigital
    │     ├─settings.py
    │     └─urls.py
    └── visual 
-        ├── static
-        │      ├── assets...
-        │      └── images...
-        │      
+        ├── static 
         ├── templates
         │      └─home.html
         └─views.py
