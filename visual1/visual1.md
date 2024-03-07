@@ -292,9 +292,9 @@ Die Hintergrundbilder werden durch die Datei `static/assets/js/main.js` aufgeruf
 
 ```javascript
 images: {
-    'static/images/bg01.jpeg': 'center',
-    'static/images/bg02.jpeg': 'center',
-    'static/images/bg03.jpeg': 'center'
+    'static/images/bg01.jpg': 'center',
+    'static/images/bg02.jpg': 'center',
+    'static/images/bg03.jpg': 'center'
 },
 ```
 
@@ -321,7 +321,7 @@ Am Ende des  <body>-Bereichs formatieren wir das Eingabe-Fenster um, sodass es b
         <script src="{% static "assets/js/main.js" %}"></script>
 ```
 
-
+Der Code des Projekts liegt auf Github https://github.com/markstaler/pv4ing/blob/master/visual1/energieDigital.zip
 
 
 Dieses Tutorial wurde für den Unterricht **CAS Energie digital** erstellt. Markus Markstaler 2024.
