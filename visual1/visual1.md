@@ -141,17 +141,19 @@ In diesem Ordner erstellen wir eine neue Datei  `home.html`.
 {% load static %}
 <html>
     <head>
-        <title>Sinus</title>
+        <title>Energie digital</title>
     </head>
     <body>
+		<h1>Energie digital</h1>
+            <p>Beispiel für Visualisierung über Django/Python</a>.</p>
+			</header>
+
         <form method="post" enctype="multipart/form-data">
 			{% csrf_token %}
-			<input type="number" name="nB2S" value={{ nS2B }}>  
+            <input type="number" name="nB2S" value={{ nS2B }} >
 			<br>
 			<img src="{% static "sinus.jpg" %}">
-        <form>        
     </body>
-</html>
 ```
 
 Im html-Code sind zwei Django-Kommandos eingebaut:
@@ -169,7 +171,7 @@ Nun funktioniert unsere Seite noch nicht. Es fehlen noch zwei Punkte:
 
 ## 3. Erste  Seite
 
-Wir wollen eine App "sinus" erstellen mit dem url: **localhost:8000/sinus**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "sinusfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die html-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
+Wir wollen eine App "visual" erstellen mit dem url: **localhost:8000**. Diese Seite soll ein Eingabefeld für eine Zahl haben. Diese Zahl gibt an wieviel Sinuszyklen in einem Diagramm gezeichnet werden sollen. Diese Zahl wird vom Browser zum Server gesendet. Dort wird in python die "sinusfunktion" aufgerufen und mit matplotlib ein Diagramm erstellt und als sinus.jpg-Datei abgespeichert. Anschliessend überarbeitet der Server die html-Webpage, sodass das Diagramm enthalten ist und sendet diese zurück zum Browser, wo das Bild sinus.jpg dargestellt wird.
 
 Nun definieren wir die sinusfunktion in views.py. Hier speichern wir die sinus.jpg-Datei im Ordner "static", damit das html-Template die Datei später findet. Mit der Funktion "render" aktualisieren wir die "home.html". Hier bauen wir mit {{ nS2B }} dynamische Daten ins html ein.  "nS2B" steht für Anzahl Zyklen von Server zum Browser. Die Variablennamen findest du auch im sinus.html.
 
@@ -201,7 +203,7 @@ def sinusfunction(request):
 
 
 
-Nun passen wir die **urls.py** an. Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "localhost:8000" verwendet, wir wollen jedoch "localhost:8000/sinus", welches wir in der urls.py angegeben wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
+Nun passen wir die **urls.py** an. Unter *url* versteht man die Internetadresse (Uniform Resource Locator). Wir verwenden den lokalen Django-Entwicklungsserver, welcher die Standardadresse "localhost:8000" verwendet, welches wir in der urls.py angegeben sodass die sinusfunction aufgerufen wird. Öffne die `energieDigital/urls.py`-Datei und passe den Code an. 
 
 ```python
 from django.contrib import admin
@@ -209,7 +211,7 @@ from django.urls import path
 from visual import views
 
 urlpatterns = [
-    path('sinus/', views.sinusfunction),
+    path('', views.sinusfunction),
     path('admin/', admin.site.urls),
 ]
 ```
@@ -220,17 +222,13 @@ Wenn diese Adresse beim Server ankommt wird die Python-Funktion "sinusfunktion" 
 
 Nun haben wir einiges angepasst. PyCharm erkennt Änderungen in den Dateien und startet den Webserver neu. Ev. folgt noch eine Fehlermeldung, dass die numpy und matplotlib Bibliotheken nicht installiert sind, d.h. beim Code das Red Bulb Icon anklicken und die Bibliotheken installieren.
 
-Wir können nun die Webpage öffnen mit https://localhost:8000/sinus.
+Wir können nun die Webpage öffnen mit https://localhost:8000.
 
 
 
 ## 4. Zusammenfassung
 
 Versuche dies nachzuvollziehen....Passt die Anzahl Zyklen im Eingabefeld mit der Grafik überein? Sieh dir die beiden Variablen nS2B und nB2S an und wie sie funktionieren. Einmal mit {{..}} im html-Code und einmal als dic (Dictionary) in Python.
-
-Passe die Seite so an, dass diese direkt mit localhost geöffnet wird, ohne /sinus.
-
-
 
 Die View-Model-Template Architektur von Django sieht nun wie folgt aus:
 ![](pic4.png)
@@ -249,5 +247,81 @@ energieDigital
         └─views.py
 
 ```
+
+## 5. Erweiterungen
+
+Wir erweitern die Webpage um zwei Funktionen:
+
+1) Das Diagramm wird nichtmehr als jpg-Datei ins html-Template eingebaut, sondern es wird direkt in views.py ein html-Code generiert über die Bokeh-Bibliothek und diese ans html-Template übergeben.
+2) Wir verwenden ein fertiges template von html5up
+
+#### Bokeh
+
+Anstatt matplotlip verwenden wir Bokeh zur Erzeugung von Diagrammen. Dies bauen wir in views.py ein:
+
+```python
+from bokeh.plotting import figure
+from bokeh.embed import components
+```
+
+```python
+    p1 = figure(height=400, width=1600, background_fill_alpha=0.8, border_fill_alpha=0.8)
+    p1.line(x,y)
+    p1.toolbar.logo = None
+    [script, div] = components(p1)
+    htmlCode = script + div
+```
+
+Den Inhalt der Variabel `htmlCode` laden wir in unserem home.html-Template im <body>-Bereich:
+
+```html
+{{ htmlCode|safe}}
+```
+
+In diesem Code ist ein JavaScript erforderlich um das Diagramm darzustellen. Dieses laden wir vom Internet, welches wir im <head>-Bereich auf definieren:
+
+```html
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.4.min.js" crossorigin="anonymous"></script>
+```
+
+### html5up Template
+
+Wir verwendet das Template  [www.html5up.net/eventually](http://www.html5up.net/eventually). Dies besteht aus Darstellungscode im Ordner **assets** und aus Hintergrundbildern, welche im Ordner **images** abgelegt werden. Beide Ordner legen wir in unseren Ordner **static** ab.
+
+Die Hintergrundbilder werden durch die Datei `static/assets/js/main.js` aufgerufen. Das diese gefunden werden, müssen wir dies in dieser Datei anpassen:
+
+```javascript
+images: {
+    'static/images/bg01.jpeg': 'center',
+    'static/images/bg02.jpeg': 'center',
+    'static/images/bg03.jpeg': 'center'
+},
+```
+
+ 
+
+In unserem home.html-Template erweitern wir im <head>-Bereich den Aufruf der Cascading Style Sheets. 
+
+```html
+<link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
+```
+
+Am Ende des  <body>-Bereichs formatieren wir das Eingabe-Fenster um, sodass es besser sichtbar wird über <style> und wir laden das JavaScript: 
+
+```html
+        <style>
+            input[type=number] {
+            box-sizing: border-box;
+            border: solid 2px rgba(90, 90, 234, 0.8);
+            opacity: 0.80;
+            background-color: #ffffff;
+            color: #000000;
+            }
+        </style>
+        <script src="{% static "assets/js/main.js" %}"></script>
+```
+
+
+
 
 Dieses Tutorial wurde für den Unterricht **CAS Energie digital** erstellt. Markus Markstaler 2024.
