@@ -216,15 +216,11 @@ urlpatterns = [
 ]
 ```
 
-
-
 Wenn diese Adresse beim Server ankommt wird die Python-Funktion "sinusfunktion" ausgeführt und die home.html-Datei neu gerendert und vom Server an den Browser geschickt.
 
 Nun haben wir einiges angepasst. PyCharm erkennt Änderungen in den Dateien und startet den Webserver neu. Ev. folgt noch eine Fehlermeldung, dass die numpy und matplotlib Bibliotheken nicht installiert sind, d.h. beim Code das Red Bulb Icon anklicken und die Bibliotheken installieren.
 
 Wir können nun die Webpage öffnen mit https://localhost:8000.
-
-
 
 ## 4. Zusammenfassung
 
@@ -272,15 +268,15 @@ from bokeh.embed import components
     htmlCode = script + div
 ```
 
-Den Inhalt der Variabel `htmlCode` laden wir in unserem home.html-Template im <body>-Bereich:
+Den Inhalt der Variabel `htmlCode` laden wir in unserem home.html-Template im "body"-Bereich:
 
 ```html
 {{ htmlCode|safe}}
 ```
 
-In diesem Code ist ein JavaScript erforderlich um das Diagramm darzustellen. Dieses laden wir vom Internet, welches wir im <head>-Bereich auf definieren:
+In diesem Code ist ein JavaScript erforderlich um das Diagramm darzustellen. Dieses laden wir vom Internet, welches wir im "head"-Bereich auf definieren:
 
-```html
+```
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.4.min.js" crossorigin="anonymous"></script>
 ```
 
@@ -290,7 +286,7 @@ Wir verwendet das Template  [www.html5up.net/eventually](http://www.html5up.net/
 
 Die Hintergrundbilder werden durch die Datei `static/assets/js/main.js` aufgerufen. Das diese gefunden werden, müssen wir dies in dieser Datei anpassen:
 
-```javascript
+```
 images: {
     'static/images/bg01.jpg': 'center',
     'static/images/bg02.jpg': 'center',
@@ -298,17 +294,15 @@ images: {
 },
 ```
 
- 
+ In unserem home.html-Template erweitern wir im "head"-Bereich den Aufruf der Cascading Style Sheets. 
 
-In unserem home.html-Template erweitern wir im <head>-Bereich den Aufruf der Cascading Style Sheets. 
-
-```html
+```
 <link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
 ```
 
-Am Ende des  <body>-Bereichs formatieren wir das Eingabe-Fenster um, sodass es besser sichtbar wird über <style> und wir laden das JavaScript: 
+Am Ende des  <body>-Bereichs formatieren wir das Eingabe-Fenster um, sodass es besser sichtbar wird über "style" und wir laden das JavaScript: 
 
-```html
+```
         <style>
             input[type=number] {
             box-sizing: border-box;
@@ -323,5 +317,5 @@ Am Ende des  <body>-Bereichs formatieren wir das Eingabe-Fenster um, sodass es b
 
 Der Code des Projekts liegt auf Github https://github.com/markstaler/pv4ing/blob/master/visual1/energieDigital.zip
 
-
 Dieses Tutorial wurde für den Unterricht **CAS Energie digital** erstellt. Markus Markstaler 2024.
+
