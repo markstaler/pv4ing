@@ -402,13 +402,44 @@ Nun werden die Daten als Django-Webpage dargestellt über den lokalen Entwicklun
 django-admin startproject energieDigital .
 ```
 
-Dann folgen Ergänzungen in den beiden Dateien: 
 
-- **settings.py**:  ergänzen unserer App 'energieDigital' bei INSTALLED_APPS. Wir führen den Pfadname für unsere statischen Dateien hinzu: 
-  `STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static/')` 
-- **urls.py**: Importieren der noch zu erstellenden Funktion "chart" aus der Datei views.py: ` from . import view` . Weiter soll beim Aufruf der url die importierte Funktion ausgeführt werden. Hierzu ergänzen wir die urlpatterns um `path('', views.chart)`.
 
-Nun legen wir zwei Ordner an. Der Ordner `templates` für die Datei `home.html`und der Ordner `static`indem das Diagramm als jpg-Datei abgespeichert wird.
+Dann führen wir folgende Ergänzungen in den beiden Dateien: 
+
+**settings.py**:  
+
+1. Ergänzen unserer INSTALLED_APPS 'energieDigital'. 
+
+2. Wir führen den Pfadname für unsere statischen Dateien hinzu bei STATIC_ROOTS.
+   `STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static/')` 
+
+```
+INSTALLED_APPS = [
+    ..., 
+    "energieDigital"
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'energieDigital/static/')
+```
+
+
+
+**urls.py**
+
+Importieren der noch zu erstellenden Funktion "chart" aus der Datei views.py mit "from . import views". Weiters soll beim Aufruf der url die importierte Funktion ausgeführt werden. Hierzu ergänzen wir die urlpatterns um "path('', views.chart)".
+
+```
+from . import views
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path('', views.chart)
+]
+```
+
+
+
+Nun legen wir zwei Ordner an. Der Ordner `templates` (nicht template, dann kennt sich Django nicht aus) für die Datei `home.html`und der Ordner `static`indem das Diagramm als jpg-Datei abgespeichert wird.
 
 ```
 energieDigital 
