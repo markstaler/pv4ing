@@ -5,4 +5,7 @@ __pycache__
 db.sqlite3
 erzeugeProfilinklVerbrauch.py
 .ipynb_checkpoints
+rpi
+visual1
+startJupyter.bat
 
