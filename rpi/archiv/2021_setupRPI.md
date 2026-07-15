@@ -1,6 +1,6 @@
 # Setup RaspberryPi 
 
-Erstellt am 3.10.2025 für Raspberry Pi 5 für den Unterricht im **CAS Energie digital**.
+Erstellt am 15.12.2021 für Raspberry Pi 3 Model B+ für den Unterricht im **CAS Energie digital**.
 
 Ziel ist mit dem RaspberryPi eine Luftmessstation zu bauen. Die Messwerte für Temperatur, Feuchte, Luftdruck werden über ein Handy durch "ansurfen" einer Web-Page dargestellt. Die Webpage läuft über den Django-Entwicklungsserver auf dem RaspberryPi. Inhalt des Tutorials:
 
@@ -11,33 +11,54 @@ Ziel ist mit dem RaspberryPi eine Luftmessstation zu bauen. Die Messwerte für T
 - Erstellen einer einfachen Webpage zur Darstellung der Messdaten als Diagramm
 - Automatisches Starten der Messung und des Entwicklungsserver für die Webpage beim Einschalten des Raspberry Pi's.
 
-## Installation Headless
-Healess heisst wir installieren ohne Bildschirm und Tastatur, über Fernzugriff SSH (Secure Shell). Der RPI loggt sich ins WLAN ein welches wir am Notebook als Hotspot aktivieren. Wir definieren ein eigenen "Network name" und ein "Network password", sowie die WLAN-Frequenz mit 2.4 GHz. In der Beschreibung verwenden wir "setupRPI" verwendet für den Namen und das pws. Verwende einen eigenen Netzwerkname und nicht "setupRPI", sodass wir uns untereinander mit dem WLAN nicht stören.
+# Installation
+Wir schreiben die Installationsdateien auf die SD-Karte mit **Raspberry Pi Imager** von [www.raspberrypi.org](http://www.raspberrypi.org). Wir verwenden nicht NOOBS oder Raspbian. Falls das Imager-Programmfester ausserhalb des Bildschirms ist, kann dieses mit [Alt+Tab] angewählt und mit [Alt+Space] verschoben (Move) werden.
+
+**Wichtig!** Im November 2021 erfolgte die neue OS-Version "Debian Bullseye", welche derzeit noch für uns relevante Bugs hat (VNC-Auflösung, 2nd I2C-Port, owncloud), d.h. installiere **Raspberry Pi OS (other) > Raspberry Pi OS (Legacy)** basierden dem "Debian Buster".
+
+Das Schreiben der SD-Karte dauert etwas länger....
+
+Es gibt zwei Möglichkeiten den Raspberry Pi (RPI) in Betrieb zu nehmen. Sofern möglich sollte b) verwendet werden!
+a) Headless, d.h. ohne Bildschirm und Tastatur.
+b) Mit Bildschirm und Tastatur am RPI angeschlossen
+
+### a) Headless
+Dieser Teil ist nur relevant, wenn kein Bildschirm und keine Tastatur angeschlossen sind, weil wir dann über Fernzugriff den Raspberry (RPI) bedienen werden um die Installation durchführen zu können. Hierzu müssen wir auf das Terminal des RPIs zugreifen. Dies wird über **"ssh"**, d.h. Secure Shell durchgeführt. Shell ist ein Begriff für das Terminal . Wir werden auf  dem Notebook das Windows-Terminal (oder ein anderes ssh-Programm wie putty) starten und eine sichere Verbindung zum RPI herstellen und können dann auf dem Notebook Kommandos eingeben welche direkt auf dem RPI ausführt werden.
+
+Zuerst müssen wir auf dem RPI den ssh-Zugriff freigeben. Dies teilen wir dem RPI mit, indem wir eine leere Datei mit dem Namen "ssh" auf der SD-Karte speichern. Später beim Starten, erkennt der RPI über die Datei, dass der ssh-Zugriff aktiviert werden soll (nach dem Freischalten löscht der RPI die Datei). 
+Das Anlegen der ssh-Datei machen wir über das Windows-Terminal. Wir wechseln auf die SD-Karte (falls SD-Karte nicht im Dateimanager angezeigt wird, nochmals neu einstecken) und erzeugen eine leere Datei durch:
+
+```
+NUL >> ssh
+```
+
+Als nächstes definieren wir den WLAN-Zugriff des RPIs. Wir erzeugen mit unserem Notebook ein "Mobile hotspot" (unter Settings > Network & Internet). Wir definieren ein eigenen "Network name" und ein "Network password", sowie die WLAN-Frequenz mit 2.4 GHz (sofern möglich). Verwendet einen eigenen Netzwerkname und nicht "setupRPI", sodass wir uns untereinander mit dem WLAN nicht stören.
 
 ![Mobile Hotspot unter Windows 10 einrichten](hotspot.jpg)
 
-Diese Konfiguration teilen wir dem RPI bei der Installation mit indem wir die Installationsdateien auf die SD-Kater schreiben.
+Diese Konfiguration teilen wir dem RPI mit, indem wir eine Konfigurationsdatei auf der SD-Karte erstellen. Wir benötigen Notepad++ als Editor und erstellen eine Datei mit dem Inhalt:
 
-Dies wir mit **Raspberry Pi Imager** von [www.raspberrypi.org](http://www.raspberrypi.org) durchgeführt. Falls das Imager-Programmfester ausserhalb des Bildschirms ist, kann dieses mit [Alt+Tab] angewählt und mit [Alt+Space] verschoben (Move) werden.
+    ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev 
+    update_config=1
+    country=CH
+    
+    network={
+        ssid="setupRPI"
+        psk="setupRPI"
+    }
 
- - Modell wählen / OS Wählen (Empfohlen) / SD-Karte
- - weiter > EINSTELLUNGEN BEARBEITEN:
- - Reiter Allgemein:
-    - Benutzername: rpi / pwd: rpi 
-    - WIFI: 
-        - SID: setupRPI
-        - pwd: setupRPI
-        - Wifi-Land: CH
-- Reiter Dienste: SSH aktivieren
 
-Nun haben wir auch das WLAN konfiguriert und eine SSH Verbindung aktiviert, sodass wir den RPI "Headless" in Betrieb nehmen können. Das Schreiben der SD-Karte dauert etwas länger....
+Diese Datei speichern mit dem Name **"wpa_supplicant.conf"** auf der SD-Card. **Wichtig** unter "Edit" bei "EOL Conversion"als "UNIX (LF) Format" abspeichern.
 
-Wir stecken die SD-Karte in den RPI und starten diesen. Dies dauert etwas 3 Minuten. Unter "Mobile hotspot" meldet sich unserer RPI mit einer IP-Adresse an. Mit dieser IP-Adresse verbinden wir uns über ssh durch Eingabe auf dem Windows-Terminal: 
+Das Windows Betriebssystem verwendet für End of Line (EOL) zwei Zeichen (CR=Carrier Return und LF=Line feed). Der RasperryPi arbeitet mit Linux/Unix/OSX und dieses Betriebssystem verwendet als EOL nur ein Zeichen (LF=Line feed). 
+
+Wir stecken die SD-Karte in den RPI und starten diesen. Unter "Mobile hotspot" meldet sich unserer RPI mit einer IP-Adresse an. Mit dieser IP-Adresse verbinden wir uns über ssh durch Eingabe auf dem Windows-Terminal: 
 
 ```
-ssh rpi@192.168.137.207
+ssh pi@192.168.137.207
 ```
-Den Username haben wir mit "rpi" angegeben. Die IP-Adresse passen wir an. Das Standard-Passwort des RPIs lautet "raspberry".
+
+Den Username haben wir mit "pi" angegeben. Die IP-Adresse passen wir an. Das Standard-Passwort des RPIs lautet "raspberry".
 
 ![ssh Verbindung zum RPI](hotspot2.jpg)
 
@@ -53,9 +74,27 @@ Wir wählen die Interface-Optionen und aktivieren die VNC-Verbindung.
 
 ![VNC](config2.jpg)
 
-Nun laden wir den **"real VNC Viewer"** (nicht VNC Server) aus dem Internet und installieren diesen auf unserem Notebook. Wir verbinden uns zum RPI über die IP-Adresse und sind auf dem Desktop des RPIs. Wir folgen den Installationsanweisungen. Nicht das WLAN wechseln, sonst verlieren wir die VNC-Remote-Verbindung. **Wichtig** kein Update! Dies machen wir später. 
+Nun laden wir den **"real VNC Viewer"** (nicht VNC Server) aus dem Internet und installieren diesen auf unserem Notebook. Wir verbinden uns zum RPI über die IP-Adresse und sind auf dem Desktop des RPIs. Wir folgen den Installationsanweisungen. Nicht das WLAN wechseln, sonst verlieren wir die VNC-Remote-Verbindung. **Wichtig** kein Update! Dies machen wir später. Nun können wir zum Kapitel "Weitere Einstellungen" springen.
 
-Nun nehmen wir folgende Einstellungen vor, über das Menü **Einstellungen>Raspberry-Pi-Konfiguration>Schnittstellen**:
+### b) Mit Bildschirm und Tastatur
+
+Wir stecken die SD-Karte in den RPI und starten diesen. Wir folgen den Installationsanweisungen. Wichtig kein Update! Dies machen wir später. 
+
+## Ab nun Remote!
+
+Das Grundsystem ist auf dem RPI installiert. Ab nun arbeiten wir Remote, d.h. der RPI hat kein Bildschirm oder Tastatur und Maus. Wir verbinden uns Remote auf den RPI über den **real VNC Viewer"** (nicht VNC Server) welcher über das Internet geladen und anschliessend auf dem Rechner installiert wird. 
+
+![remote](remoteRPI.jpg)Um uns mit der RPI zu Verbinden müssen wir die IP-Adresse des Raspberry Pi kennen. Wir öffnen das Terminal auf dem RPI mit der Tastenkombination **Strg+Alt+T** (oder Links oben aufs Icon klicken) und geben folgenden Befehl ein um die IP-Adresse des wlan0 zu erhalten:
+
+```
+ifconfig
+```
+
+Mit VNC können auch Dateien übertragen werden, jedoch einfacher geht es mit sFTP-Tool wie **WinSCP** oder **FileZilla**.
+
+## Weitere Einstellungen
+
+Nach a) oder b) nehmen wir folgende Einstellungen vor, über das Menü **Einstellungen>Raspberry-Pi-Konfiguration>Schnittstellen**:
 
  - Auflösung festlegen, sodass diese auch über Remote (VNC) eingestellt wird, z.B. DMT 1920x1200 60Hz.  
 
@@ -71,46 +110,40 @@ Nun nehmen wir folgende Einstellungen vor, über das Menü **Einstellungen>Raspb
 
 Anschliessend Fenster schliessen. Es erfolgt eine Abfrage zum Neustart, welche wir bestätigen. 
 
-Auflösung bei nicht angeschlossenem Monitor (headless) über VNC kann nicht mehr im Menü eingestellt werden. Dies muss in der /boot/firmeware/config.txt Datei erfolgen mittels. Einstellung siehe: https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=5851. Für Änderungen muss der Editor mit Admin-Rechte gestartet werden durch `sudo geany`. Folgende Einstellung für 1920x1200 60Hz:
+**Hinweis zu Raspberry Pi 4** (nicht RPI 3B+): Auflösung bei nicht angeschlossenem Monitor (headless) über VNC kann nicht mehr im Menü eingestellt werden. Dies muss in der /boot/config.txt Datei erfolgen mittels:
 
 ```
 hdmi_force_hotplug=1 
 hdmi_group=2
 hdmi_mode=0x45 
 ```
-In dieser Datei kann auch die Lüftersteuerung eingestellt werden. Siehe https://u-labs.de/portal/lufter-des-raspberry-pi-5-selbst-steuern-so-geht-es/, z.B.
 
+siehe: https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=5851. Für Änderungen muss der Editor mit Admin-Rechte gestartet werden durch `sudo geany`.
 
+### Zusätzliche Software Pakete installieren
 
-### RPI einrichten
-Zuerst finden wir uns auf dem Desktop des RPIs zurecht. Wir öffnen den Dateimanager und legen unter `/home/rpi/Documents` einen Ordner `Wetterstation` an.
+Zuerst finden wir uns auf dem Desktop des RPIs zurecht. Wir öffnen den Dateimanager und legen einen Ordner `CAS` für uns an unter `/home/pi`. Dort legen wir eine neue Datei **requirements.txt** an um Bibliotheken zu installieren. Wir können als Texteditor "geany" verwenden, welcher bereits auf den RPI installierst ist:
 
-Das System von RPI5 arbeitet mit Python, deshalb können aus Stabilitätsgründen keine weiteren Pakete bei Hauptsystem ergänzt werden. Es wird hierfür ein **Virtual ENViroment (.venv)** angelegt.
 ```
-python -m venv .venv
+matplotlib
+pandas
+django
+pysqlite3
+adafruit-circuitpython-ssd1306
+pimoroni-bme280
+pimoroni-sgp30
+smbus2
 ```
-Nun wurde ein Ordner `venv`angelgt jedoch versteck, welches wir mit dem "." angegeben haben. In diesem Ordner liegt das Pythonprogramm und dort werden die Bibliotheken abgelegt. Wir starten die virtuelle Umgebung mit:
 
-````
-source Wetterstation/bin/activate
-```
-In der aktivierten virtuellen Umgebung führen wir die Paketinstallation mit dem Python-Package-Installer "pip" durch. Der Aufruf geht wie folgt:
-```
-pip install Packetname
-```
-Es werden folgende Pakete installiert:
+Für die Python-Bibliotheken verwenden wir den Python-Package-Installer "pip3" für Python3. Mit "-r" teilen wir dem Python-Package-Installer mit, dass die Pakete in der Textdatei "requirement.txt" angegeben sind. Hierfür bewegen wir und mit dem Terminal in den Ordner `CAS`  mit den Kommando "cd". Anstatt "dir" gilt bei UNIX "ls" für list. Autocomplete bei Dateinamen mit Tabulator funktioniert ebenfalls.
 
- - pandas
- - numpy
- - matplotlib
- - django
- - pysqlite3
- - adafruit-circuitpython-ssd1306
- - pimoroni-bme280
- - pimoroni-sgp30
- - smbus2
+Unix oder Linux ist ein sicheres Betriebssystem, u.a. dadurch das die Ausführungsrechte eingeschränkt sind. Um ein Programm oder eine Datei mit Administratorrechte ausführen zu können wir "sudo" vor dem Befehl gestellt. 
 
-Mit "pip list" können wir nachsehen, welche Pakete installiert sind und mit mit "python --version" die Version von Python.
+```
+sudo pip3 install -r requirements.txt
+```
+
+Wir arbeiten mit Python 3.x. Um Bibliotheken hierfür zu installieren muss darauf geachtet werden das die "3"-Version verwendet wird. Z.B. **pip3 anstatt pip**. Ohne "3" wird die Version für Python 2.x verwendet. **Der RaspberryPi benötigt für das System beide Versionen!** Standardmässig wird Python2.x verwendet. Erkennbar durch "python --version", oder "python3 --version".
 
 # PIOLED Display
 
